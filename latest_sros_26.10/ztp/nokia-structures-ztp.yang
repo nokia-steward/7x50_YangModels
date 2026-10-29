@@ -1,0 +1,1913 @@
+module nokia-structures-ztp {
+
+    yang-version "1.1";
+
+    namespace "urn:nokia.com:sros:ns:yang:sr:structures-ztp";
+
+    prefix "structures-ztp";
+
+    import ietf-yang-structure-ext        { prefix "sx"; }
+    import nokia-sros-yang-extensions     { prefix "sros-ext"; }
+    import nokia-types-sros               { prefix "types-sros"; }
+
+    sros-ext:sros-major-release "rel26";
+    organization "Nokia";
+    contact
+        "Nokia SR OS Support
+         Web: <http://www.nokia.com>";
+    description
+        "Nokia YANG data template describing the Nokia SR OS Automated Device
+         Provisioning (ADP) provisioning file used during Zero Touch Provisioning
+         (ZTP).
+
+         This file is also referred to as the conveyed-information file and the
+         security-artifacts file. The same file structure is referenced from
+         within the provisioning file as
+         'next-provisioning-file', as the 'file' of a 'redirect-information
+         bootstrap-server', and as an 'onboarding-information
+         pre-configuration-script'; Secure ZTP (SZTP) additionally references it as
+         the 'pre-boot-config-script'.
+
+         This model is published as an 'sx:structure' (RFC 8791) template: the
+         file is a standalone document and is not part of any configuration
+         datastore.
+
+         $(name) symbol references expand to their value before the field is
+         interpreted, and may appear in any value. Where the field's own type
+         would not match the unexpanded text, the type is a union that also
+         accepts ztp-variable-reference.
+
+         The provisioning file is plain text. The following constructs belong to
+         that text format and have no representation in this model:
+          - @(name) line-leading conditionals: the line is included only when
+            the named symbol is set, and is omitted otherwise.
+          - # line comments (ignored from # to end of line).
+
+         Copyright 2016 Nokia. All rights reserved. Reproduction of this document
+         is authorized on the condition that the foregoing copyright notice is included.
+
+         This nokia-structures-ztp YANG module embodies Nokia's proprietary
+         intellectual property. Nokia retains all title and ownership in the
+         specification, including any revisions.
+
+         Nokia grants all interested parties a non-exclusive license to use
+         and distribute an unmodified copy of this specification in connection with
+         management of Nokia products, and without fee, provided this
+         copyright notice and license appear on all copies.
+
+         This specification is supplied `as is', and Nokia makes no warranty,
+         either express or implied, as to the use, operation, condition, or performance
+         of the specification.";
+    revision "2026-10-28";
+
+    typedef ztp-variable-reference {
+        type string {
+            length "1..255";
+            pattern '.*[$]\([^)]+\).*';
+        }
+        description
+            "A value containing one or more ZTP symbol references of the form
+             $(name), alone or mixed with literal text. Symbols are defined with
+             'setvar' or are predefined system symbols (for example the chassis
+             serial number or MAC address); each reference expands to its value
+             during provisioning.";
+    }
+
+    typedef ztp-http-or-https-url {
+        type string {
+            pattern '[hH][tT][tT][pP][sS]?:[\\/]{2}'
+                  + '([^@]*@)?'
+                  + '((\[[^\]]+\])|([^\\/:])+)'
+                  + '(:([0-9]{1,4}|[0-5][0-9]{4}|6[0-4][0-9]{3}|'
+                  + '65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?'
+                  + '([\\/].*)?';
+        }
+        description
+            "HTTP or HTTPS URL accepted by the ZTP provisioning file";
+    }
+
+    typedef ztp-ftp-url {
+        type string {
+            pattern '[^ <>{}|^"`]*';
+            pattern '(ftp):(\\|/){2}'
+                  +   '([^:@?/]*:[^:@?/]*@)?'
+                  +   '((\w|(\w(\w|\.\w|-\w|[%]\w)*))\.\w(\w|-\w|[%]\w)*)'
+                  +   '((\\|/)[^;?]*)?';
+        }
+        description
+            "FTP URL accepted by the ZTP provisioning file";
+    }
+
+    typedef remote-download-url {
+        type union {
+            type ztp-http-or-https-url {
+                length "1..255";
+            }
+            type ztp-ftp-url {
+                length "1..255";
+            }
+            type ztp-variable-reference;
+        }
+        description
+            "A remote URL from which a file may be downloaded during provisioning.
+             FTP, HTTP and HTTPS schemes are supported. The value may instead be a
+             $(name) symbol reference that expands to such a URL.";
+    }
+
+    typedef proxy-url {
+        type union {
+            type ztp-http-or-https-url {
+                length "1..200";
+            }
+            type ztp-ftp-url {
+                length "1..200";
+            }
+            type ztp-variable-reference;
+        }
+        description
+            "An HTTP proxy URL used when downloading a file during provisioning.
+             FTP, HTTP and HTTPS schemes are supported. The value may instead be a
+             $(name) symbol reference that expands to such a URL.";
+    }
+
+    typedef local-file-or-variable {
+        type union {
+            type types-sros:local-file-url;
+            type ztp-variable-reference;
+        }
+        description
+            "A local (on-box) file URL, or a $(name) symbol reference that expands
+             to one.";
+    }
+
+    typedef ip-address-or-variable {
+        type union {
+            type types-sros:ip-address;
+            type ztp-variable-reference;
+        }
+        description
+            "An IPv4 or IPv6 address, or a $(name) symbol reference that expands to
+             one.";
+    }
+
+    grouping provisioning-file-grouping {
+        container provisioning-file {
+            description
+                "Enter the provisioning-file context.
+                 MODEL-NOTE: there is no 'provisioning-file' keyword in the file; its instructions appear at the document root.";
+
+            container bof {
+                presence "Generate a new Boot Options File (BOF)";
+                description "Enter the bof context";
+
+                leaf-list line {
+                    type string;
+                    ordered-by user;
+                    description
+                        "Specify a line of BOF configuration.
+                         MODEL-NOTE: these lines have no field keyword in the file; 'line' is documentation-only.";
+                }
+            } // container bof
+
+            container dns {
+                presence
+                    "Configure DNS servers used during provisioning. DNS servers
+                     are applied in order; secondary requires primary and tertiary
+                     requires secondary. All configured DNS servers must be of the
+                     same address family.";
+                description "Enter the dns context";
+
+                leaf domain {
+                    type string {
+                        length "1..179";
+                    }
+                    description "DNS search domain";
+                }
+
+                leaf primary {
+                    type ip-address-or-variable;
+                    mandatory true;
+                    description "Primary DNS server IPv4 or IPv6 address";
+                }
+
+                leaf secondary {
+                    type ip-address-or-variable;
+                    description
+                        "Secondary DNS server IPv4 or IPv6 address. Requires a
+                         primary server to be configured, and must be of the same
+                         address family as the other configured DNS servers.";
+                }
+
+                leaf tertiary {
+                    type ip-address-or-variable;
+                    description
+                        "Tertiary DNS server IPv4 or IPv6 address. Requires a
+                         secondary server to be configured, and must be of the
+                         same address family as the other configured DNS
+                         servers.";
+                }
+            } // container dns
+
+            container download {
+                description
+                    "Files to download during provisioning. Files are fetched
+                     in a fixed order based on file type, not in the order in
+                     which they appear in the provisioning file: md5, sha256,
+                     image, config, then file. In particular the boot image is
+                     always downloaded and applied before any config or file
+                     entry.";
+
+                list md5 {
+                    key "local-file";
+                    description "Enter the md5 list instance";
+
+                    leaf local-file {
+                        type local-file-or-variable;
+                        description
+                            "Local destination for the downloaded MD5 checksum file.
+                             MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                    }
+
+                    leaf primary-url {
+                        type remote-download-url;
+                        description "Primary location from which to download the file";
+                    }
+
+                    leaf primary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the primary location. Requires the
+                             primary location to be configured.";
+                    }
+
+                    leaf primary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the primary location. Requires
+                             the primary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf secondary-url {
+                        type remote-download-url;
+                        description
+                            "Secondary location from which to download the file.
+                             Requires a primary location to be configured.";
+                    }
+
+                    leaf secondary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the secondary location. Requires the
+                             secondary location to be configured.";
+                    }
+
+                    leaf secondary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the secondary location. Requires
+                             the secondary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf tertiary-url {
+                        type remote-download-url;
+                        description
+                            "Tertiary location from which to download the file.
+                             Requires a secondary location to be configured.";
+                    }
+
+                    leaf tertiary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the tertiary location. Requires the
+                             tertiary location to be configured.";
+                    }
+
+                    leaf tertiary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the tertiary location. Requires
+                             the tertiary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf encrypt {
+                        type empty;
+                        description "Store the downloaded file encrypted";
+                    }
+
+                    container verification {
+                        presence "Verify the downloaded file against a hash";
+                        description "Enter the verification context";
+
+                        leaf hash-algorithm {
+                            type enumeration {
+                                enum md5 { value 0; }
+                                enum sha256 { value 1; }
+                            }
+                            mandatory true;
+                            description "Hash algorithm";
+                        }
+
+                        leaf hash-value {
+                            type string {
+                                length "1..255";
+                            }
+                            mandatory true;
+                            description "Hash value the downloaded file must match";
+                        }
+                    } // container verification
+
+                    container unzip {
+                        presence "Unzip the downloaded file after download";
+                        description "Enter the unzip context";
+
+                        leaf directory {
+                            type string {
+                                length "1..200";
+                                pattern '.*[/\\]';
+                            }
+                            mandatory true;
+                            description "Local directory to extract into; must end with a slash";
+                        }
+                    } // container unzip
+                } // list md5
+
+                list sha256 {
+                    key "local-file";
+                    description "Enter the sha256 list instance";
+
+                    leaf local-file {
+                        type local-file-or-variable;
+                        description
+                            "Local destination for the downloaded SHA-256 checksum file.
+                             MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                    }
+
+                    leaf primary-url {
+                        type remote-download-url;
+                        description "Primary location from which to download the file";
+                    }
+
+                    leaf primary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the primary location. Requires the
+                             primary location to be configured.";
+                    }
+
+                    leaf primary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the primary location. Requires
+                             the primary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf secondary-url {
+                        type remote-download-url;
+                        description
+                            "Secondary location from which to download the file.
+                             Requires a primary location to be configured.";
+                    }
+
+                    leaf secondary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the secondary location. Requires the
+                             secondary location to be configured.";
+                    }
+
+                    leaf secondary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the secondary location. Requires
+                             the secondary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf tertiary-url {
+                        type remote-download-url;
+                        description
+                            "Tertiary location from which to download the file.
+                             Requires a secondary location to be configured.";
+                    }
+
+                    leaf tertiary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the tertiary location. Requires the
+                             tertiary location to be configured.";
+                    }
+
+                    leaf tertiary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the tertiary location. Requires
+                             the tertiary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf encrypt {
+                        type empty;
+                        description "Store the downloaded file encrypted";
+                    }
+
+                    container verification {
+                        presence "Verify the downloaded file against a hash";
+                        description "Enter the verification context";
+
+                        leaf hash-algorithm {
+                            type enumeration {
+                                enum md5 { value 0; }
+                                enum sha256 { value 1; }
+                            }
+                            mandatory true;
+                            description "Hash algorithm";
+                        }
+
+                        leaf hash-value {
+                            type string {
+                                length "1..255";
+                            }
+                            mandatory true;
+                            description "Hash value the downloaded file must match";
+                        }
+                    } // container verification
+
+                    container unzip {
+                        presence "Unzip the downloaded file after download";
+                        description "Enter the unzip context";
+
+                        leaf directory {
+                            type string {
+                                length "1..200";
+                                pattern '.*[/\\]';
+                            }
+                            mandatory true;
+                            description "Local directory to extract into; must end with a slash";
+                        }
+                    } // container unzip
+                } // list sha256
+
+                list image {
+                    key "local-file";
+                    description
+                        "Enter the image list instance. The boot image is
+                         downloaded and applied before any config or file
+                         download, regardless of the order of entries in the
+                         provisioning file.";
+
+                    leaf local-file {
+                        type local-file-or-variable;
+                        description
+                            "Local destination for the downloaded image file.
+                             MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                    }
+
+                    leaf primary-url {
+                        type remote-download-url;
+                        description "Primary location from which to download the file";
+                    }
+
+                    leaf primary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the primary location. Requires the
+                             primary location to be configured.";
+                    }
+
+                    leaf primary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the primary location. Requires
+                             the primary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf secondary-url {
+                        type remote-download-url;
+                        description
+                            "Secondary location from which to download the file.
+                             Requires a primary location to be configured.";
+                    }
+
+                    leaf secondary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the secondary location. Requires the
+                             secondary location to be configured.";
+                    }
+
+                    leaf secondary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the secondary location. Requires
+                             the secondary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf tertiary-url {
+                        type remote-download-url;
+                        description
+                            "Tertiary location from which to download the file.
+                             Requires a secondary location to be configured.";
+                    }
+
+                    leaf tertiary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the tertiary location. Requires the
+                             tertiary location to be configured.";
+                    }
+
+                    leaf tertiary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the tertiary location. Requires
+                             the tertiary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    container verification {
+                        presence "Verify the downloaded file against a hash";
+                        description "Enter the verification context";
+
+                        leaf hash-algorithm {
+                            type enumeration {
+                                enum md5 { value 0; }
+                                enum sha256 { value 1; }
+                            }
+                            mandatory true;
+                            description "Hash algorithm";
+                        }
+
+                        leaf hash-value {
+                            type string {
+                                length "1..255";
+                            }
+                            mandatory true;
+                            description "Hash value the downloaded file must match";
+                        }
+                    } // container verification
+
+                    container unzip {
+                        presence "Unzip the downloaded file after download";
+                        description "Enter the unzip context";
+
+                        leaf directory {
+                            type string {
+                                length "1..200";
+                                pattern '.*[/\\]';
+                            }
+                            mandatory true;
+                            description "Local directory to extract into; must end with a slash";
+                        }
+                    } // container unzip
+
+                    leaf match-or-replace {
+                        type empty;
+                        description "Replace the local file only when it differs from the downloaded file";
+                    }
+                } // list image
+
+                list config {
+                    key "local-file";
+                    description "Enter the config list instance";
+
+                    leaf local-file {
+                        type local-file-or-variable;
+                        description
+                            "Local destination for the downloaded configuration file.
+                             MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                    }
+
+                    leaf primary-url {
+                        type remote-download-url;
+                        description "Primary location from which to download the file";
+                    }
+
+                    leaf primary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the primary location. Requires the
+                             primary location to be configured.";
+                    }
+
+                    leaf primary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the primary location. Requires
+                             the primary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf secondary-url {
+                        type remote-download-url;
+                        description
+                            "Secondary location from which to download the file.
+                             Requires a primary location to be configured.";
+                    }
+
+                    leaf secondary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the secondary location. Requires the
+                             secondary location to be configured.";
+                    }
+
+                    leaf secondary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the secondary location. Requires
+                             the secondary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf tertiary-url {
+                        type remote-download-url;
+                        description
+                            "Tertiary location from which to download the file.
+                             Requires a secondary location to be configured.";
+                    }
+
+                    leaf tertiary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the tertiary location. Requires the
+                             tertiary location to be configured.";
+                    }
+
+                    leaf tertiary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the tertiary location. Requires
+                             the tertiary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf encrypt {
+                        type empty;
+                        description "Store the downloaded file encrypted";
+                    }
+
+                    container verification {
+                        presence "Verify the downloaded file against a hash";
+                        description "Enter the verification context";
+
+                        leaf hash-algorithm {
+                            type enumeration {
+                                enum md5 { value 0; }
+                                enum sha256 { value 1; }
+                            }
+                            mandatory true;
+                            description "Hash algorithm";
+                        }
+
+                        leaf hash-value {
+                            type string {
+                                length "1..255";
+                            }
+                            mandatory true;
+                            description "Hash value the downloaded file must match";
+                        }
+                    } // container verification
+
+                    container unzip {
+                        presence "Unzip the downloaded file after download";
+                        description "Enter the unzip context";
+
+                        leaf directory {
+                            type string {
+                                length "1..200";
+                                pattern '.*[/\\]';
+                            }
+                            mandatory true;
+                            description "Local directory to extract into; must end with a slash";
+                        }
+                    } // container unzip
+                } // list config
+
+                list file {
+                    key "local-file";
+                    description "Enter the file list instance";
+
+                    leaf local-file {
+                        type local-file-or-variable;
+                        description
+                            "Local destination for the downloaded file.
+                             MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                    }
+
+                    leaf primary-url {
+                        type remote-download-url;
+                        description "Primary location from which to download the file";
+                    }
+
+                    leaf primary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the primary location. Requires the
+                             primary location to be configured.";
+                    }
+
+                    leaf primary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the primary location. Requires
+                             the primary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf secondary-url {
+                        type remote-download-url;
+                        description
+                            "Secondary location from which to download the file.
+                             Requires a primary location to be configured.";
+                    }
+
+                    leaf secondary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the secondary location. Requires the
+                             secondary location to be configured.";
+                    }
+
+                    leaf secondary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the secondary location. Requires
+                             the secondary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf tertiary-url {
+                        type remote-download-url;
+                        description
+                            "Tertiary location from which to download the file.
+                             Requires a secondary location to be configured.";
+                    }
+
+                    leaf tertiary-proxy {
+                        type proxy-url;
+                        description
+                            "HTTP proxy used for the tertiary location. Requires the
+                             tertiary location to be configured.";
+                    }
+
+                    leaf tertiary-trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "TLS trust anchor used for the tertiary location. Requires
+                             the tertiary location to be configured. The trust anchor
+                             must resolve to a trust-anchor imported by this
+                             provisioning file or to a TLS trust-anchor profile
+                             already configured on the device.";
+                    }
+
+                    leaf encrypt {
+                        type empty;
+                        description "Store the downloaded file encrypted";
+                    }
+
+                    container verification {
+                        presence "Verify the downloaded file against a hash";
+                        description "Enter the verification context";
+
+                        leaf hash-algorithm {
+                            type enumeration {
+                                enum md5 { value 0; }
+                                enum sha256 { value 1; }
+                            }
+                            mandatory true;
+                            description "Hash algorithm";
+                        }
+
+                        leaf hash-value {
+                            type string {
+                                length "1..255";
+                            }
+                            mandatory true;
+                            description "Hash value the downloaded file must match";
+                        }
+                    } // container verification
+
+                    container unzip {
+                        presence "Unzip the downloaded file after download";
+                        description "Enter the unzip context";
+
+                        leaf directory {
+                            type string {
+                                length "1..200";
+                                pattern '.*[/\\]';
+                            }
+                            mandatory true;
+                            description "Local directory to extract into; must end with a slash";
+                        }
+                    } // container unzip
+                } // list file
+            } // container download
+
+            container import {
+                description "Enter the import context";
+
+                container client {
+                    presence "Client certificate and private key used for TLS authentication";
+                    description "Enter the client context";
+
+                    container cert {
+                        description "Client certificate file";
+
+                        leaf local-file {
+                            type local-file-or-variable;
+                            mandatory true;
+                            description
+                                "Local destination for the client certificate file.
+                                 MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                        }
+
+                        leaf primary-url {
+                            type remote-download-url;
+                            description "Primary location from which to download the file";
+                        }
+
+                        leaf primary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the primary location. Requires the
+                                 primary location to be configured.";
+                        }
+
+                        leaf primary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the primary location. Requires
+                                 the primary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf secondary-url {
+                            type remote-download-url;
+                            description
+                                "Secondary location from which to download the file.
+                                 Requires a primary location to be configured.";
+                        }
+
+                        leaf secondary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the secondary location. Requires the
+                                 secondary location to be configured.";
+                        }
+
+                        leaf secondary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the secondary location. Requires
+                                 the secondary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf tertiary-url {
+                            type remote-download-url;
+                            description
+                                "Tertiary location from which to download the file.
+                                 Requires a secondary location to be configured.";
+                        }
+
+                        leaf tertiary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the tertiary location. Requires the
+                                 tertiary location to be configured.";
+                        }
+
+                        leaf tertiary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the tertiary location. Requires
+                                 the tertiary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf format {
+                            type string {
+                                length "1..32";
+                            }
+                            default "pem";
+                            description "Certificate encoding format";
+                        }
+
+                        leaf encrypt {
+                            type empty;
+                            description "Store the downloaded file encrypted";
+                        }
+
+                        container verification {
+                            presence "Verify the downloaded file against a hash";
+                            description "Enter the verification context";
+
+                            leaf hash-algorithm {
+                                type enumeration {
+                                    enum md5 { value 0; }
+                                    enum sha256 { value 1; }
+                                }
+                                mandatory true;
+                                description "Hash algorithm";
+                            }
+
+                            leaf hash-value {
+                                type string {
+                                    length "1..255";
+                                }
+                                mandatory true;
+                                description "Hash value the downloaded file must match";
+                            }
+                        } // container verification
+
+                        container unzip {
+                            presence "Unzip the downloaded file after download";
+                            description "Enter the unzip context";
+
+                            leaf directory {
+                                type string {
+                                    length "1..200";
+                                    pattern '.*[/\\]';
+                                }
+                                mandatory true;
+                                description "Local directory to extract into; must end with a slash";
+                            }
+                        } // container unzip
+
+                    } // container cert
+
+                    container key {
+                        description "Client private key file";
+
+                        leaf local-file {
+                            type local-file-or-variable;
+                            mandatory true;
+                            description
+                                "Local destination for the client private key file.
+                                 MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                        }
+
+                        leaf primary-url {
+                            type remote-download-url;
+                            description "Primary location from which to download the file";
+                        }
+
+                        leaf primary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the primary location. Requires the
+                                 primary location to be configured.";
+                        }
+
+                        leaf primary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the primary location. Requires
+                                 the primary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf secondary-url {
+                            type remote-download-url;
+                            description
+                                "Secondary location from which to download the file.
+                                 Requires a primary location to be configured.";
+                        }
+
+                        leaf secondary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the secondary location. Requires the
+                                 secondary location to be configured.";
+                        }
+
+                        leaf secondary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the secondary location. Requires
+                                 the secondary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf tertiary-url {
+                            type remote-download-url;
+                            description
+                                "Tertiary location from which to download the file.
+                                 Requires a secondary location to be configured.";
+                        }
+
+                        leaf tertiary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the tertiary location. Requires the
+                                 tertiary location to be configured.";
+                        }
+
+                        leaf tertiary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the tertiary location. Requires
+                                 the tertiary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf format {
+                            type string {
+                                length "1..32";
+                            }
+                            default "pem";
+                            description "Certificate encoding format";
+                        }
+
+                        leaf encrypt {
+                            type empty;
+                            description "Store the downloaded file encrypted";
+                        }
+
+                        container verification {
+                            presence "Verify the downloaded file against a hash";
+                            description "Enter the verification context";
+
+                            leaf hash-algorithm {
+                                type enumeration {
+                                    enum md5 { value 0; }
+                                    enum sha256 { value 1; }
+                                }
+                                mandatory true;
+                                description "Hash algorithm";
+                            }
+
+                            leaf hash-value {
+                                type string {
+                                    length "1..255";
+                                }
+                                mandatory true;
+                                description "Hash value the downloaded file must match";
+                            }
+                        } // container verification
+
+                        container unzip {
+                            presence "Unzip the downloaded file after download";
+                            description "Enter the unzip context";
+
+                            leaf directory {
+                                type string {
+                                    length "1..200";
+                                    pattern '.*[/\\]';
+                                }
+                                mandatory true;
+                                description "Local directory to extract into; must end with a slash";
+                            }
+                        } // container unzip
+
+                    } // container key
+                } // container client
+
+                list trust-anchor {
+                    key "name";
+                    max-elements 8;
+                    description
+                        "Enter the trust-anchor list instance. A maximum of 8
+                         trust-anchor imports are supported.";
+
+                    leaf name {
+                        type string {
+                            length "1..32";
+                        }
+                        description "Trust anchor name";
+                    }
+
+                    container cert {
+                        description "Trust anchor certificate chain file";
+
+                        leaf local-file {
+                            type local-file-or-variable;
+                            mandatory true;
+                            description
+                                "Local destination for the trust anchor certificate file.
+                                 MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                        }
+
+                        leaf primary-url {
+                            type remote-download-url;
+                            description "Primary location from which to download the file";
+                        }
+
+                        leaf primary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the primary location. Requires the
+                                 primary location to be configured.";
+                        }
+
+                        leaf primary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the primary location. Requires
+                                 the primary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf secondary-url {
+                            type remote-download-url;
+                            description
+                                "Secondary location from which to download the file.
+                                 Requires a primary location to be configured.";
+                        }
+
+                        leaf secondary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the secondary location. Requires the
+                                 secondary location to be configured.";
+                        }
+
+                        leaf secondary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the secondary location. Requires
+                                 the secondary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf tertiary-url {
+                            type remote-download-url;
+                            description
+                                "Tertiary location from which to download the file.
+                                 Requires a secondary location to be configured.";
+                        }
+
+                        leaf tertiary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the tertiary location. Requires the
+                                 tertiary location to be configured.";
+                        }
+
+                        leaf tertiary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the tertiary location. Requires
+                                 the tertiary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf format {
+                            type string {
+                                length "1..32";
+                            }
+                            default "pem";
+                            description "Certificate encoding format";
+                        }
+
+                        leaf encrypt {
+                            type empty;
+                            description "Store the downloaded file encrypted";
+                        }
+
+                        container verification {
+                            presence "Verify the downloaded file against a hash";
+                            description "Enter the verification context";
+
+                            leaf hash-algorithm {
+                                type enumeration {
+                                    enum md5 { value 0; }
+                                    enum sha256 { value 1; }
+                                }
+                                mandatory true;
+                                description "Hash algorithm";
+                            }
+
+                            leaf hash-value {
+                                type string {
+                                    length "1..255";
+                                }
+                                mandatory true;
+                                description "Hash value the downloaded file must match";
+                            }
+                        } // container verification
+
+                        container unzip {
+                            presence "Unzip the downloaded file after download";
+                            description "Enter the unzip context";
+
+                            leaf directory {
+                                type string {
+                                    length "1..200";
+                                    pattern '.*[/\\]';
+                                }
+                                mandatory true;
+                                description "Local directory to extract into; must end with a slash";
+                            }
+                        } // container unzip
+
+                        leaf tls-version {
+                            type enumeration {
+                                enum 1.2 { value 0; }
+                                enum 1.3 { value 1; }
+                                enum all { value 2; }
+                            }
+                            default "all";
+                            description "TLS protocol version for trust anchor certificate downloads";
+                        }
+                    } // container cert
+
+                    container crl {
+                        presence "Import a certificate revocation list";
+                        description "Enter the crl context";
+
+                        leaf local-file {
+                            type local-file-or-variable;
+                            mandatory true;
+                            description
+                                "Local destination for the certificate revocation list file.
+                                 MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                        }
+
+                        leaf primary-url {
+                            type remote-download-url;
+                            description "Primary location from which to download the file";
+                        }
+
+                        leaf primary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the primary location. Requires the
+                                 primary location to be configured.";
+                        }
+
+                        leaf primary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the primary location. Requires
+                                 the primary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf secondary-url {
+                            type remote-download-url;
+                            description
+                                "Secondary location from which to download the file.
+                                 Requires a primary location to be configured.";
+                        }
+
+                        leaf secondary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the secondary location. Requires the
+                                 secondary location to be configured.";
+                        }
+
+                        leaf secondary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the secondary location. Requires
+                                 the secondary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf tertiary-url {
+                            type remote-download-url;
+                            description
+                                "Tertiary location from which to download the file.
+                                 Requires a secondary location to be configured.";
+                        }
+
+                        leaf tertiary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the tertiary location. Requires the
+                                 tertiary location to be configured.";
+                        }
+
+                        leaf tertiary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the tertiary location. Requires
+                                 the tertiary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf format {
+                            type string {
+                                length "1..32";
+                            }
+                            default "pem";
+                            description "Certificate encoding format";
+                        }
+
+                        leaf encrypt {
+                            type empty;
+                            description "Store the downloaded file encrypted";
+                        }
+
+                        container verification {
+                            presence "Verify the downloaded file against a hash";
+                            description "Enter the verification context";
+
+                            leaf hash-algorithm {
+                                type enumeration {
+                                    enum md5 { value 0; }
+                                    enum sha256 { value 1; }
+                                }
+                                mandatory true;
+                                description "Hash algorithm";
+                            }
+
+                            leaf hash-value {
+                                type string {
+                                    length "1..255";
+                                }
+                                mandatory true;
+                                description "Hash value the downloaded file must match";
+                            }
+                        } // container verification
+
+                        container unzip {
+                            presence "Unzip the downloaded file after download";
+                            description "Enter the unzip context";
+
+                            leaf directory {
+                                type string {
+                                    length "1..200";
+                                    pattern '.*[/\\]';
+                                }
+                                mandatory true;
+                                description "Local directory to extract into; must end with a slash";
+                            }
+                        } // container unzip
+
+                        leaf tls-version {
+                            type enumeration {
+                                enum 1.2 { value 0; }
+                                enum 1.3 { value 1; }
+                                enum all { value 2; }
+                            }
+                            default "all";
+                            description "TLS protocol version for trust anchor certificate downloads";
+                        }
+                    } // container crl
+                } // list trust-anchor
+            } // container import
+
+            container onboarding-information {
+                description
+                    "SZTP-style onboarding information. Not applicable when
+                     provisioning via the RFC 8572 secure bootstrap (RESTCONF)
+                     protocol.";
+
+                container boot-image {
+                    presence "Download and unpack the boot image";
+                    description "Enter the boot-image context";
+
+                    leaf os-name {
+                        type enumeration {
+                            enum SROS { value 0; }
+                        }
+                        default "SROS";
+                        description "Operating system name";
+                    }
+
+                    leaf os-version {
+                        type string {
+                            length "1..40";
+                        }
+                        description "Required operating system version";
+                    }
+
+                    leaf-list download-uri {
+                        type remote-download-url;
+                        min-elements 1;
+                        max-elements 3;
+                        ordered-by user;
+                        description "Ordered list of URIs from which the boot image may be downloaded";
+                    }
+
+                    container image-verification {
+                        presence "Verify the boot image against a hash";
+                        description "Enter the image-verification context";
+
+                        leaf hash-algorithm {
+                            type enumeration {
+                                enum md5 { value 0; }
+                                enum sha256 { value 1; }
+                            }
+                            mandatory true;
+                            description "Hash algorithm";
+                        }
+
+                        leaf hash-value {
+                            type string {
+                                length "1..255";
+                            }
+                            mandatory true;
+                            description "Hash value the downloaded file must match";
+                        }
+                    } // container image-verification
+                } // container boot-image
+
+                leaf pre-configuration-script {
+                    type remote-download-url;
+                    description
+                        "URL of a pre-configuration script to execute. Mutually
+                         exclusive with next-provisioning-file.";
+                }
+            } // container onboarding-information
+
+            container redirect-information {
+                description
+                    "SZTP-style redirect information listing bootstrap servers. Not
+                     applicable when provisioning via the RFC 8572 secure bootstrap
+                     (RESTCONF) protocol. Mutually exclusive with
+                     next-provisioning-file.";
+
+                list bootstrap-server {
+                    key "address";
+                    max-elements 3;
+                    description
+                        "Enter the bootstrap-server list instance. A maximum of
+                         3 bootstrap servers are supported.";
+
+                    leaf address {
+                        type remote-download-url;
+                        description
+                            "Bootstrap server URL.
+                             MODEL-NOTE: positional value with no field keyword; 'address' is documentation-only.";
+                    }
+
+                    leaf port {
+                        type union {
+                            type uint16 {
+                                range "1..65535";
+                            }
+                            type ztp-variable-reference;
+                        }
+                        description "Bootstrap server TCP port";
+                    }
+
+                    leaf trust-anchor {
+                        type string {
+                            length "1..32";
+                        }
+                        description
+                            "Name of the TLS trust anchor used to authenticate the
+                             bootstrap server. The trust anchor must resolve to a
+                             trust-anchor imported by this provisioning file or to a
+                             TLS trust-anchor profile already configured on the
+                             device.";
+                    }
+
+                    leaf file {
+                        type string {
+                            length "1..255";
+                        }
+                        mandatory true;
+                        description "Path or file identifier requested from the bootstrap server";
+                    }
+                } // list bootstrap-server
+            } // container redirect-information
+
+            container set {
+                presence "Set ZTP parameters and the provisioning timeout";
+                description
+                    "Enter the set context.
+                     MODEL-NOTE: this block may be repeated, with each occurrence accumulating.";
+
+                list parameter {
+                    key "name";
+                    description "Enter the parameter list instance";
+
+                    leaf name {
+                        type string {
+                            length "1..64";
+                        }
+                        description
+                            "Name of a predefined ZTP symbol; must match a symbol
+                             known to the system";
+                    }
+
+                    leaf value {
+                        type string {
+                            length "1..200";
+                        }
+                        mandatory true;
+                        description
+                            "Parameter value.
+                             MODEL-NOTE: written as 'name = value' in the file; 'value' is documentation-only.";
+                    }
+                } // list parameter
+
+                container timeout {
+                    description "Additional time to wait for provisioning to complete";
+
+                    leaf hours {
+                        type union {
+                            type uint32 {
+                                range "1..24";
+                            }
+                            type ztp-variable-reference;
+                        }
+                        description "Timeout contribution in hours; added to any minutes value";
+                    }
+
+                    leaf minutes {
+                        type union {
+                            type uint32 {
+                                range "30..1440";
+                            }
+                            type ztp-variable-reference;
+                        }
+                        description "Timeout contribution in minutes; added to any hours value";
+                    }
+                } // container timeout
+            } // container set
+
+            list setvar {
+                key "name";
+                description "Enter the setvar list instance";
+
+                leaf name {
+                    type string {
+                        length "1..64";
+                    }
+                    description "Local variable name";
+                }
+
+                leaf value {
+                    type string {
+                        length "1..200";
+                    }
+                    mandatory true;
+                    description
+                        "Local variable value.
+                         MODEL-NOTE: written as 'name = value' in the file; 'value' is documentation-only.";
+                }
+            } // list setvar
+
+            container secure-syslog {
+                presence "Configure a TLS syslog collector for provisioning logs";
+                description "Enter the secure-syslog context";
+
+                leaf primary-trust-anchor {
+                    type string {
+                        length "1..32";
+                    }
+                    description "Name of the TLS trust anchor used to authenticate the syslog collector";
+                }
+
+                leaf primary-url {
+                    type string {
+                        length "1..255";
+                    }
+                    description "Syslog collector host";
+                }
+            } // container secure-syslog
+
+            list write {
+                key "path";
+                description "Enter the write list instance";
+
+                leaf path {
+                    type local-file-or-variable;
+                    description "Local file to create";
+                }
+
+                leaf-list line {
+                    type string;
+                    ordered-by user;
+                    description
+                        "Specify a line to write to the file.
+                         MODEL-NOTE: these lines have no field keyword in the file; 'line' is documentation-only.";
+                }
+            } // list write
+
+            container execute {
+                description
+                    "Classic CLI script to run after downloading of provisioning files completes.
+                     Supported on 7705 SAR-Hm and SAR-Hmc only; rejected as an unrecognized
+                     command on other platforms.";
+
+                leaf-list line {
+                    type string;
+                    ordered-by user;
+                    description
+                        "Classic CLI command to run.
+                         MODEL-NOTE: these lines have no field keyword in the file. 'line' is documentation-only.";
+                    }
+            } // container execute
+        
+            leaf next-provisioning-file {
+                type union {
+                    type types-sros:local-file-url;
+                    type ztp-variable-reference;
+                }
+                description
+                    "Local provisioning file to process next. Cannot be combined
+                     with redirect-information or with an onboarding-information
+                     pre-configuration-script.";
+            }
+
+            container cellular {
+                description
+                    "Enter the cellular context.
+                     Supported on 7705 SAR-Hm and SAR-Hmc only; rejected as an unrecognized
+                     command on other platforms.";
+
+                leaf carrier {
+                    type string {
+                        length "1..255";
+                    }
+                    description
+                        "Carrier to switch the modem to. Must be one of the
+                         carriers the installed modem reports as supported.
+                         Requires a Telit FN920C04 modem.";
+                }
+
+                container firmware-upgrade {
+                    presence "Stage a cellular modem firmware upgrade";
+                    description "Enter the firmware-upgrade context";
+
+                    leaf version {
+                        type string {
+                            length "1..80";
+                        }
+                        mandatory true;
+                        description "Target modem firmware version";
+                    }
+
+                    container file {
+                        description "Enter the file context";
+
+                        leaf local-file {
+                            type local-file-or-variable;
+                            mandatory true;
+                            description
+                                "Local destination for the downloaded firmware file.
+                                 MODEL-NOTE: positional value with no field keyword; 'local-file' is documentation-only.";
+                        }
+
+                        leaf primary-url {
+                            type remote-download-url;
+                            description "Primary location from which to download the file";
+                        }
+
+                        leaf primary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the primary location. Requires the
+                                 primary location to be configured.";
+                        }
+
+                        leaf primary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the primary location. Requires
+                                 the primary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf secondary-url {
+                            type remote-download-url;
+                            description
+                                "Secondary location from which to download the file.
+                                 Requires a primary location to be configured.";
+                        }
+
+                        leaf secondary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the secondary location. Requires the
+                                 secondary location to be configured.";
+                        }
+
+                        leaf secondary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the secondary location. Requires
+                                 the secondary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf tertiary-url {
+                            type remote-download-url;
+                            description
+                                "Tertiary location from which to download the file.
+                                 Requires a secondary location to be configured.";
+                        }
+
+                        leaf tertiary-proxy {
+                            type proxy-url;
+                            description
+                                "HTTP proxy used for the tertiary location. Requires the
+                                 tertiary location to be configured.";
+                        }
+
+                        leaf tertiary-trust-anchor {
+                            type string {
+                                length "1..32";
+                            }
+                            description
+                                "TLS trust anchor used for the tertiary location. Requires
+                                 the tertiary location to be configured. The trust anchor
+                                 must resolve to a trust-anchor imported by this
+                                 provisioning file or to a TLS trust-anchor profile
+                                 already configured on the device.";
+                        }
+
+                        leaf encrypt {
+                            type empty;
+                            description "Store the downloaded file encrypted";
+                        }
+
+                        container verification {
+                            presence "Verify the downloaded file against a hash";
+                            description "Enter the verification context";
+
+                            leaf hash-algorithm {
+                                type enumeration {
+                                    enum md5 { value 0; }
+                                    enum sha256 { value 1; }
+                                }
+                                mandatory true;
+                                description "Hash algorithm";
+                            }
+
+                            leaf hash-value {
+                                type string {
+                                    length "1..255";
+                                }
+                                mandatory true;
+                                description "Hash value the downloaded file must match";
+                            }
+                        } // container verification
+
+                        container unzip {
+                            presence "Unzip the downloaded file after download";
+                            description "Enter the unzip context";
+
+                            leaf directory {
+                                type string {
+                                    length "1..200";
+                                    pattern '.*[/\\]';
+                                }
+                                mandatory true;
+                                description "Local directory to extract into; must end with a slash";
+                            }
+                        } // container unzip
+                    } // container file
+                } // container firmware-upgrade
+
+                container pdn-profile {
+                    presence "Configure the cellular PDN profile used during ZTP";
+                    description "Enter the pdn-profile context";
+
+                    leaf apn {
+                        type string {
+                            length "1..100";
+                        }
+                        mandatory true;
+                        description
+                            "Access Point Name applied to cellular PDN profile 1
+                             for the ZTP cellular uplink.";
+                    }
+
+                    leaf protocol {
+                        type enumeration {
+                            enum ipv4 { value 1; }
+                            enum ipv6 { value 2; }
+                        }
+                        description
+                            "PDN protocol applied to cellular PDN profile 1
+                             for the ZTP cellular uplink. When omitted, the
+                             profile's existing or default protocol is left
+                             unchanged.";
+                    }
+                } // container pdn-profile
+            } // container cellular
+        } // container provisioning-file
+    } // grouping provisioning-file-grouping
+
+    sx:structure provisioning-file {
+        uses provisioning-file-grouping;
+    }
+}
