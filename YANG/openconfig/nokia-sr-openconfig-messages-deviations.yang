@@ -2,10 +2,11 @@ module nokia-sr-openconfig-messages-deviations {
 
     namespace "urn:nokia.com:sros:ns:yang:sr:openconfig-messages-deviations";
 
-    prefix "nokia-oc-messages-devs";
+    prefix "nokia-oc-sys-msg-devs";
 
     import nokia-sros-yang-extensions     { prefix "sros-ext"; }
-    import openconfig-messages            { prefix "oc-messages"; }
+    import openconfig-messages            { prefix "oc-sys-msg"; }
+    import openconfig-system              { prefix "oc-sys"; }
 
     sros-ext:sros-major-release "rel26";
     organization "Nokia";
@@ -31,9 +32,18 @@ module nokia-sr-openconfig-messages-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
-    deviation /oc-messages:messages {
+    deviation /oc-sys:system/oc-sys:messages/oc-sys:state/oc-sys:message/oc-sys:msg {
+        description "Added limit to string length.";
+        deviate replace {
+            type string {
+                length "0..4100";
+            }
+        }
+    }
+
+    deviation /oc-sys-msg:messages {
         deviate not-supported;
     }
 

@@ -34,7 +34,7 @@ submodule nokia-state-router-mpls {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-router-mpls {
         container mpls {
@@ -2196,6 +2196,16 @@ submodule nokia-state-router-mpls {
                         enum lsp-auto-bw-skipped            { value 3; }
                     }
                     description "The ad-hoc optimization event for the LSP container.";
+                }
+
+                leaf container-id {
+                    type yang:gauge32;
+                    description "The container id specifies the LSP container index in the LSP container.";
+                }
+
+                leaf filter-ref-count {
+                    type yang:gauge32;
+                    description "The number of filters referencing this LSP container.";
                 }
 
                 container last-optimization {

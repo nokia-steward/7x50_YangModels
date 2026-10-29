@@ -16,6 +16,7 @@ submodule nokia-state-subscriber-mgmt {
     include nokia-state-submgt-local-user-db;
     include nokia-state-submgt-service-chaining;
     include nokia-state-submgt-subscriber;
+    include nokia-state-submgt-up-resiliency;
     include nokia-state-submgt-vrgw;
     include nokia-state-submgt-wlangw;
 
@@ -42,7 +43,7 @@ submodule nokia-state-subscriber-mgmt {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-subscriber-mgmt {
         container subscriber-mgmt {
@@ -668,6 +669,21 @@ submodule nokia-state-subscriber-mgmt {
 
             } // list diameter-session
 
+            list group-interface-template {
+                key "name";
+                description "Enter the group-interface-template list instance";
+
+                leaf name {
+                    type types-sros:named-item;
+                    description "Identifies this group interface template template";
+                }
+
+                leaf last-changed {
+                    type types-sros:date-time;
+                }
+
+            } // list group-interface-template
+
             list sap-template {
                 key "name";
                 description "Enter the sap-template list instance";
@@ -675,6 +691,10 @@ submodule nokia-state-subscriber-mgmt {
                 leaf name {
                     type types-sros:named-item;
                     description "Identifies this SAP template";
+                }
+
+                leaf last-changed {
+                    type types-sros:date-time;
                 }
 
             } // list sap-template
@@ -1098,6 +1118,11 @@ submodule nokia-state-subscriber-mgmt {
                             description "Supports Fwa Subscriber Fate Sharing Groups";
                         }
 
+                        leaf nit {
+                            type boolean;
+                            description "Supports Network Instance Tunnel";
+                        }
+
                     } // container up-nokia-features
 
                     container cp-features {
@@ -1404,6 +1429,7 @@ submodule nokia-state-subscriber-mgmt {
                                 } // list filter
 
                             } // container l2-access-id-tunnel
+
 
                         } // container ibcp
 
@@ -3160,6 +3186,17 @@ submodule nokia-state-subscriber-mgmt {
                     type boolean;
                 }
 
+                list category {
+                    key "category-name";
+                    description "Enter the category list instance";
+
+                    leaf category-name {
+                        type types-sros:named-item;
+                        description "The name identifies this category";
+                    }
+
+                } // list category
+
             } // list category-map
 
             list bgp-peering-policy {
@@ -3513,6 +3550,7 @@ submodule nokia-state-subscriber-mgmt {
             uses state-submgt-service-chaining-isa-service-chaining;
             uses state-submgt-local-user-db;
             uses state-submgt-subscriber;
+            uses state-submgt-up-resiliency;
             uses state-submgt-vrgw;
             uses state-submgt-wlangw-wlan-gw;
         } // container subscriber-mgmt

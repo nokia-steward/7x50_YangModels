@@ -38,7 +38,7 @@ submodule nokia-conf-svc-vprn-dhcp-server {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-svc-vprn-dhcp-server {
         container dhcp-server {
@@ -1430,6 +1430,12 @@ submodule nokia-conf-svc-vprn-dhcp-server {
                         description "Text description";
                     }
 
+                    leaf distribute-map-always {
+                        type boolean;
+                        default "false";
+                        description "Always send configured MAP options to the client";
+                    }
+
                     leaf-list apply-groups {
                         type leafref {
                             path "../../../../../../groups/group/name";
@@ -1936,7 +1942,49 @@ submodule nokia-conf-svc-vprn-dhcp-server {
                                 }
                             } // list option
 
+                            container option-map-t {
+                                presence "Enable the option-map-t context";
+                                description "Enable the option-map-t context";
 
+                                leaf domain {
+                                    type leafref {
+                                        path "../../../../../../../../nat/map-t/domain/name";
+                                    }
+                                    mandatory true;
+                                    description "MAP-T domain sent in DHCPv6 options";
+                                }
+
+                                leaf mapping-rule {
+                                    type leafref {
+                                        path "../../../../../../../../nat/map-t/domain[name=current()/../domain]/mapping-rule/rule-name";
+                                    }
+                                    mandatory true;
+                                    description "MAP-T mapping rule sent in DHCPv6 options";
+                                }
+
+                            } // container option-map-t
+
+                            container option-map-e {
+                                presence "Enable the option-map-e context";
+                                description "Enable the option-map-e context";
+
+                                leaf domain {
+                                    type leafref {
+                                        path "../../../../../../../../nat/map-e/domain/name";
+                                    }
+                                    mandatory true;
+                                    description "MAP-E domain sent in DHCPv6 options";
+                                }
+
+                                leaf mapping-rule {
+                                    type leafref {
+                                        path "../../../../../../../../nat/map-e/domain[name=current()/../domain]/mapping-rule/rule-name";
+                                    }
+                                    mandatory true;
+                                    description "MAP-E mapping rule sent in DHCPv6 options";
+                                }
+
+                            } // container option-map-e
 
                         } // container options
 

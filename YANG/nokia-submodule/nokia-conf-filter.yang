@@ -47,7 +47,7 @@ submodule nokia-conf-filter {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-filter {
         container filter {
@@ -1449,7 +1449,7 @@ submodule nokia-conf-filter {
                                     type leafref {
                                         path "../../../../match-list/protocol-list/protocol-list-name";
                                     }
-                                    max-elements 1;
+                                    max-elements 16;
                                     description "Name of the protocol list as a match criterion";
                                 }
 
@@ -1484,7 +1484,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/ip-prefix-list/prefix-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "IPv4 address prefix list used as match criterion";
                                             }
 
@@ -1518,7 +1518,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/ip-prefix-list/prefix-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "IPv4 address prefix list used as match criterion";
                                             }
 
@@ -1555,7 +1555,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/ip-prefix-list/prefix-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "IPv4 address prefix list used as match criterion";
                                             }
 
@@ -1633,7 +1633,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Name of the port list as the match criterion";
                                             }
 
@@ -1706,7 +1706,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Name of the port list as the match criterion";
                                             }
 
@@ -1782,7 +1782,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Name of the port list as the match criterion";
                                             }
 
@@ -1975,7 +1975,7 @@ submodule nokia-conf-filter {
                                         type leafref {
                                             path "../../../../../match-list/ip-packet-length-list/packet-length-list-name";
                                         }
-                                        max-elements 1;
+                                        max-elements 16;
                                         description "Packet length list to match";
                                     }
 
@@ -2273,6 +2273,16 @@ submodule nokia-conf-filter {
                                             leaf lsp {
                                                 type types-sros:named-item-64;
                                                 description "LSP that is specified to forward a packet matching this entry";
+                                            }
+
+                                        }
+                                        case lsp-container {
+
+                                            leaf lsp-container {
+                                                type leafref {
+                                                    path "../../../../../../router/mpls/lsp-container/container-name";
+                                                }
+                                                description "LSP container whose members forward matching packets";
                                             }
 
                                         }
@@ -3729,7 +3739,7 @@ submodule nokia-conf-filter {
                                     type leafref {
                                         path "../../../../match-list/protocol-list/protocol-list-name";
                                     }
-                                    max-elements 1;
+                                    max-elements 16;
                                     description "Name of the protocol list as a match criterion";
                                 }
 
@@ -3764,7 +3774,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/ipv6-prefix-list/prefix-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "IPv6 address prefix list used as match criterion";
                                             }
 
@@ -3798,7 +3808,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/ipv6-prefix-list/prefix-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "IPv6 address prefix list used as match criterion";
                                             }
 
@@ -3835,7 +3845,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/ipv6-prefix-list/prefix-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "IPv6 address prefix list used as match criterion";
                                             }
 
@@ -3913,7 +3923,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Name of the port list as the match criterion";
                                             }
 
@@ -3986,7 +3996,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Name of the port list as the match criterion";
                                             }
 
@@ -4062,7 +4072,7 @@ submodule nokia-conf-filter {
                                                 type leafref {
                                                     path "../../../../../match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Name of the port list as the match criterion";
                                             }
 
@@ -4285,7 +4295,7 @@ submodule nokia-conf-filter {
                                         type leafref {
                                             path "../../../../../match-list/ipv6-packet-length-list/packet-length-list-name";
                                         }
-                                        max-elements 1;
+                                        max-elements 16;
                                         description "IPv6 packet length list to match";
                                     }
 
@@ -4565,6 +4575,16 @@ submodule nokia-conf-filter {
                                             leaf lsp {
                                                 type types-sros:named-item-64;
                                                 description "LSP that is specified to forward a packet matching this entry";
+                                            }
+
+                                        }
+                                        case lsp-container {
+
+                                            leaf lsp-container {
+                                                type leafref {
+                                                    path "../../../../../../router/mpls/lsp-container/container-name";
+                                                }
+                                                description "LSP container whose members forward matching packets";
                                             }
 
                                         }

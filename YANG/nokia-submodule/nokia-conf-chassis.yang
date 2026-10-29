@@ -34,7 +34,7 @@ submodule nokia-conf-chassis {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-chassis {
         list chassis {
@@ -85,7 +85,15 @@ submodule nokia-conf-chassis {
                     type uint32 {
                         range "1..31";
                     }
-                    description "The unique identifier index for a fan tray in the chassis.";
+                    description "Chassis fan slot number";
+                }
+
+                leaf fan-module-type {
+                    type enumeration {
+                        enum fan-sar-10x-f                  { value 2; }
+                        enum fan-sar-10x-r                  { value 3; }
+                    }
+                    description "Type of fan tray module";
                 }
 
                 leaf-list apply-groups {

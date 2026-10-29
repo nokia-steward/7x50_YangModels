@@ -35,7 +35,7 @@ submodule nokia-conf-isa-video-group {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-isa-video-group {
         list video-group {
@@ -206,6 +206,59 @@ submodule nokia-conf-isa-video-group {
                     }
 
                 } // container session
+
+                container rtcp {
+                    description "Enter the rtcp context";
+
+                    container fcc {
+                        description "Enter the fcc context";
+
+                        leaf max-threshold-per-session {
+                            type types-isa:watermark-rtcp-max-threshold-fcc;
+                            default "0";
+                            description "Maximum threshold for each FCC session";
+                        }
+
+                        leaf action {
+                            type types-isa:watermark-rtcp-action;
+                            default "report-only";
+                            description "Watermark RTCP FCC action";
+                        }
+
+                        leaf suspend-time {
+                            type types-isa:watermark-rtcp-suspend-time;
+                            units "seconds";
+                            default "0";
+                            description "FCC time suspension for exceeding the threshold";
+                        }
+
+                    } // container fcc
+
+                    container ret {
+                        description "Enter the ret context";
+
+                        leaf max-threshold-per-session {
+                            type types-isa:watermark-rtcp-max-threshold-ret;
+                            default "0";
+                            description "Maximum threshold for each RET session";
+                        }
+
+                        leaf action {
+                            type types-isa:watermark-rtcp-action;
+                            default "report-only";
+                            description "Watermark RTCP RET action";
+                        }
+
+                        leaf suspend-time {
+                            type types-isa:watermark-rtcp-suspend-time;
+                            units "seconds";
+                            default "0";
+                            description "RET time suspension for exceeding the threshold";
+                        }
+
+                    } // container ret
+
+                } // container rtcp
 
             } // container watermark
 

@@ -32,14 +32,8 @@ module nokia-sr-openconfig-alarms-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-alarms:equipment-failure {
-        deviate not-supported;
-    }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-alarms:equipment-mismatch {
-        deviate not-supported;
-    }
 
 }

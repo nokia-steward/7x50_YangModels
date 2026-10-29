@@ -37,7 +37,7 @@ submodule nokia-state-application-assurance {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-application-assurance {
         container application-assurance {
@@ -124,6 +124,41 @@ submodule nokia-state-application-assurance {
 
             } // list aarp
 
+            list aa-transit-redundancy {
+                key "aatr-id";
+                description "Enter the aa-transit-redundancy list instance";
+
+                leaf aatr-id {
+                    type types-services:bsx-aatr-id;
+                    description "Specifies an identifier that uniquely identifies an AATR instance within AA.";
+                }
+
+                leaf oper-state {
+                    type types-sros:oper-state;
+                    description
+                        "The operational state of the AATR instance.
+                         When the value is 'down' the AATR instance is not
+                         performing multi-chassis transit IP redundancy.";
+                }
+
+                leaf oper-flags {
+                    type types-aa:aatr-oper-flags;
+                    description "The conditions that affect the operating status of the AATR instance.";
+                }
+
+                leaf activity-state {
+                    type types-aa:aatr-activity-state;
+                    description "The redundancy activity role of the AATR instance.";
+                }
+
+                leaf transit-ip-policy-id {
+                    type types-services:bsx-transit-ip-policy-id-or-zero;
+                    description
+                        "The Transit IP Policy associated with this AATR instance.
+                         The value 0 indicates that no transit IP policy is associated.";
+                }
+
+            } // list aa-transit-redundancy
 
             container cflowd {
                 description "Enter the cflowd context";

@@ -32,7 +32,7 @@ submodule nokia-conf-port-dwdm-coherent {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-port-dwdm-coherent {
         container coherent {
@@ -70,6 +70,11 @@ submodule nokia-conf-port-dwdm-coherent {
                 type types-port:optical-dispersion-control-mode;
                 default "automatic";
                 description "Mode used to compensate for chromatic dispersion";
+            }
+
+            leaf operational-mode {
+                type types-port:optical-operational-mode;
+                description "Coherent optic operational mode";
             }
 
             leaf rx-los-reaction {
@@ -147,6 +152,11 @@ submodule nokia-conf-port-dwdm-coherent {
                     type boolean;
                     default "true";
                     description "Report the host (electrical side) transmit alarm";
+                }
+
+                leaf cfg {
+                    type boolean;
+                    description "Enable/disable cfg alarm.";
                 }
 
             } // container report-alarm

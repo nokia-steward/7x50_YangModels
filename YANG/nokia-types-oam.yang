@@ -32,7 +32,7 @@ module nokia-types-oam {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef saa-threshold-direction {
         type enumeration {
@@ -982,6 +982,7 @@ module nokia-types-oam {
             enum lsp-oper-down                  { value 19; }
             enum udp-return-ip-not-local        { value 20; }
             enum eth-cfm-unsupported-test-type  { value 21; }
+            enum srv6-tunnel-unavailable        { value 22; }
         }
         description
             "Reason for the inability (if any) to launch test frames for the specified test
@@ -991,7 +992,8 @@ module nokia-types-oam {
              no-tx-port                (3) - an egress has not been found
              eth-parent-admin-down     (4) - the parent (e.g. the SAP, SDP, service, or port) of the MEP is administratively down
              eth-no-mep-or-admin-down  (5) - the test's MEP is not fully configured or the MEP is administratively down
-             unexpected-error          (6) - transmission failed due to unexpected conditions, such as failed memory allocation, traffic congestion, or failure to obtain the necessary resources
+             unexpected-error          (6) - transmission failed due to unexpected conditions, such as failed memory allocation,
+                                             traffic congestion, or failure to obtain the necessary resources
              no-service                (7) - the service associated with this test session was not found
              service-admin-down        (8) - the service associated with this test session is administratively down
              service-oper-down         (9) - the service associated with this test session is operationally down
@@ -1006,7 +1008,38 @@ module nokia-types-oam {
              lsp-not-available        (18) - LSP not available (e.g. not configured)
              lsp-oper-down            (19) - LSP is operationally down
              udp-return-ip-not-local  (20) - UDP Return IP address is not local
-             eth-cfm-unsupported-test-type (21) - the test type is not valid on the MEP";
+             eth-cfm-unsupported-test-type (21) - the test type is not valid on the MEP
+             srv6-tunnel-unavailable  (22) - the segment-routing-v6 tunnel is not available
+                                             (e.g. not configured, or down) ";
+    }
+
+    typedef oam-pm-session-test-liveness-oper-state {
+        type enumeration {
+            enum not-applicable                 { value 1; }
+            enum no-threshold-config            { value 2; }
+            enum oper-down                      { value 3; }
+            enum idle                           { value 4; }
+            enum active                         { value 5; }
+            enum failed                         { value 6; }
+        }
+        description
+            "Status of liveness monitoring for the test
+
+             not-applicable(1)
+                 - the test type (e.g. DMM) does not support liveness monitoring
+             no-threshold-config(2)
+                 - the test does not have a configured liveness failure threshold
+             oper-down(3)
+                 - the test is operationally down (includes administratively down)
+             idle(4)
+                 - the test is trying to send request packets, and zero replies have
+                   been received
+             active(5)
+                 - the test has received one or more reply packets, and the test is
+                   not 'failed'
+             failed(6)
+                 - the configured threshold for consecutive request/reply failures is met
+                   (or exceeded)";
     }
 
     typedef oam-pm-session-mpls-dm-rx-status {

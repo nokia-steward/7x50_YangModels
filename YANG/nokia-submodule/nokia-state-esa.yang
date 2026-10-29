@@ -33,7 +33,7 @@ submodule nokia-state-esa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-esa {
         list esa {
@@ -77,6 +77,7 @@ submodule nokia-state-esa {
                     bit boot-failed                    { position 5; }
                     bit fw-update-required             { position 6; }
                     bit unexpected-fw-version          { position 7; }
+                    bit bmc-login-failed               { position 8; }
                 }
                 description
                     "Indicates the operational flags that determine the status
@@ -362,6 +363,7 @@ submodule nokia-state-esa {
                      A temperature threshold of 0 means that this is not supported and
                      not possible to retrieve on the ESA.";
             }
+
 
             list host-port {
                 key "host-port";

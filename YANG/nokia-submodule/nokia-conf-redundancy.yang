@@ -44,7 +44,7 @@ submodule nokia-conf-redundancy {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-redundancy {
         container redundancy {
@@ -58,10 +58,16 @@ submodule nokia-conf-redundancy {
 
             leaf rollback-sync {
                 type enumeration {
-                    enum rollback-single                { value 2; }
-                    enum rollback-all                   { value 3; }
+                    enum rollback-single {
+                        value 2;
+                        description "Copy only the newest rollback checkpoint file";
+                    }
+                    enum rollback-all {
+                        value 3;
+                        description "Copy all rollback checkpoint files";
+                    }
                 }
-                description "Parameters for redundancy rollback synchronization";
+                description "Automatic synchronization of rollback checkpoint files";
             }
 
             leaf synchronize {
@@ -117,7 +123,7 @@ submodule nokia-conf-redundancy {
                     }
                     units "seconds";
                     default "5";
-                    description "Time before reverting the management CPM Ethernet port";
+                    description "Time before reverting the management Ethernet port";
                 }
 
             } // container mgmt-ethernet
@@ -1718,7 +1724,7 @@ submodule nokia-conf-redundancy {
                         }
                         units "seconds";
                         default "10";
-                        description "Time before BGP EVPN multi-homing DF election algorithm";
+                        description "Time before BGP EVPN multihoming DF election algorithm";
                     }
 
                     leaf activation-timer {
@@ -1727,7 +1733,7 @@ submodule nokia-conf-redundancy {
                         }
                         units "seconds";
                         default "3";
-                        description "Time before Ethernet segment activated on DF-elected PE";
+                        description "Global ES activation timer";
                     }
 
                     leaf-list apply-groups {

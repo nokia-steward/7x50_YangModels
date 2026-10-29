@@ -36,7 +36,7 @@ submodule nokia-conf-qos {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-qos {
         container qos {
@@ -1483,6 +1483,11 @@ submodule nokia-conf-qos {
                         description "Priority for the packet";
                     }
 
+                    leaf l4s-fc {
+                        type types-sros:fc-name;
+                        description "Specifies the forwarding class.";
+                    }
+
                     leaf-list apply-groups {
                         type leafref {
                             path "../../../../groups/group/name";
@@ -1520,6 +1525,11 @@ submodule nokia-conf-qos {
                     leaf priority {
                         type types-qos:priority;
                         description "Priority for packets that match the Dot1p value";
+                    }
+
+                    leaf l4s-fc {
+                        type types-sros:fc-name;
+                        description "Specifies the forwarding class.";
                     }
 
                     leaf-list apply-groups {
@@ -1686,6 +1696,12 @@ submodule nokia-conf-qos {
                         }
                         default "trtcm-ds-coupled";
                         description "Policer algorithm type";
+                    }
+
+                    leaf mode {
+                        type types-qos:sap-policer-mode;
+                        default "default";
+                        description "Specifies the operational mode of the policer";
                     }
 
                     leaf-list apply-groups {
@@ -2156,6 +2172,12 @@ submodule nokia-conf-qos {
                     }
                     default "7";
                     description "Weighting factor to calculate shared buffer utilization";
+                }
+
+                leaf ecn {
+                    type boolean;
+                    default "false";
+                    description "Specifies the ecn marking is enabled for this slope policy.";
                 }
 
                 leaf-list apply-groups {
@@ -7080,6 +7102,13 @@ submodule nokia-conf-qos {
                         description "Enable low-latency mode on the queue";
                     }
 
+                    leaf burst-limit {
+                        type types-qos:kilobytes {
+                            range "8|10";
+                        }
+                        description "Maximum traffic burst size for the VLAN QoS queue";
+                    }
+
                     leaf-list apply-groups {
                         type leafref {
                             path "../../../../groups/group/name";
@@ -7364,7 +7393,7 @@ submodule nokia-conf-qos {
 
                 leaf port-speed {
                     type uint32 {
-                        range "1|10|25|40|50|100|200|400";
+                        range "1|10|25|40|50|100|200|400|800";
                     }
                     units "gigabps";
                     default "100";
@@ -8396,6 +8425,11 @@ submodule nokia-conf-qos {
                         description "Default profile for the ingressing traffic";
                     }
 
+                    leaf l4s-fc {
+                        type types-sros:fc-name;
+                        description "Specifies the forwarding class.";
+                    }
+
                     leaf-list apply-groups {
                         type leafref {
                             path "../../../../groups/group/name";
@@ -8997,6 +9031,12 @@ submodule nokia-conf-qos {
                         type types-qos:sap-egress-policer-stat-mode;
                         default "minimal";
                         description "Mode of statistics collected by the policer";
+                    }
+
+                    leaf mode {
+                        type types-qos:sap-policer-mode;
+                        default "default";
+                        description "Specifies the operational mode of the policer";
                     }
 
                     leaf-list apply-groups {

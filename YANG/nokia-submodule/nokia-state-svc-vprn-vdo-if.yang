@@ -34,7 +34,7 @@ submodule nokia-state-svc-vprn-vdo-if {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-svc-vprn-vdo-if-video-interface {
         list video-interface {
@@ -1302,7 +1302,7 @@ submodule nokia-state-svc-vprn-vdo-if {
 
                     leaf pid-language {
                         status deprecated;
-                        type types-sros:named-item;
+                        type types-sros:named-item-or-empty;
                         description "The value indicates the language of the MPEG stream.";
                     }
 
@@ -2344,6 +2344,936 @@ submodule nokia-state-svc-vprn-vdo-if {
 
             } // list statistics
 
+            list channel-analytics {
+                key "mcast-address source";
+                description "Enter the channel-analytics list instance";
+
+                leaf mcast-address {
+                    type types-sros:ipv4-multicast-address;
+                    description "a.b.c.d - multicast channel address.";
+                }
+
+                leaf source {
+                    type types-sros:ipv4-unicast-address;
+                    description "a.b.c.d - unicast source address.";
+                }
+
+                container overall-metrics {
+                    description "Enter the overall-metrics context";
+
+                    leaf stream-type {
+                        type enumeration {
+                            enum network                        { value 0; }
+                            enum zone                           { value 1; }
+                        }
+                        description
+                            "The value indicates the type of stream being transmitted from the video
+                             ISA perspective. Network stream is the stream ingressing the video ISA
+                             and being stored by it. Zone stream is the stream egressing the video ISA
+                             into which AD streams will be inserted.";
+                    }
+
+                    leaf ssrc-id {
+                        type uint32;
+                        description
+                            "The value indicates the synchronization source (SSRC) identifier carried
+                             in the Real-time Transport Protocol (RTP) header to identify the source
+                             of a stream of RTP packets.";
+                    }
+
+                    leaf udp-src-port {
+                        type inet:port-number;
+                        description "The value indicates the UDP source port in the received RTP multicast stream.";
+                    }
+
+                    leaf udp-dest-port {
+                        type inet:port-number;
+                        description "The value indicates the UDP destination port in the received RTP multicast stream.";
+                    }
+
+                    leaf up-time {
+                        type uint32;
+                        units "seconds";
+                        description "The value indicates the time since this source group entry was created.";
+                    }
+
+                    leaf buffer-size {
+                        type yang:gauge32;
+                        units "milliseconds";
+                        description
+                            "The value indicates the number of milliseconds worth of channel packets stored by
+                             the Retransmission (RT) server or Fast Channel Change (FCC) server on this channel.";
+                    }
+
+                    leaf rx-bytes {
+                        type yang:counter64;
+                        units "bytes";
+                        description "The value indicates the total number of bytes received on this multicast channel.";
+                    }
+
+                    leaf rx-packets {
+                        type yang:counter64;
+                        description "The value indicates the total number of packets received on this multicast channel.";
+                    }
+
+                    leaf rx-invalid-packets {
+                        type yang:counter64;
+                        description
+                            "The value indicates the total number of invalid packets received on this
+                             multicast channel.";
+                    }
+
+                    leaf tx-bytes {
+                        type yang:counter64;
+                        units "bytes";
+                        description "The value indicates the total number of bytes transmitted on this multicast channel.";
+                    }
+
+                    leaf tx-packets {
+                        type yang:counter64;
+                        description "The value indicates the total number of packets transmitted on this multicast channel.";
+                    }
+
+                    leaf tx-failed-packets {
+                        type yang:counter64;
+                        description
+                            "The value indicates the total number of failures during the transmission of packets on
+                             this multicast channel. Failure happens when the packet to be sent is not stored in
+                             the video cache.";
+                    }
+
+                    leaf rt-srvr-rtp-pkts-req {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of Real-time Transport Protocol (RTP) packets
+                             requested in the Real-time Transport Control Protocol (RTCP) feedback (FB) messages
+                             received on this channel.";
+                    }
+
+                    leaf rt-srvr-rx-rt-req {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of RT requests received by the Retransmission
+                             (RT) server.";
+                    }
+
+                    leaf rt-srvr-rx-failed-req {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of failed requests at the Retransmission (RT)
+                             server due to congestion or lack of resources.";
+                    }
+
+                    leaf rt-srvr-tx-rt-replies {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of Retransmission (RT) replies sent by
+                             the RT server.";
+                    }
+
+                    leaf rt-srvr-tx-bytes {
+                        type yang:counter64;
+                        units "bytes";
+                        description "The value indicates the total number of bytes sent by the Retransmission (RT) server.";
+                    }
+
+                    leaf rt-srvr-tx-packets {
+                        type yang:counter64;
+                        description
+                            "The value indicates the total number of packets sent by the Retransmission
+                             (RT) server.";
+                    }
+
+                    leaf fcc-srvr-rx-fcc-req {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of Fast Channel Change (FCC) requests
+                             received by the FCC server.";
+                    }
+
+                    leaf fcc-srvr-rx-failed-req {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of failed requests at the Fast Channel
+                             Change (FCC) server.";
+                    }
+
+                    leaf fcc-srvr-tx-fcc-replies {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of Fast Channel Change (FCC) replies
+                             sent by the FCC server.";
+                    }
+
+                    leaf fcc-srvr-tx-bytes {
+                        type yang:counter64;
+                        units "bytes";
+                        description
+                            "The value indicates the total number of bytes sent by the Fast Channel
+                             Change (FCC) server.";
+                    }
+
+                    leaf fcc-srvr-tx-packets {
+                        type yang:counter64;
+                        description
+                            "The value indicates the total number of packets sent by the Fast Channel
+                             Change (FCC) server.";
+                    }
+
+                    leaf dup-seq-number {
+                        type yang:counter32;
+                        description
+                            "The value indicates the total number of Real-time Transport Protocol (RTP)
+                             packets detected with a duplicate sequence number.";
+                    }
+
+                    leaf rx-dup-ssrc-drops {
+                        type yang:counter32;
+                        description
+                            "The value indicates the number of receive-packets dropped with a duplicate
+                             synchronization source (SSRC) identifier.";
+                    }
+
+                    leaf dup-ssrc {
+                        type yang:counter32;
+                        description
+                            "The value indicates the number of packets detected with a duplicate
+                             synchronization source (SSRC) identifier.";
+                    }
+
+                    leaf fcc-min-duration {
+                        type uint32 {
+                            range "0..100000";
+                        }
+                        units "milliseconds";
+                        description
+                            "The value indicates the minimum FCC duration in msecs for FCC requests for
+                             this channel.";
+                    }
+
+                    leaf audio-reorder {
+                        type uint32 {
+                            range "0..100000";
+                        }
+                        units "milliseconds";
+                        description
+                            "The value indicates in msecs how much earlier the audio frames are sent during
+                             an FCC burst to achieve a good audio fast-channel-change experience.";
+                    }
+
+                    leaf rx-bytes-saved {
+                        type yang:counter64;
+                        units "bytes";
+                        description
+                            "The value indicates the total number of received bytes that are saved
+                             on this multicast channel.";
+                    }
+
+                    leaf rx-packets-saved {
+                        type yang:counter64;
+                        description
+                            "The value indicates the total number of received packets that are saved
+                             on this multicast channel.";
+                    }
+
+                    leaf stat-oper-bw {
+                        type uint32;
+                        units "kilobps";
+                        description
+                            "The value indicates the most recently computed bandwidth of the video
+                             stream averaged over the last one second.";
+                    }
+
+                    leaf num-fcc-dented-pkts {
+                        type yang:counter32;
+                        description
+                            "The value indicates the number of packets in the unicast FCC stream
+                             that were dropped due to denting.";
+                    }
+
+                    leaf max-rtp-ts-delta {
+                        type yang:counter32;
+                        description
+                            "The value indicates the maximum Real Time Protocol(RTP) Timestamps(Ts)
+                             delta recorded up to this point in time.";
+                    }
+
+                    leaf max-ticks-delta {
+                        type yang:counter64;
+                        description
+                            "The value indicates the maximum arrival Timestamps(Ts) delta recorded up
+                             to this point in time.";
+                    }
+
+                    leaf cur-ts-jitter {
+                        type yang:counter64;
+                        description
+                            "The value indicates the difference between the current arrival Timestamps(Ts)
+                             delta and current Real Time Protocol(RTP) Timestamps(Ts) delta.";
+                    }
+
+                    leaf max-ts-jitter {
+                        type yang:counter64;
+                        description
+                            "The value indicates the maximum difference between the arrival Timestamps(Ts)
+                             delta and current Real Time Protocol(RTP) Timestamps(Ts) delta.";
+                    }
+
+                } // container overall-metrics
+
+                container vqm {
+                    description "Enter the vqm context";
+
+                    container current {
+                        description "Enter the current context";
+
+                        leaf good-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of good seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of errored seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf degr-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of degraded seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf impair-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of impaired seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf pmt-rep-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PMT (Program Map Table) repetition
+                                 error seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pmt-rep-deg-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PMT (Program Map Table) repetition
+                                 degraded seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pmt-rep-imp-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PMT (Program Map Table) repetition
+                                 impaired seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pmt-syntx-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates  the total number of PMT syntax error seconds for
+                                 the stream on this multicast channel.";
+                        }
+
+                        leaf pat-rep-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PAT (Program Association Table)
+                                 repetition error seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pat-rep-deg-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PAT (Program Association Table)
+                                 repetition degraded seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pat-rep-imp-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PAT (Program Association Table)
+                                 repetition impaired seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pat-syntx-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates  the total number of PAT syntax error seconds for
+                                 the stream on this multicast channel.";
+                        }
+
+                        leaf pcr-rep-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PCR (Program Clock Reference)
+                                 repetition error seconds for the video stream with VQM.";
+                        }
+
+                        leaf pcr-rep-deg-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PCR (Program Clock Reference)
+                                 repetition degraded seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pcr-rep-imp-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PCR (Program Clock Reference)
+                                 repetition impaired seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf sync-byte-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of sync byte error seconds for
+                                 the stream on this multicast channel.";
+                        }
+
+                        leaf sync-loss-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of sync loss seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf cat-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of CAT (Conditional Access Table)
+                                 error seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf unref-pid-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of unreferenced PID error seconds
+                                 for the stream on this multicast channel.";
+                        }
+
+                        leaf mdi-delay-factor {
+                            type uint32;
+                            units "milliseconds";
+                            description
+                                "The value indicates Media Delivery Index (MDI) delay factor. If the value
+                                 of this object is '4294967295' (0xFFFFFFFF) then this indicates there is
+                                 no media stream.";
+                        }
+
+                        leaf mdi-loss-rate {
+                            type binary {
+                                length "8";
+                            }
+                            description "The value indicates Media Delivery Index (MDI) loss Rate.";
+                        }
+
+                        leaf min-gop-length {
+                            type uint32;
+                            units "pictures";
+                            description
+                                "The value indicates the minimum distance in a Group Of Pictures (GOP) between
+                                 two consecutive I-frames within a sequence of frames in that video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf min-frm-per-sec {
+                            type uint32;
+                            units "fps";
+                            description
+                                "The value indicates the minimum number of frames per second in a video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf avg-gop-length {
+                            type uint32;
+                            units "pictures";
+                            description
+                                "The value indicates the average distance in a Group Of Pictures (GOP) between
+                                 two consecutive I-frames within a sequence of frames in that video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf avg-frm-per-sec {
+                            type uint32;
+                            units "fps";
+                            description
+                                "The value indicates the average number of frames per second in a video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf max-gop-length {
+                            type uint32;
+                            units "pictures";
+                            description
+                                "The value indicates the maximum distance in a Group Of Pictures (GOP) between
+                                 two consecutive I-frames within a sequence of frames in that video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf max-frm-per-sec {
+                            type uint32;
+                            units "fps";
+                            description
+                                "The value indicates the maximum number of frames per second in a video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf good-i-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of good 'I' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf bad-i-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of bad 'I' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf good-p-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of good 'P' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf bad-p-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of bad 'P' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf good-b-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of good 'B' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf bad-b-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of bad 'B' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf traffic-loss-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates loss of traffic seconds in a stream on a multicast
+                                 channel.";
+                        }
+
+                    } // container current
+
+                    list interval {
+                        key "stats-time";
+                        description "Enter the interval list instance";
+
+                        leaf stats-time {
+                            type uint32 {
+                                range "1..max";
+                            }
+                            units "minutes";
+                            description
+                                "Duration of the statistics interval in minutes. This is the list key for
+                                 interval-scoped VQM analytics.";
+                        }
+
+                        leaf good-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of good seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of errored seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf degr-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of degraded seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf impair-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of impaired seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf pmt-rep-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PMT (Program Map Table) repetition
+                                 error seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pmt-rep-deg-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PMT (Program Map Table) repetition
+                                 degraded seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pmt-rep-imp-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PMT (Program Map Table) repetition
+                                 impaired seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pmt-syntx-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates  the total number of PMT syntax error seconds for
+                                 the stream on this multicast channel.";
+                        }
+
+                        leaf pat-rep-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PAT (Program Association Table)
+                                 repetition error seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pat-rep-deg-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PAT (Program Association Table)
+                                 repetition degraded seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pat-rep-imp-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PAT (Program Association Table)
+                                 repetition impaired seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pat-syntx-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates  the total number of PAT syntax error seconds for
+                                 the stream on this multicast channel.";
+                        }
+
+                        leaf pcr-rep-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PCR (Program Clock Reference)
+                                 repetition error seconds for the video stream with VQM.";
+                        }
+
+                        leaf pcr-rep-deg-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PCR (Program Clock Reference)
+                                 repetition degraded seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf pcr-rep-imp-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of PCR (Program Clock Reference)
+                                 repetition impaired seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf sync-byte-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of sync byte error seconds for
+                                 the stream on this multicast channel.";
+                        }
+
+                        leaf sync-loss-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of sync loss seconds for the stream
+                                 on this multicast channel.";
+                        }
+
+                        leaf cat-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of CAT (Conditional Access Table)
+                                 error seconds for the stream on this multicast channel.";
+                        }
+
+                        leaf unref-pid-err-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates the total number of unreferenced PID error seconds
+                                 for the stream on this multicast channel.";
+                        }
+
+                        leaf mdi-delay-factor {
+                            type uint32;
+                            units "milliseconds";
+                            description
+                                "The value indicates Media Delivery Index (MDI) delay factor. If the value
+                                 of this object is '4294967295' (0xFFFFFFFF) then this indicates there is
+                                 no media stream.";
+                        }
+
+                        leaf mdi-loss-rate {
+                            type binary {
+                                length "8";
+                            }
+                            description "The value indicates Media Delivery Index (MDI) loss Rate.";
+                        }
+
+                        leaf min-gop-length {
+                            type uint32;
+                            units "pictures";
+                            description
+                                "The value indicates the minimum distance in a Group Of Pictures (GOP) between
+                                 two consecutive I-frames within a sequence of frames in that video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf min-frm-per-sec {
+                            type uint32;
+                            units "fps";
+                            description
+                                "The value indicates the minimum number of frames per second in a video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf avg-gop-length {
+                            type uint32;
+                            units "pictures";
+                            description
+                                "The value indicates the average distance in a Group Of Pictures (GOP) between
+                                 two consecutive I-frames within a sequence of frames in that video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf avg-frm-per-sec {
+                            type uint32;
+                            units "fps";
+                            description
+                                "The value indicates the average number of frames per second in a video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf max-gop-length {
+                            type uint32;
+                            units "pictures";
+                            description
+                                "The value indicates the maximum distance in a Group Of Pictures (GOP) between
+                                 two consecutive I-frames within a sequence of frames in that video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf max-frm-per-sec {
+                            type uint32;
+                            units "fps";
+                            description
+                                "The value indicates the maximum number of frames per second in a video stream
+                                 on a multicast channel.";
+                        }
+
+                        leaf good-i-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of good 'I' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf bad-i-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of bad 'I' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf good-p-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of good 'P' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf bad-p-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of bad 'P' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf good-b-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of good 'B' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf bad-b-frames {
+                            type uint32;
+                            description
+                                "The value indicates the number of bad 'B' frames in a video stream on
+                                 a multicast channel.";
+                        }
+
+                        leaf traffic-loss-secs {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The value indicates loss of traffic seconds in a stream on a multicast
+                                 channel.";
+                        }
+
+                    } // list interval
+
+                } // container vqm
+
+                list pid {
+                    key "pid";
+                    description "Enter the pid list instance";
+
+                    leaf pid {
+                        type uint32 {
+                            range "0..8191";
+                        }
+                        description
+                            "The value indicates the 13-bit packet identifier used to identify the type
+                             of data stored in the packet payload.";
+                    }
+
+                    leaf pid-type {
+                        type enumeration {
+                            enum other                          { value 0; }
+                            enum audio                          { value 1; }
+                            enum video                          { value 2; }
+                            enum data                           { value 3; }
+                            enum ca                             { value 4; }
+                            enum scte35                         { value 5; }
+                            enum pat                            { value 6; }
+                            enum pcr                            { value 7; }
+                            enum pmt                            { value 8; }
+                        }
+                        description
+                            "The value indicates the type of the packet identifier.
+                             other  (0) - Unspecified stream type
+                             audio  (1) - audio stream
+                             video  (2) - video stream
+                             data   (3) - data stream
+                             ca     (4) - conditional access stream
+                             scte35 (5) - Society of Cable Telecommunications
+                                          Engineers 35 stream
+                             pat    (6) - program association table
+                             pcr    (7) - program clock reference
+                             pmt    (8) - program map table.";
+                    }
+
+                    leaf pid-mpeg-stream-type {
+                        type uint32;
+                        description "The value indicates the type of MPEG stream.";
+                    }
+
+                    leaf pid-language {
+                        type types-sros:named-item-or-empty;
+                        description "The value indicates the language of the MPEG stream.";
+                    }
+
+                    leaf pid-cc-err-secs {
+                        type uint32;
+                        units "seconds";
+                        description
+                            "The value indicates the total number of continuity counter error seconds
+                             for the MPEG stream.";
+                    }
+
+                    leaf pid-tei-err-secs {
+                        type uint32;
+                        units "seconds";
+                        description
+                            "The value indicates the total number of TEI (Transport Error Indicator)
+                             error seconds for the MPEG stream.";
+                    }
+
+                    leaf pid-absent-err-secs {
+                        type uint32;
+                        description
+                            "The value of tmnxVdoPIDAbsentErrSecs indicates the total number of
+                             video or non-video PID (Program Identifier) absent error seconds for
+                             the MPEG stream based on the PID type. This object has separate
+                             instances for each PID type within a video stream based on bundle,
+                             channel and source-override configurations.";
+                    }
+
+                    leaf pid-bit-rate {
+                        type uint32;
+                        units "kilobps";
+                        description "The value indicates the bitrate of the stream.";
+                    }
+
+                    leaf pid-is-pcr {
+                        type boolean;
+                        description "The value indicates whether or not this is a Program Clock Reference(PCR) PID.";
+                    }
+
+                } // list pid
+
+            } // list channel-analytics
 
             list session {
                 key "source-address source-port";

@@ -40,7 +40,7 @@ submodule nokia-conf-router-bgp {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-router-bgp {
         container bgp {
@@ -1040,6 +1040,7 @@ submodule nokia-conf-router-bgp {
                     description "Enable legacy-mode of BGP error handling";
                 }
 
+
             } // container error-handling
 
             container damp-peer-oscillations {
@@ -1439,9 +1440,7 @@ submodule nokia-conf-router-bgp {
                     description "Enter the mvpn-ipv4 context";
 
                     leaf send {
-                        type int32 {
-                            range "1..16";
-                        }
+                        type types-bgp:add-paths-send-limit-no-multipaths;
                         description "Maximum paths advertised per multicast VPN IPv4 NRLI";
                     }
 
@@ -1457,9 +1456,7 @@ submodule nokia-conf-router-bgp {
                     description "Enter the mvpn-ipv6 context";
 
                     leaf send {
-                        type int32 {
-                            range "1..16";
-                        }
+                        type types-bgp:add-paths-send-limit-no-multipaths;
                         description "Maximum paths advertised per multicast VPN IPv6 NRLI";
                     }
 
@@ -1475,9 +1472,7 @@ submodule nokia-conf-router-bgp {
                     description "Enter the mcast-vpn-ipv4 context";
 
                     leaf send {
-                        type int32 {
-                            range "1..16";
-                        }
+                        type types-bgp:add-paths-send-limit-no-multipaths;
                         description "Maximum paths advertised per multicast IPv4 VPN prefix";
                     }
 
@@ -1493,9 +1488,7 @@ submodule nokia-conf-router-bgp {
                     description "Enter the mcast-vpn-ipv6 context";
 
                     leaf send {
-                        type int32 {
-                            range "1..16";
-                        }
+                        type types-bgp:add-paths-send-limit-no-multipaths;
                         description "Maximum paths advertised per multicast IPv6 VPN prefix";
                     }
 
@@ -3677,6 +3670,7 @@ submodule nokia-conf-router-bgp {
                         description "Tolerate non-critical errors in UPDATE messages";
                     }
 
+
                 } // container error-handling
 
                 container damp-peer-oscillations {
@@ -3746,6 +3740,57 @@ submodule nokia-conf-router-bgp {
                     } // container advertise
 
                 } // container bfd-strict-mode
+
+                container bfd {
+                    presence "Enable the bfd context";
+                    description "Enable the bfd context";
+
+                    leaf transmit-interval {
+                        type uint32 {
+                            range "10..100000";
+                        }
+                        units "milliseconds";
+                        default "100";
+                        description "Transmit interval for the BFD session";
+                    }
+
+                    leaf receive-interval {
+                        type uint32 {
+                            range "10..100000";
+                        }
+                        units "milliseconds";
+                        default "100";
+                        description "Receive interval for the BFD session";
+                    }
+
+                    leaf multiplier {
+                        type uint32 {
+                            range "1..20";
+                        }
+                        default "3";
+                        description "Multiplier for the BFD session";
+                    }
+
+                    leaf type {
+                        type enumeration {
+                            enum cpm-np {
+                                value 1;
+                                description "Processed by the network processor on the CPM";
+                            }
+                            enum auto {
+                                value 2;
+                                description "System determines the appropriate session type";
+                            }
+                            enum fp {
+                                value 3;
+                                description "Processed on the forwarding plane hardware";
+                            }
+                        }
+                        default "auto";
+                        description "Type of BFD session endpoint to use";
+                    }
+
+                } // container bfd
 
                 container add-paths {
                     presence "Enable the add-paths context";
@@ -3851,9 +3896,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mvpn-ipv4 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast VPN IPv4 prefix";
                         }
 
@@ -3869,9 +3912,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mvpn-ipv6 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast VPN IPv6 prefix";
                         }
 
@@ -3887,9 +3928,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mcast-vpn-ipv4 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast IPv4 VPN prefix";
                         }
 
@@ -3905,9 +3944,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mcast-vpn-ipv6 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast IPv6 VPN prefix";
                         }
 
@@ -5161,6 +5198,7 @@ submodule nokia-conf-router-bgp {
                         description "Tolerate non-critical errors in UPDATE messages";
                     }
 
+
                 } // container error-handling
 
                 container damp-peer-oscillations {
@@ -5230,6 +5268,57 @@ submodule nokia-conf-router-bgp {
                     } // container advertise
 
                 } // container bfd-strict-mode
+
+                container bfd {
+                    presence "Enable the bfd context";
+                    description "Enable the bfd context";
+
+                    leaf transmit-interval {
+                        type uint32 {
+                            range "10..100000";
+                        }
+                        units "milliseconds";
+                        default "100";
+                        description "Transmit interval for the BFD session";
+                    }
+
+                    leaf receive-interval {
+                        type uint32 {
+                            range "10..100000";
+                        }
+                        units "milliseconds";
+                        default "100";
+                        description "Receive interval for the BFD session";
+                    }
+
+                    leaf multiplier {
+                        type uint32 {
+                            range "1..20";
+                        }
+                        default "3";
+                        description "Multiplier for the BFD session";
+                    }
+
+                    leaf type {
+                        type enumeration {
+                            enum cpm-np {
+                                value 1;
+                                description "Processed by the network processor on the CPM";
+                            }
+                            enum auto {
+                                value 2;
+                                description "System determines the appropriate session type";
+                            }
+                            enum fp {
+                                value 3;
+                                description "Processed on the forwarding plane hardware";
+                            }
+                        }
+                        default "auto";
+                        description "Type of BFD session endpoint to use";
+                    }
+
+                } // container bfd
 
                 container hold-time {
                     description "Enter the hold-time context";
@@ -5657,9 +5746,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mvpn-ipv4 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast VPN IPv4 prefix";
                         }
 
@@ -5675,9 +5762,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mvpn-ipv6 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast VPN IPv6 prefix";
                         }
 
@@ -5693,9 +5778,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mcast-vpn-ipv4 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast IPv4 VPN prefix";
                         }
 
@@ -5711,9 +5794,7 @@ submodule nokia-conf-router-bgp {
                         description "Enter the mcast-vpn-ipv6 context";
 
                         leaf send {
-                            type int32 {
-                                range "1..16";
-                            }
+                            type types-bgp:add-paths-send-limit-no-multipaths;
                             description "Maximum paths per multicast IPv6 VPN prefix";
                         }
 

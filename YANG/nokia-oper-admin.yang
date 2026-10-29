@@ -36,7 +36,7 @@ module nokia-oper-admin {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef configuration-region {
         type enumeration {
@@ -235,6 +235,36 @@ module nokia-oper-admin {
                     description "URL to save technical support information";
                 }
 
+                choice output-level {
+                    default "extensive";
+                    description
+                        "Selects the level of detail in the tech-support output.
+                         When unspecified, 'extensive' is used.";
+                    case extensive {
+
+                        leaf extensive {
+                            type empty;
+                            description "Save encrypted state and diagnostic information (default)";
+                        }
+
+                    }
+                    case state {
+
+                        leaf state {
+                            type empty;
+                            description "Save cleartext state information";
+                        }
+
+                    }
+                    case diagnostic {
+
+                        leaf diagnostic {
+                            type empty;
+                            description "Save cleartext state and encrypted diagnostic information";
+                        }
+
+                    }
+                }
             }
             output {
 
@@ -615,7 +645,7 @@ module nokia-oper-admin {
             description "Enter the redundancy context";
 
             action force-switchover {
-                description "Force a switchover to the standby CPM";
+                description "Force a switchover to the standby CPM or CPIOM";
 
                 input {
 
@@ -676,7 +706,7 @@ module nokia-oper-admin {
             } // action force-switchover
 
             action synchronize {
-                description "Synchronize the standby CPM";
+                description "Synchronize the standby CPM or CPIOM";
 
                 input {
 
@@ -1635,6 +1665,16 @@ module nokia-oper-admin {
                                     }
 
                                 }
+                                case ethernet-satellite {
+
+                                    leaf ethernet-satellite {
+                                        type leafref {
+                                            path "/state:state/state:satellite/state:ethernet-satellite/state:satellite-id";
+                                        }
+                                        description "Ethernet satellite where secure boot settings apply";
+                                    }
+
+                                }
                             }
                             leaf confirmation-code {
                                 type types-sros:string-not-all-spaces {
@@ -1716,6 +1756,16 @@ module nokia-oper-admin {
                                             path "/state:state/state:cpm/state:cpm-slot";
                                         }
                                         description "CPM slot where secure boot is activated or modified";
+                                    }
+
+                                }
+                                case ethernet-satellite {
+
+                                    leaf ethernet-satellite {
+                                        type leafref {
+                                            path "/state:state/state:satellite/state:ethernet-satellite/state:satellite-id";
+                                        }
+                                        description "Ethernet satellite where secure boot settings apply";
                                     }
 
                                 }
@@ -1803,6 +1853,16 @@ module nokia-oper-admin {
                                     }
 
                                 }
+                                case ethernet-satellite {
+
+                                    leaf ethernet-satellite {
+                                        type leafref {
+                                            path "/state:state/state:satellite/state:ethernet-satellite/state:satellite-id";
+                                        }
+                                        description "Ethernet satellite where secure boot settings apply";
+                                    }
+
+                                }
                             }
                             leaf confirmation-code {
                                 type types-sros:string-not-all-spaces {
@@ -1839,7 +1899,7 @@ module nokia-oper-admin {
                                         type leafref {
                                             path "/state:state/state:system/state:software-repository/state:repository-name";
                                         }
-                                        description "The location of the target software image";
+                                        description "Location of the target satellite software image";
                                     }
 
                                 }
@@ -1895,12 +1955,43 @@ module nokia-oper-admin {
 
                         input {
 
-                            leaf software-image {
-                                type types-sros:cflash-and-url;
-                                mandatory true;
-                                description "Location of the target software image";
-                            }
+                            choice target {
+                                description
+                                    "The ethernet satellite or ESA that validates the software image.
+                                     When no target is given, every secure-boot enabled CPM validates the
+                                     image against its own keys.";
+                                case ethernet-satellite {
 
+                                    leaf ethernet-satellite {
+                                        type leafref {
+                                            path "/state:state/state:satellite/state:ethernet-satellite/state:satellite-id";
+                                        }
+                                        description "Ethernet satellite that validates the software image";
+                                    }
+
+                                }
+                            }
+                            choice software-source {
+                                mandatory true;
+                                case software-image {
+
+                                    leaf software-image {
+                                        type types-sros:cflash-and-url;
+                                        description "Location of the target software image";
+                                    }
+
+                                }
+                                case repository {
+
+                                    leaf software-repository {
+                                        type leafref {
+                                            path "/state:state/state:system/state:software-repository/state:repository-name";
+                                        }
+                                        description "Location of the target satellite software image";
+                                    }
+
+                                }
+                            }
                         }
                         output {
 
@@ -4609,6 +4700,8 @@ module nokia-oper-admin {
                         type enumeration {
                             enum c5-c12-1g/10g                  { value 1; }
                             enum c5-c10-10g+c11-c12-10g/25g     { value 2; }
+                            enum 1g/10g                         { value 3; }
+                            enum 10g/25g+1g                     { value 4; }
                         }
                         mandatory true;
                         description "Port speed combination allowed on the router";
@@ -4719,6 +4812,27 @@ module nokia-oper-admin {
                                     description "Dynamic tunnel port";
                                 }
 
+                                leaf idi {
+                                    type types-sros:display-string;
+                                    description "Regular expression string to match IDi of saved records";
+                                }
+
+                                leaf removed-tunnels {
+                                    type boolean;
+                                    default "false";
+                                    description "Show the keys of removed dynamic tunnels";
+                                }
+
+                            }
+                        }
+                        choice output-format {
+                            case json {
+
+                                leaf json {
+                                    type empty;
+                                    description "Show the output in indented JSON format";
+                                }
+
                             }
                         }
                     }
@@ -4752,6 +4866,13 @@ module nokia-oper-admin {
 
                             leaf max-number-of-records {
                                 type uint32;
+                            }
+
+                            leaf peer-identity {
+                                type string {
+                                    length "1..253";
+                                }
+                                description "IKE identity of the remote peer. Present for both IKE and ESP key types when the peer identity is known.";
                             }
 
                             list key-history {

@@ -39,7 +39,7 @@ submodule nokia-conf-router-mpls {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-router-mpls {
         container mpls {
@@ -1216,6 +1216,16 @@ submodule nokia-conf-router-mpls {
                     description "Enable soft preemption";
                 }
 
+                leaf use-computed-metric {
+                    when "not(../type) or ../type = 'p2p-rsvp-one-hop' or ../type = 'p2p-rsvp-mesh' or ../type = 'p2p-sr-te-one-hop' or ../type = 'p2p-sr-te-mesh' or ../type = 'p2p-sr-te-pce-init' or ../type = 'p2p-sr-te-on-demand'" {
+                        description "not allowed for this LSP template type";
+                    }
+                    type boolean;
+                    sros-ext:auto-restart-to-modify;
+                    default "false";
+                    description "Use the computed metric for the path in the TTM";
+                }
+
                 leaf-list include-admin-group {
                     when "not(../type) or ../type = 'p2mp-rsvp' or ../type = 'p2p-rsvp-one-hop' or ../type = 'p2p-rsvp-mesh' or ../type = 'p2p-sr-te-one-hop' or ../type = 'p2p-sr-te-mesh' or ../type = 'p2p-sr-te-on-demand' or ../type = 'p2p-rsvp-member'" {
                         description "not allowed for this LSP template type";
@@ -1383,7 +1393,6 @@ submodule nokia-conf-router-mpls {
                         description "not allowed for this LSP template type";
                     }
                     presence "Enable the fast-reroute context";
-                    sros-ext:auto-restart-to-modify;
                     description "Enable the fast-reroute context";
 
                     leaf hop-limit {
@@ -1858,6 +1867,16 @@ submodule nokia-conf-router-mpls {
                         description "Source address for S-BFD packets";
                     }
 
+                    leaf allow-bfd-transit {
+                        when "../../type = 'p2p-sr-te-one-hop' or ../../type = 'p2p-sr-te-mesh' or ../../type = 'p2p-sr-te-pce-init' or ../../type = 'p2p-sr-te-on-demand'" {
+                            description "not allowed for this LSP template type";
+                        }
+                        type boolean;
+                        sros-ext:auto-restart-to-modify;
+                        default "false";
+                        description "Allow BFD transit packets on template SR-TE LSPs";
+                    }
+
                 } // container bfd
 
                 container pce-associations {
@@ -2269,6 +2288,15 @@ submodule nokia-conf-router-mpls {
                     }
                     type boolean;
                     description "Enable soft preemption";
+                }
+
+                leaf use-computed-metric {
+                    when "not(../type) or ../type = 'p2p-rsvp' or ../type = 'p2p-sr-te'" {
+                        description "not allowed for this LSP type";
+                    }
+                    type boolean;
+                    default "false";
+                    description "Use the computed metric for the path in the TTM";
                 }
 
                 leaf-list include-admin-group {
@@ -2846,6 +2874,15 @@ submodule nokia-conf-router-mpls {
                         }
                         type types-sros:ip-unicast-address;
                         description "Source address for the S-BFD packets";
+                    }
+
+                    leaf allow-bfd-transit {
+                        when "../../type = 'p2p-sr-te'" {
+                            description "not allowed for this LSP type";
+                        }
+                        type boolean;
+                        default "false";
+                        description "Allow BFD transit packets on this SR-TE LSP";
                     }
 
                 } // container bfd
@@ -3833,6 +3870,14 @@ submodule nokia-conf-router-mpls {
                     type types-sros:ip-unicast-address;
                     sros-ext:auto-restart-to-modify;
                     description "Destination IP address for member LSPs of LSP container";
+                }
+
+                leaf metric {
+                    type uint32 {
+                        range "1..16777215";
+                    }
+                    sros-ext:auto-restart-to-modify;
+                    description "Metric override for member LSPs of the LSP container";
                 }
 
                 leaf-list apply-groups {

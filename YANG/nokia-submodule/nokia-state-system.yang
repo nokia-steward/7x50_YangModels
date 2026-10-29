@@ -50,7 +50,7 @@ submodule nokia-state-system {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-system {
         container system {
@@ -592,6 +592,16 @@ submodule nokia-state-system {
 
                         } // container vpls-evpn-mpls
 
+                        container vprn-nw-ingress-filter {
+                            description "Enter the vprn-nw-ingress-filter context";
+
+                            leaf oper-state {
+                                type types-sros:enabled-disabled;
+                                description "Indicates the VPRN network ingress filter option operational state.";
+                            }
+
+                        } // container vprn-nw-ingress-filter
+
                     } // container service
 
                     container mac-filter {
@@ -1113,6 +1123,8 @@ submodule nokia-state-system {
 
                                     } // container tcp-flags-ext
 
+
+
                                 } // container match-criteria
 
                             } // container ip-filter
@@ -1328,6 +1340,9 @@ submodule nokia-state-system {
 
                                     } // container tcp-flags
 
+
+
+
                                     container tcp-flags-ext {
                                         description "Enter the tcp-flags-ext context";
 
@@ -1518,6 +1533,8 @@ submodule nokia-state-system {
 
                                     } // container tcp-flags-ext
 
+
+
                                 } // container match-criteria
 
                             } // container ip-filter
@@ -1692,6 +1709,9 @@ submodule nokia-state-system {
                                         }
 
                                     } // container tcp-flags
+
+
+
 
                                     container tcp-flags-ext {
                                         description "Enter the tcp-flags-ext context";
@@ -2365,6 +2385,7 @@ submodule nokia-state-system {
                         enum admin-down                     { value 1; }
                         enum listen-port-unavailable        { value 2; }
                         enum active-delay-on-boot           { value 3; }
+                        enum tls-server-profile-down        { value 4; }
                     }
                     description "The reason due to which gRPC server is operationally down.";
                 }
@@ -9803,6 +9824,36 @@ submodule nokia-state-system {
                 }
 
             } // list software-repository
+
+            container ssh {
+                description "Enter the ssh context";
+
+                container client-known-hosts {
+                    description "Enter the client-known-hosts context";
+
+                    list host {
+                        key "host-name";
+                        description "Enter the host list instance";
+
+                        leaf host-name {
+                            type types-sros:string-not-all-spaces {
+                                length "1..128";
+                            }
+                            description "IP address or FQDN of the host.";
+                        }
+
+                        leaf public-key {
+                            type types-sros:string-not-all-spaces {
+                                length "1..1800";
+                            }
+                            description "Value of the SSHv2 host public key.";
+                        }
+
+                    } // list host
+
+                } // container client-known-hosts
+
+            } // container ssh
 
             container statistics {
                 description "Enter the statistics context";

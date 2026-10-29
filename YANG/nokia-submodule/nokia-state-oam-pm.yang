@@ -32,7 +32,7 @@ submodule nokia-state-oam-pm {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-oam-pm {
         container oam-pm {
@@ -1481,6 +1481,13 @@ submodule nokia-state-oam-pm {
                                          Not all request frame transmit failures are detected by this mechanism.
                                          It is possible that 'none' will be returned when the test is unable
                                          to transmit frames.";
+                                }
+
+                                leaf liveness-oper-state {
+                                    type types-oam:oam-pm-session-test-liveness-oper-state;
+                                    description
+                                        "Liveness operational state for the test, indicating whether or
+                                         not the test is successfully sending and receiving test packets";
                                 }
 
                                 container stamp {

@@ -34,7 +34,7 @@ submodule nokia-conf-policy-options {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-policy-options {
         container policy-options {
@@ -1613,6 +1613,7 @@ submodule nokia-conf-policy-options {
                                     range "1..16";
                                 }
                                 type enumeration {
+                                    enum all                            { value -2; }
                                     enum multipaths                     { value -1; }
                                 }
                             }
@@ -3154,6 +3155,7 @@ submodule nokia-conf-policy-options {
                                     range "1..16";
                                 }
                                 type enumeration {
+                                    enum all                            { value -2; }
                                     enum multipaths                     { value -1; }
                                 }
                             }
@@ -3754,6 +3756,7 @@ submodule nokia-conf-policy-options {
                                 range "1..16";
                             }
                             type enumeration {
+                                enum all                            { value -2; }
                                 enum multipaths                     { value -1; }
                             }
                         }

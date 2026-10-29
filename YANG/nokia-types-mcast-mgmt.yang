@@ -31,7 +31,7 @@ module nokia-types-mcast-mgmt {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     typedef mode {
         type enumeration {
@@ -83,6 +83,14 @@ module nokia-types-mcast-mgmt {
     typedef percent-without-zero-and-hundred {
         type uint32 {
             range "1..99";
+        }
+        units "percent";
+        description "Integer number used to specify the percentage value.";
+    }
+
+    typedef expanded-percent-without-zero {
+        type uint32 {
+            range "1..6000";
         }
         units "percent";
         description "Integer number used to specify the percentage value.";

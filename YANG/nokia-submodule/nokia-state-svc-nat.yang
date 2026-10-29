@@ -36,7 +36,7 @@ submodule nokia-state-svc-nat {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-04-22";
+    revision "2026-10-28";
 
     grouping state-svc-nat {
         container nat {
@@ -1635,6 +1635,880 @@ submodule nokia-state-svc-nat {
                 } // container statistics
 
             } // container map-t
+
+            container map-e {
+                description "Enter the map-e context";
+
+                list domain {
+                    key "name";
+                    description "Enter the domain list instance";
+
+                    leaf name {
+                        type types-sros:named-item;
+                        description "MAP-E domain name";
+                    }
+
+                    leaf service-name {
+                        type types-services:service-name;
+                        description "Routing context in which the domain is instantiated and active";
+                    }
+
+                    container fp {
+                        description "Enter the fp context";
+
+                        container statistics {
+                            description "Enter the statistics context";
+
+                            container upstream {
+                                description "Enter the upstream context";
+
+                                container dropped {
+                                    description "Enter the dropped context";
+
+                                    leaf anchor-interface {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the upstream direction due to anchor-interface congestion";
+                                    }
+
+                                    leaf anti-spoof {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the upstream direction due to anti-spoof lookup failures";
+                                    }
+
+                                    leaf unknown-protocol {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the upstream direction due to unknown protocol (not TCP/UDP/ICMP)";
+                                    }
+
+                                } // container dropped
+
+                                container forwarded {
+                                    description "Enter the forwarded context";
+
+                                    leaf total-packets {
+                                        type yang:counter64;
+                                        description "Number of packets forwarded in the upstream direction";
+                                    }
+
+                                    leaf total-octets {
+                                        type yang:counter64;
+                                        description "Number of octets forwarded in the upstream direction";
+                                    }
+
+                                } // container forwarded
+
+                            } // container upstream
+
+                            container downstream {
+                                description "Enter the downstream context";
+
+                                container dropped {
+                                    description "Enter the dropped context";
+
+                                    leaf anchor-interface {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the downstream direction due to anchor-interface congestion";
+                                    }
+
+                                    leaf unknown-protocol {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the downstream direction due to unknown protocol (not TCP/UDP/ICMP)";
+                                    }
+
+                                } // container dropped
+
+                                container forwarded {
+                                    description "Enter the forwarded context";
+
+                                    leaf total-packets {
+                                        type yang:counter64;
+                                        description "Number of packets forwarded in the downstream direction";
+                                    }
+
+                                    leaf total-octets {
+                                        type yang:counter64;
+                                        description "Number of octets forwarded in the downstream direction";
+                                    }
+
+                                } // container forwarded
+
+                            } // container downstream
+
+                        } // container statistics
+
+                    } // container fp
+
+                    list esa {
+                        key "esa-id vm";
+                        description "Enter the esa list instance";
+
+                        leaf esa-id {
+                            type leafref {
+                                path "../../../../../../esa/esa-id";
+                            }
+                            description "ESA used by the ISA NAT MAP-E group.";
+                        }
+
+                        leaf vm {
+                            type leafref {
+                                path "../../../../../../esa[esa-id=current()/../esa-id]/vm/vm-id";
+                            }
+                            description "ESA-VM used by the ISA NAT MAP-E group.";
+                        }
+
+                        container statistics {
+                            description "Enter the statistics context";
+
+                            leaf generated-icmpv4-fragmentation {
+                                type yang:counter64;
+                                description "Number of icmpv4 fragmentation needed but df flag is set generated";
+                            }
+
+                            container upstream {
+                                description "Enter the upstream context";
+
+                                leaf fragments-rx {
+                                    type yang:counter64;
+                                    description "Number of fragmented packets received in the upstream direction";
+                                }
+
+                                leaf icmpv4-echo-rx {
+                                    type yang:counter64;
+                                    description "Number of icmpv4 echo packets received in the upstream direction";
+                                }
+
+                                leaf cpe-icmpv6-error-reports-rx {
+                                    type yang:counter64;
+                                    description "Number of cpe generated icmpv6 error report packets received in the upstream direction";
+                                }
+
+                                leaf intermediate-icmpv6-error-rx {
+                                    type yang:counter64;
+                                    description "Number of intermediate node generated icmpv6 error report packets received in the upstream direction";
+                                }
+
+                                container dropped {
+                                    description "Enter the dropped context";
+
+                                    leaf total-packets {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the upstream direction";
+                                    }
+
+                                    leaf total-octets {
+                                        type yang:counter64;
+                                        description "Number of octets dropped in the upstream direction";
+                                    }
+
+                                    leaf unknown-protocol {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the upstream direction due to unknown protocol(not TCP/UDP/ICMP)";
+                                    }
+
+                                    leaf anti-spoof {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the upstream direction due to anti-spoof lookup failures";
+                                    }
+
+                                    leaf icmpv6 {
+                                        type yang:counter64;
+                                        description "Number of icmpv6 dropped packets in the upstream direction";
+                                    }
+
+                                } // container dropped
+
+                                container forwarded {
+                                    description "Enter the forwarded context";
+
+                                    leaf total-packets {
+                                        type yang:counter64;
+                                        description "Number of packets forwarded in the upstream direction";
+                                    }
+
+                                    leaf total-octets {
+                                        type yang:counter64;
+                                        description "Number of octets forwarded in the upstream direction";
+                                    }
+
+                                } // container forwarded
+
+                                container icmpv6-local {
+                                    description "Enter the icmpv6-local context";
+
+                                    leaf packets {
+                                        type yang:counter64;
+                                        description "Number of icmpv6 packets processed locally in the upstream direction";
+                                    }
+
+                                    leaf octets {
+                                        type yang:counter64;
+                                        description "Number of icmpv6 octets processed locally in the upstream direction";
+                                    }
+
+                                } // container icmpv6-local
+
+                                container ipv6-reassembly {
+                                    description "Enter the ipv6-reassembly context";
+
+                                    leaf reassembled-packets {
+                                        type yang:counter64;
+                                        description "Number of packets successfully reassembled";
+                                    }
+
+                                    leaf total-reassembly-attempts {
+                                        type yang:counter64;
+                                        description "Number of reassembly attempts";
+                                    }
+
+                                    container failed {
+                                        description "Enter the failed context";
+
+                                        leaf buffer-exhaustion {
+                                            type yang:counter64;
+                                            description "Number of reassembly failures due to buffer exhaustion";
+                                        }
+
+                                        leaf max-fragmentation-list-reached {
+                                            type yang:counter64;
+                                            description "Number of reassembly failures due to maximum fragmentation list limit reached";
+                                        }
+
+                                        leaf per-packet-fragment-limit {
+                                            type yang:counter64;
+                                            description "Number of reassembly failures due to per-packet fragment limit";
+                                        }
+
+                                        leaf timeout {
+                                            type yang:counter64;
+                                            description "Number of reassembly failures due to timeout";
+                                        }
+
+                                        leaf other {
+                                            type yang:counter64;
+                                            description "Number of reassembly failures due to other reasons";
+                                        }
+
+                                        leaf total {
+                                            type yang:counter64;
+                                            description "Total number of reassembly failures";
+                                        }
+
+                                    } // container failed
+
+                                    container histogram {
+                                        description "Enter the histogram context";
+
+                                        list fragments {
+                                            key "list-id";
+                                            description "Enter the fragments list instance";
+
+                                            leaf list-id {
+                                                type uint32 {
+                                                    range "0..20";
+                                                }
+                                                description "MAP-T ESA-VM fragment list identifier";
+                                            }
+
+                                            leaf resolved {
+                                                type yang:counter64;
+                                                description "Number of fragments per resolved fragment list";
+                                            }
+
+                                            leaf dropped {
+                                                type yang:counter64;
+                                                description "Number of fragments per dropped fragment list";
+                                            }
+
+                                        } // list fragments
+
+                                    } // container histogram
+
+                                } // container ipv6-reassembly
+
+                            } // container upstream
+
+                            container downstream {
+                                description "Enter the downstream context";
+
+                                leaf fragments-rx {
+                                    type yang:counter64;
+                                    description "Number of fragmented packets received in the downstream direction";
+                                }
+
+                                leaf fragmentation-required {
+                                    type yang:counter64;
+                                    description "Number of packets with need-fragmentation received in the downstream direction";
+                                }
+
+                                leaf packets-fragmented {
+                                    type yang:counter64;
+                                    description "Number of packets fragmented by the system in the downstream direction";
+                                }
+
+                                leaf fragments-generated {
+                                    type yang:counter64;
+                                    description "Number of fragments generated as a result of fragmentation in the downstream direction";
+                                }
+
+                                leaf icmpv4-error-reports-rx {
+                                    type yang:counter64;
+                                    description "Number of icmpv4 error reports packets received in the downstream direction";
+                                }
+
+                                leaf icmpv4-echo-rx {
+                                    type yang:counter64;
+                                    description "Number of icmpv4 echo packets received in the downstream direction";
+                                }
+
+                                container dropped {
+                                    description "Enter the dropped context";
+
+                                    leaf total-packets {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the downstream direction";
+                                    }
+
+                                    leaf total-octets {
+                                        type yang:counter64;
+                                        description "Number of octets dropped in the downstream direction";
+                                    }
+
+                                    leaf unknown-protocol {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the downstream direction due to unknown protocol(not TCP/UDP/ICMP)";
+                                    }
+
+                                    leaf fragments-rx {
+                                        type yang:counter64;
+                                        description "Number of fragmented packets dropped received in the downstream direction";
+                                    }
+
+                                    leaf fragmentation-required {
+                                        type yang:counter64;
+                                        description "Number of packets dropped in the downstream direction due to fragmentation";
+                                    }
+
+                                    leaf icmpv4 {
+                                        type yang:counter64;
+                                        description "Number of icmpv4 packets dropped in the downstream direction";
+                                    }
+
+                                } // container dropped
+
+                                container forwarded {
+                                    description "Enter the forwarded context";
+
+                                    leaf total-packets {
+                                        type yang:counter64;
+                                        description "Number of packets forwarded in the downstream direction";
+                                    }
+
+                                    leaf total-octets {
+                                        type yang:counter64;
+                                        description "Number of octets forwarded in the downstream direction";
+                                    }
+
+                                } // container forwarded
+
+                                container fragment-handling {
+                                    description "Enter the fragment-handling context";
+
+                                    leaf rx-resolved-fragments {
+                                        type yang:counter64;
+                                        description "Number of fragments that were successfully assembled into packets";
+                                    }
+
+                                    leaf rx-unresolved-fragments {
+                                        type yang:counter64;
+                                        description "Number of fragments that were NOT successfully assembled into packets and thus discarded";
+                                    }
+
+                                    leaf tx-fragments {
+                                        type yang:counter64;
+                                        description "Number of transmitted fragments";
+                                    }
+
+                                    leaf overlapping-first-fragments {
+                                        type yang:counter64;
+                                        description "Number of fragment discards due to overlap";
+                                    }
+
+                                    container dropped {
+                                        description "Enter the dropped context";
+
+                                        leaf timeout {
+                                            type yang:counter64;
+                                            description "Number of fragment discards due to the timeout";
+                                        }
+
+                                        leaf buffer-exhaustion {
+                                            type yang:counter64;
+                                            description "Number of fragments discards due to buffer exhaustion";
+                                        }
+
+                                        leaf too-many-fragments {
+                                            type yang:counter64;
+                                            description "Number of fragments discards due to too many fragments";
+                                        }
+
+                                        leaf too-many-lists {
+                                            type yang:counter64;
+                                            description "Number of fragments discards due to number of fragmentation lists exceeded its maximum value";
+                                        }
+
+                                        leaf fragment-list-timeout {
+                                            type yang:counter64;
+                                            description "Number of list drops due to the timeouts";
+                                        }
+
+                                    } // container dropped
+
+                                    container histogram {
+                                        description "Enter the histogram context";
+
+                                        list fragments {
+                                            key "list-id";
+                                            description "Enter the fragments list instance";
+
+                                            leaf list-id {
+                                                type uint32 {
+                                                    range "0..20";
+                                                }
+                                                description "MAP-T ESA-VM fragment list identifier";
+                                            }
+
+                                            leaf resolved {
+                                                type yang:counter64;
+                                                description "Number of fragments per resolved fragment list";
+                                            }
+
+                                            leaf dropped {
+                                                type yang:counter64;
+                                                description "Number of fragments per dropped fragment list";
+                                            }
+
+                                        } // list fragments
+
+                                    } // container histogram
+
+                                } // container fragment-handling
+
+                            } // container downstream
+
+                        } // container statistics
+
+                    } // list esa
+
+                    list mapping-rule {
+                        key "rule-name";
+                        description "Enter the mapping-rule list instance";
+
+                        leaf rule-name {
+                            type types-sros:named-item;
+                            description "The name that identifies this mapping rule";
+                        }
+
+                        leaf address-sharing-ratio {
+                            type yang:gauge32;
+                            description
+                                "Number of MAP Customer Edge (CE) sharing the same IP address.
+                                 The value zero indicates that each CE is assigned its own IPv4 prefix.";
+                        }
+
+                        leaf excluded-ports {
+                            type yang:gauge32;
+                            description "Number of ports excluded from mapping with this rule";
+                        }
+
+                        leaf ports-per-user {
+                            type yang:gauge32;
+                            description "Number of ports available per MAP Customer Edge (CE)";
+                        }
+
+                        container fp {
+                            description "Enter the fp context";
+
+                            container statistics {
+                                description "Enter the statistics context";
+
+                                container upstream {
+                                    description "Enter the upstream context";
+
+                                    container dropped {
+                                        description "Enter the dropped context";
+
+                                        leaf anti-spoof {
+                                            type yang:counter64;
+                                            description "Number of packets dropped in the upstream direction due to anti-spoof lookup failures";
+                                        }
+
+                                    } // container dropped
+
+                                    container forwarded {
+                                        description "Enter the forwarded context";
+
+                                        leaf total-packets {
+                                            type yang:counter64;
+                                            description "Number of packets forwarded in the upstream direction";
+                                        }
+
+                                        leaf total-octets {
+                                            type yang:counter64;
+                                            description "Number of octets forwarded in the upstream direction";
+                                        }
+
+                                    } // container forwarded
+
+                                } // container upstream
+
+                                container downstream {
+                                    description "Enter the downstream context";
+
+                                    container forwarded {
+                                        description "Enter the forwarded context";
+
+                                        leaf total-packets {
+                                            type yang:counter64;
+                                            description "Number of packets forwarded in the downstream direction";
+                                        }
+
+                                        leaf total-octets {
+                                            type yang:counter64;
+                                            description "Number of octets forwarded in the downstream direction";
+                                        }
+
+                                    } // container forwarded
+
+                                } // container downstream
+
+                            } // container statistics
+
+                        } // container fp
+
+                        list esa {
+                            key "esa-id vm";
+                            description "Enter the esa list instance";
+
+                            leaf esa-id {
+                                type leafref {
+                                    path "../../../../../../../esa/esa-id";
+                                }
+                                description "ESA used by the ISA NAT MAP-E group.";
+                            }
+
+                            leaf vm {
+                                type leafref {
+                                    path "../../../../../../../esa[esa-id=current()/../esa-id]/vm/vm-id";
+                                }
+                                description "ESA-VM used by the ISA NAT MAP-E group.";
+                            }
+
+                            container statistics {
+                                description "Enter the statistics context";
+
+                                leaf generated-icmpv4-fragmentation {
+                                    type yang:counter64;
+                                    description "Number of icmpv4 fragmentation needed but df flag is set generated";
+                                }
+
+                                container upstream {
+                                    description "Enter the upstream context";
+
+                                    leaf fragments-rx {
+                                        type yang:counter64;
+                                        description "Number of fragmented packets received in the upstream direction";
+                                    }
+
+                                    leaf icmpv4-echo-rx {
+                                        type yang:counter64;
+                                        description "Number of icmpv4 echo packets received in the upstream direction";
+                                    }
+
+                                    leaf cpe-icmpv6-error-reports-rx {
+                                        type yang:counter64;
+                                        description "Number of cpe generated icmpv6 error report packets received in the upstream direction";
+                                    }
+
+                                    leaf intermediate-icmpv6-error-rx {
+                                        type yang:counter64;
+                                        description "Number of intermediate node generated icmpv6 error report packets received in the upstream direction";
+                                    }
+
+                                    container dropped {
+                                        description "Enter the dropped context";
+
+                                        leaf total-packets {
+                                            type yang:counter64;
+                                            description "Number of packets dropped in the upstream direction";
+                                        }
+
+                                        leaf total-octets {
+                                            type yang:counter64;
+                                            description "Number of octets dropped in the upstream direction";
+                                        }
+
+                                        leaf unknown-protocol {
+                                            type yang:counter64;
+                                            description "Number of packets dropped in the upstream direction due to unknown protocol(not TCP/UDP/ICMP)";
+                                        }
+
+                                        leaf anti-spoof {
+                                            type yang:counter64;
+                                            description "Number of packets dropped in the upstream direction due to anti-spoof lookup failures";
+                                        }
+
+                                        leaf icmpv6 {
+                                            type yang:counter64;
+                                            description "Number of icmpv6 dropped packets in the upstream direction";
+                                        }
+
+                                    } // container dropped
+
+                                    container forwarded {
+                                        description "Enter the forwarded context";
+
+                                        leaf total-packets {
+                                            type yang:counter64;
+                                            description "Number of packets forwarded in the upstream direction";
+                                        }
+
+                                        leaf total-octets {
+                                            type yang:counter64;
+                                            description "Number of octets forwarded in the upstream direction";
+                                        }
+
+                                    } // container forwarded
+
+                                    container icmpv6-local {
+                                        description "Enter the icmpv6-local context";
+
+                                        leaf packets {
+                                            type yang:counter64;
+                                            description "Number of icmpv6 packets processed locally in the upstream direction";
+                                        }
+
+                                        leaf octets {
+                                            type yang:counter64;
+                                            description "Number of icmpv6 octets processed locally in the upstream direction";
+                                        }
+
+                                    } // container icmpv6-local
+
+                                } // container upstream
+
+                                container downstream {
+                                    description "Enter the downstream context";
+
+                                    leaf fragments-rx {
+                                        type yang:counter64;
+                                        description "Number of fragmented packets received in the downstream direction";
+                                    }
+
+                                    leaf fragmentation-required {
+                                        type yang:counter64;
+                                        description "Number of packets with need-fragmentation received in the downstream direction";
+                                    }
+
+                                    leaf packets-fragmented {
+                                        type yang:counter64;
+                                        description "Number of packets fragmented by the system in the downstream direction";
+                                    }
+
+                                    leaf fragments-generated {
+                                        type yang:counter64;
+                                        description "Number of fragments generated as a result of fragmentation in the downstream direction";
+                                    }
+
+                                    leaf icmpv4-error-reports-rx {
+                                        type yang:counter64;
+                                        description "Number of icmpv4 error reports packets received in the downstream direction";
+                                    }
+
+                                    leaf icmpv4-echo-rx {
+                                        type yang:counter64;
+                                        description "Number of icmpv4 echo packets received in the downstream direction";
+                                    }
+
+                                    container dropped {
+                                        description "Enter the dropped context";
+
+                                        leaf total-packets {
+                                            type yang:counter64;
+                                            description "Number of packets dropped in the downstream direction";
+                                        }
+
+                                        leaf total-octets {
+                                            type yang:counter64;
+                                            description "Number of octets dropped in the downstream direction";
+                                        }
+
+                                        leaf unknown-protocol {
+                                            type yang:counter64;
+                                            description "Number of packets dropped in the downstream direction due to unknown protocol(not TCP/UDP/ICMP)";
+                                        }
+
+                                        leaf fragments-rx {
+                                            type yang:counter64;
+                                            description "Number of fragmented packets dropped received in the downstream direction";
+                                        }
+
+                                        leaf fragmentation-required {
+                                            type yang:counter64;
+                                            description "Number of packets dropped in the downstream direction due to fragmentation";
+                                        }
+
+                                        leaf icmpv4 {
+                                            type yang:counter64;
+                                            description "Number of icmpv4 packets dropped in the downstream direction";
+                                        }
+
+                                    } // container dropped
+
+                                    container forwarded {
+                                        description "Enter the forwarded context";
+
+                                        leaf total-packets {
+                                            type yang:counter64;
+                                            description "Number of packets forwarded in the downstream direction";
+                                        }
+
+                                        leaf total-octets {
+                                            type yang:counter64;
+                                            description "Number of octets forwarded in the downstream direction";
+                                        }
+
+                                    } // container forwarded
+
+                                } // container downstream
+
+                            } // container statistics
+
+                        } // list esa
+
+                    } // list mapping-rule
+
+                } // list domain
+
+                container statistics {
+                    description "Enter the statistics context";
+
+                    container fragmentation {
+                        description "Enter the fragmentation context";
+
+                        leaf rx-resolved {
+                            type yang:counter64;
+                            description "Fragments that are resolved without buffering";
+                        }
+
+                        leaf rx-unresolved {
+                            type yang:counter64;
+                            description
+                                "Number of fragments that were queued in the system
+                                 since the last clearing of the stats";
+                        }
+
+                        leaf tx-frags {
+                            type yang:counter64;
+                            description
+                                "Number of fragments that were resolved and
+                                 forwarded out of the fragmentation logic";
+                        }
+
+                        leaf dropped {
+                            type yang:counter64;
+                            description "Number of dropped fragments";
+                        }
+
+                        leaf created-flows {
+                            type yang:counter64;
+                            description
+                                "Number of flow records created since the last
+                                 clearing of the statistics. Flow record creation
+                                 is triggered by the first fragment of a packet.";
+                        }
+
+                        leaf flow-collisions {
+                            type yang:counter64;
+                            description
+                                "Number of flow collisions (overlapping first
+                                 fragments) since the last clearing of the statistics";
+                        }
+
+                        leaf exceeded-max-flows {
+                            type yang:counter64;
+                            description "Number of times the maximum number of flows is exceeded";
+                        }
+
+                        leaf exceeded-max-timeouts {
+                            type yang:counter64;
+                            description
+                                "Number of fragments that have timed out since the
+                                 last clearing of the statistics";
+                        }
+
+                        leaf exceeded-max-buffers {
+                            type yang:counter64;
+                            description "Number of times the maximum number of buffers is exceeded";
+                        }
+
+                        leaf exceeded-max-buffers-per-flow {
+                            type yang:counter64;
+                            description
+                                "Number of times a fragment count per flow has
+                                 exceeded the maximum value";
+                        }
+
+                        leaf in-use-flows {
+                            type types-sros:percent;
+                            description "Percentage of currently processed flows (flow records)";
+                        }
+
+                        leaf max-flows {
+                            type types-sros:percent;
+                            description
+                                "Maximum number of flows (flow records) reached
+                                 since the last clearing of the statistics";
+                        }
+
+                        leaf in-use-buffers {
+                            type types-sros:percent;
+                            description "Percentage of in-use buffers";
+                        }
+
+                        leaf max-buffers {
+                            type types-sros:percent;
+                            description
+                                "Maximum number of buffers allocated in the system
+                                 since the last clearing of the statistics";
+                        }
+
+                    } // container fragmentation
+
+                } // container statistics
+
+            } // container map-e
+
+            container licensing {
+                description "Enter the licensing context";
+
+                leaf number-of-map-subscribers {
+                    type yang:gauge64;
+                    description
+                        "Number of configured MAP-E subscribers across all enabled
+                         MAP-E domains. The count is the sum of two raised to the
+                         power of the number of EA bits over every mapping rule of
+                         every enabled MAP-E domain.";
+                }
+
+                leaf timestamp {
+                    type types-sros:date-time;
+                    description
+                        "Time when the number of MAP subscribers last changed;
+                         absent if the subscriber count has not changed since
+                         system startup.";
+                }
+
+            } // container licensing
 
             container statistics {
                 description "Enter the statistics context";

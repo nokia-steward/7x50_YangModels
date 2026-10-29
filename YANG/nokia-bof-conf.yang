@@ -34,7 +34,7 @@ module nokia-bof-conf {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     container bof {
         description "Configure system boot options";
@@ -113,6 +113,13 @@ module nokia-bof-conf {
                             sros-ext:bof-parameter-effect "boot";
                             default "true";
                             description "Include user class in auto boot provisioning";
+                        }
+
+                        leaf secure {
+                            type boolean;
+                            sros-ext:bof-parameter-effect "boot";
+                            default "false";
+                            description "Use Secure ZTP for auto-boot";
                         }
 
                         container inband {

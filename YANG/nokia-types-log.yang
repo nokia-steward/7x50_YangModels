@@ -31,7 +31,7 @@ module nokia-types-log {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef log-policy-id {
         type uint32 {
@@ -161,7 +161,11 @@ module nokia-types-log {
         type enumeration {
             enum standard {
                 value 0;
-                description "The historical TiMOS on-disk line format (legacy text layout).";
+                description "Use the standard SR OS log event format";
+            }
+            enum rfc5424 {
+                value 1;
+                description "Use an RFC 5424 syslog format";
             }
         }
         description "Line format for event log files written to this file-id.";
@@ -573,6 +577,8 @@ module nokia-types-log {
             enum tmnxBsxSubQuarantinedClear     { value 4464; }
             enum tmnxBsxUrlFltrWebServOprStateChg { value 4465; }
             enum tmnxBsxAaSubTethered           { value 4466; }
+            enum tmnxBsxAatrInstOperStateChanged { value 4467; }
+            enum tmnxBsxAatrActivityStateChanged { value 4468; }
         }
         description "Events for application-assurance module.";
     }
@@ -977,8 +983,13 @@ module nokia-types-log {
             enum tmnxEqFlashDiskFormatStart     { value 6021; }
             enum tmnxEqFlashDiskFormatFinish    { value 6022; }
             enum tmnxEsaColdRebooted            { value 6023; }
+            enum tmnxEqCardFirmwareUpgradeStarted { value 6024; }
+            enum tmnxEqCardFirmwareUpgradeFailed { value 6025; }
+            enum tmnxChassisFanModuleMismatch   { value 6026; }
+            enum tmnxChassisFanModuleMismatchClr { value 6027; }
             enum tmnxChassisAntiTheftMismatch   { value 6028; }
             enum tmnxChassisAntiTheftMismatchClr { value 6029; }
+            enum tmnxChassisFanModuleOperUp     { value 6030; }
             enum tmnxBluetoothModuleConnectionChg { status obsolete; }
             enum tmnxIomRsrcUserOversubscribed  { status obsolete; }
             enum tmnxIomRsrcUserOversubscribedClr { status obsolete; }
@@ -1033,6 +1044,7 @@ module nokia-types-log {
             enum tmnxDhcpsLeaseOfferedExpired   { value 2034; }
             enum tmnxDhcpsAddrAllocationFailure { value 2035; }
             enum tmnxDhcpsPacketDropped         { value 2036; }
+            enum tmnxDhcpSvrSkipCustomOptionMapTE { value 2037; }
         }
         description "Events for dhcps module.";
     }
@@ -1709,6 +1721,7 @@ module nokia-types-log {
             enum tmnxNatPlLsnMemberPortUsageHigh { value 2046; }
             enum tmnxNatDetAddrMapOperStateChngd { value 2047; }
             enum tmnxNatVrtrOutRoutesHigh       { value 2048; }
+            enum tmnxNatMapERuleChange          { value 2049; }
             enum tmnxNatDetPlcyOperStateChanged { status obsolete; }
             enum tmnxNatDetMapOperStateChanged  { status obsolete; }
         }
@@ -2250,6 +2263,14 @@ module nokia-types-log {
             enum tacplusUserProfileInvalid      { value 2261; }
             enum tmnxSSHInvalidPacketLength     { value 2262; }
             enum tmnxSecureBootDisabledAlarm    { value 2263; }
+            enum tmnxSecSignedSwSatBootEvent    { value 2264; }
+            enum tacplusSingleConnNotSupported  { value 2265; }
+            enum fileCreatedByUser              { value 2266; }
+            enum fileDeletedByUser              { value 2267; }
+            enum fileModifiedByUser             { value 2268; }
+            enum fileCopiedByUser               { value 2269; }
+            enum fileMovedByUser                { value 2270; }
+            enum SSH_client_preserve_key_fail   { value 2272; }
         }
         description "Events for security module.";
     }
@@ -2372,6 +2393,7 @@ module nokia-types-log {
             enum svcEvpnMplsESDestTEPStateChgd  { value 2133; }
             enum svcBgpEvpnTepStateChgd         { value 2134; }
             enum svcSrv6FunctionOutOfResources  { value 2135; }
+            enum svcEvpnMHPortActEsDFStateChgd  { value 2136; }
             enum sapStatusChanged               { value 2203; }
             enum sapTlsMacAddrLimitAlarmRaised  { value 2204; }
             enum sapTlsMacAddrLimitAlarmCleared { value 2205; }
@@ -2847,6 +2869,8 @@ module nokia-types-log {
             enum vRtrBgpInstanceError           { value 2101; }
             enum vrtrIfIpTunnelOperStateChange  { value 2102; }
             enum tmnxVRtrBfdExtModifTxIntrvl    { value 2103; }
+            enum tmnxVRtrBfdSessParamConflict   { value 2104; }
+            enum tmnxVRtrBfdSessIntvlNoHwOffload { value 2105; }
         }
         description "Events for vrtr module.";
     }
@@ -2899,6 +2923,7 @@ module nokia-types-log {
             enum tmnxWlanGwUeCreationFail       { value 2024; }
             enum tmnxWlanGwUeReplacement        { value 2025; }
             enum tmnxWlanGwGrpMemberUsageHigh   { value 2026; }
+            enum tmnxWlanGwGtpUpPeerRtUnreach   { value 2027; }
         }
         description "Events for wlan-gw module.";
     }
@@ -3136,8 +3161,8 @@ module nokia-types-log {
     typedef log-name {
         type string {
             length "1..64";
-            pattern "(([1-9]|[1-9][0-9]|10[01])|([^\\s0-9_])|([^\\s0-9_]\\P{C}*[^\\s])|([0-9]+[^\\s0-9])|([0-9]+[^0-9]\\P{C}*[^\\s]))" {
-                error-message "'log-name' must be numeric 1..101 or alphanumeric not starting with underscore and without leading or trailing spaces";
+            pattern "(([1-9]|[1-9][0-9]|10[0-2])|([^\\s0-9_])|([^\\s0-9_]\\P{C}*[^\\s])|([0-9]+[^\\s0-9])|([0-9]+[^0-9]\\P{C}*[^\\s]))" {
+                error-message "'log-name' must be numeric 1..102 or alphanumeric not starting with underscore and without leading or trailing spaces";
             }
         }
         description "The value of log name specifies an event stream log.";

@@ -54,7 +54,7 @@ submodule nokia-conf-service {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-service {
         container service {
@@ -1816,7 +1816,7 @@ submodule nokia-conf-service {
 
                         leaf route-distinguisher {
                             type types-services:vpn-route-distinguisher;
-                            description "Route distinguisher for ES routes";
+                            description "RD for ES routes";
                         }
 
                         leaf hash-label-block {
@@ -1849,13 +1849,13 @@ submodule nokia-conf-service {
 
                             leaf ethernet-segment-name {
                                 type types-sros:named-item;
-                                description "Specify name for Ethernet segment";
+                                description "ES name";
                             }
 
                             leaf admin-state {
                                 type types-sros:admin-state;
                                 default "disable";
-                                description "Administrative state of the Ethernet segment instance";
+                                description "Administrative state of the ES instance";
                             }
 
                             leaf type {
@@ -1865,13 +1865,13 @@ submodule nokia-conf-service {
                                 }
                                 sros-ext:immutable;
                                 default "none";
-                                description "Ethernet Segment type";
+                                description "ES type";
                             }
 
                             leaf esi {
                                 type types-services:ethernet-segment-id-mac-based;
                                 sros-ext:auto-restart-to-modify;
-                                description "Ethernet segment identifier";
+                                description "ESI to signal in BGP-EVPN routes";
                             }
 
                             leaf orig-ip {
@@ -1888,11 +1888,34 @@ submodule nokia-conf-service {
 
                             leaf multi-homing-mode {
                                 type enumeration {
-                                    enum none                           { value 0; }
-                                    enum single-active                  { value 1; }
-                                    enum single-active-no-esi-label     { value 2; }
-                                    enum all-active                     { value 3; }
-                                    enum all-active-no-esi-label        { value 4; }
+                                    enum none {
+                                        value 0;
+                                        description "Keyword";
+                                    }
+                                    enum single-active {
+                                        value 1;
+                                        description "Keyword";
+                                    }
+                                    enum single-active-no-esi-label {
+                                        value 2;
+                                        description "Keyword";
+                                    }
+                                    enum all-active {
+                                        value 3;
+                                        description "Keyword";
+                                    }
+                                    enum all-active-no-esi-label {
+                                        value 4;
+                                        description "Keyword";
+                                    }
+                                    enum port-active {
+                                        value 5;
+                                        description "Configures port-active mode";
+                                    }
+                                    enum port-active-no-esi-label {
+                                        value 6;
+                                        description "Configures port-active mode with no ESI label";
+                                    }
                                 }
                                 sros-ext:auto-restart-to-modify;
                                 default "none";
@@ -1913,7 +1936,7 @@ submodule nokia-conf-service {
                                 }
                                 sros-ext:auto-restart-to-modify;
                                 default "none";
-                                description "EVPN Ethernet segment auto-ESI type";
+                                description "EVPN ES auto-ESI type";
                             }
 
                             leaf ac-df-capability {
@@ -1959,18 +1982,27 @@ submodule nokia-conf-service {
                                         range "0..100";
                                     }
                                     units "seconds";
-                                    description "Activation timer per Ethernet segment";
+                                    description "Activation timer per ES";
                                 }
 
                                 leaf service-carving-mode {
                                     type enumeration {
-                                        enum auto                           { value 1; }
-                                        enum manual                         { value 2; }
-                                        enum off                            { value 3; }
+                                        enum auto {
+                                            value 1;
+                                            description "Elect the DF based on the RFC 7432 algorithm";
+                                        }
+                                        enum manual {
+                                            value 2;
+                                            description "Elect the DF based on the manual configuration";
+                                        }
+                                        enum off {
+                                            value 3;
+                                            description "Elect the same DF with the lowest IP for all services";
+                                        }
                                     }
                                     sros-ext:auto-restart-to-modify;
                                     default "auto";
-                                    description "Mode of service carving enabled per EVPN associated with this Ethernet segment entry";
+                                    description "Service-carving mode for the ES";
                                 }
 
                                 container manual {
@@ -2061,7 +2093,7 @@ submodule nokia-conf-service {
                                             }
                                             sros-ext:immutable;
                                             default "revertive";
-                                            description "Method used to elect the DF";
+                                            description "DF election mode";
                                         }
 
                                         leaf value {
@@ -2069,7 +2101,7 @@ submodule nokia-conf-service {
                                                 range "0..65535";
                                             }
                                             default "32767";
-                                            description "Preference that is used to elect the designated forwarder";
+                                            description "Preference used to elect the DF";
                                         }
 
                                         leaf-list apply-groups {
@@ -2112,7 +2144,7 @@ submodule nokia-conf-service {
                                                 type leafref {
                                                     path "../../../../../../../../port/port-id";
                                                 }
-                                                description "Port multi-homed with this Ethernet segment entry";
+                                                description "Port multihomed with the ES entry";
                                             }
 
                                             leaf-list apply-groups {
@@ -2278,7 +2310,7 @@ submodule nokia-conf-service {
                                                 type leafref {
                                                     path "../../../../../../../../lag/lag-name";
                                                 }
-                                                description "LAG multihomed with the Ethernet segment entry";
+                                                description "LAG multihomed with the ES entry";
                                             }
 
                                             leaf-list apply-groups {
@@ -2870,16 +2902,22 @@ submodule nokia-conf-service {
 
                             leaf route-target-type {
                                 type enumeration {
-                                    enum evi-route-target               { value 1; }
-                                    enum evi-route-target-set           { value 2; }
+                                    enum evi-route-target {
+                                        value 1;
+                                        description "Advertise a separate AD per-ES route per service";
+                                    }
+                                    enum evi-route-target-set {
+                                        value 2;
+                                        description "Advertise a set of AD per-ES routes for all ES services";
+                                    }
                                 }
                                 default "evi-route-target";
-                                description "Method for the AD per-ES routes advertisement";
+                                description "Method for the AD per-ES route advertisement";
                             }
 
                             leaf route-distinguisher-ip-address {
                                 type types-sros:ipv4-address;
-                                description "IP address for route distinguisher for EVPN AD-ES routes";
+                                description "RD IP address for EVPN AD per-ES routes";
                             }
 
                             leaf extended-evi-range {

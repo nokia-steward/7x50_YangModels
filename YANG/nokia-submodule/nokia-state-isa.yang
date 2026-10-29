@@ -42,7 +42,7 @@ submodule nokia-state-isa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-isa {
         container isa {
@@ -1648,6 +1648,22 @@ submodule nokia-state-isa {
                         description "ESA-VM used by the ISA NAT MAP-T group.";
                     }
 
+                    leaf state {
+                        type enumeration {
+                            enum inactive                       { value 1; }
+                            enum active                         { value 2; }
+                            enum needs-reset                    { value 3; }
+                            enum resetting                      { value 4; }
+                            enum needs-reconcile                { value 5; }
+                            enum reconciling                    { value 6; }
+                            enum needs-audit                    { value 7; }
+                            enum auditing                       { value 8; }
+                            enum failed-bypass                  { value 9; }
+                            enum active-bypass                  { value 10; }
+                        }
+                        description "The state of this ESA-VM in the ISA NAT MAP-T group";
+                    }
+
                     container resources {
                         description "Enter the resources context";
 
@@ -1751,6 +1767,22 @@ submodule nokia-state-isa {
                         description "ESA-VM used by the ISA NAT MAP-E group.";
                     }
 
+                    leaf state {
+                        type enumeration {
+                            enum inactive                       { value 1; }
+                            enum active                         { value 2; }
+                            enum needs-reset                    { value 3; }
+                            enum resetting                      { value 4; }
+                            enum needs-reconcile                { value 5; }
+                            enum reconciling                    { value 6; }
+                            enum needs-audit                    { value 7; }
+                            enum auditing                       { value 8; }
+                            enum failed-bypass                  { value 9; }
+                            enum active-bypass                  { value 10; }
+                        }
+                        description "The state of this ESA-VM in the ISA NAT MAP-E group";
+                    }
+
                     container resources {
                         description "Enter the resources context";
 
@@ -1782,6 +1814,31 @@ submodule nokia-state-isa {
 
                             } // container downstream
 
+                            container upstream {
+                                description "Enter the upstream context";
+
+                                leaf value {
+                                    type yang:gauge64;
+                                    description "Actual consumed value";
+                                }
+
+                                leaf max {
+                                    type uint64;
+                                    description "The max value this resource can have, depending on the configuration";
+                                }
+
+                                leaf peak {
+                                    type yang:gauge64;
+                                    description "The peak value for the resource";
+                                }
+
+                                leaf peak-timestamp {
+                                    type types-sros:date-time;
+                                    description "The timestamp when the peak value was observed";
+                                }
+
+                            } // container upstream
+
                         } // container fragment-lists
 
                         container fragment-bufs {
@@ -1811,6 +1868,31 @@ submodule nokia-state-isa {
                                 }
 
                             } // container downstream
+
+                            container upstream {
+                                description "Enter the upstream context";
+
+                                leaf value {
+                                    type yang:gauge64;
+                                    description "Actual consumed value";
+                                }
+
+                                leaf max {
+                                    type uint64;
+                                    description "The max value this resource can have, depending on the configuration";
+                                }
+
+                                leaf peak {
+                                    type yang:gauge64;
+                                    description "The peak value for the resource";
+                                }
+
+                                leaf peak-timestamp {
+                                    type types-sros:date-time;
+                                    description "The timestamp when the peak value was observed";
+                                }
+
+                            } // container upstream
 
                         } // container fragment-bufs
 

@@ -32,7 +32,7 @@ module nokia-types-ptp {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef clock-type {
         type enumeration {
@@ -149,7 +149,7 @@ module nokia-types-ptp {
 
     typedef ptp-profile-identifier-type {
         type types-sros:hex-string;
-        description "The PTP profile identifier for a PTP port on a PTP clock.";
+        description "The PTP profile identifier for a PTP clock or a PTP port on a PTP clock.";
     }
 
     typedef port-encap-type {

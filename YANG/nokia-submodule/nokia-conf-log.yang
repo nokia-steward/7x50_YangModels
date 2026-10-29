@@ -41,7 +41,7 @@ submodule nokia-conf-log {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-log {
         container log {
@@ -18205,6 +18205,12 @@ submodule nokia-conf-log {
                     description "Minimum time that a file is retained on the media";
                 }
 
+                leaf format {
+                    type types-log:log-file-line-format;
+                    default "standard";
+                    description "Format used to output messages in the file";
+                }
+
                 leaf-list apply-groups {
                     type leafref {
                         path "../../../groups/group/name";
@@ -18912,7 +18918,7 @@ submodule nokia-conf-log {
 
             list log-id {
                 key "name";
-                max-elements 30;
+                max-elements 31;
                 description "Enter the log-id list instance";
 
                 leaf name {
@@ -18922,7 +18928,6 @@ submodule nokia-conf-log {
 
                 leaf admin-state {
                     type types-sros:admin-state;
-                    default "enable";
                     description "Administrative state of the log";
                 }
 
@@ -18937,6 +18942,9 @@ submodule nokia-conf-log {
                 }
 
                 leaf time-format {
+                    when "../name != '102'" {
+                        description "time-format is not supported on log-id 102";
+                    }
                     type enumeration {
                         enum utc                            { value 1; }
                         enum local                          { value 2; }
@@ -18957,6 +18965,20 @@ submodule nokia-conf-log {
                         path "../../filter/filter-name";
                     }
                     description "Event filter policy with the log destination";
+                }
+
+                leaf severity {
+                    type enumeration {
+                        enum emergency                      { value 0; }
+                        enum alert                          { value 1; }
+                        enum critical                       { value 2; }
+                        enum error                          { value 3; }
+                        enum warning                        { value 4; }
+                        enum notice                         { value 5; }
+                        enum informational                  { value 6; }
+                        enum debug                          { value 7; }
+                    }
+                    description "Send log events of specified severity and greater";
                 }
 
                 leaf-list apply-groups {
@@ -19107,6 +19129,15 @@ submodule nokia-conf-log {
                                 }
 
                             } // container cli
+
+                        }
+                        case openconfig-messages {
+
+                            leaf openconfig-messages {
+                                type empty;
+                                sros-ext:immutable;
+                                description "Send events to OpenConfig /system/messages container";
+                            }
 
                         }
                     }
@@ -19399,6 +19430,21 @@ submodule nokia-conf-log {
                         }
                     }
                     description "Syslog timestamp format";
+                }
+
+                leaf protocol-version {
+                    type enumeration {
+                        enum rfc3164 {
+                            value 0;
+                            description "Use the RFC 3164 version of syslog";
+                        }
+                        enum rfc5424 {
+                            value 1;
+                            description "Use the RFC 5424 version of syslog";
+                        }
+                    }
+                    default "rfc3164";
+                    description "Version of the syslog protocol to use";
                 }
 
                 leaf-list apply-groups {

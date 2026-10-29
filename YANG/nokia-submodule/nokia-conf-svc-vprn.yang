@@ -35,6 +35,7 @@ submodule nokia-conf-svc-vprn {
     include nokia-conf-groups;
     include nokia-conf-ipsec;
     include nokia-conf-isa;
+    include nokia-conf-isa-application-assurance-group;
     include nokia-conf-log;
     include nokia-conf-mcast-cac;
     include nokia-conf-mcast-mgmt;
@@ -100,7 +101,7 @@ submodule nokia-conf-svc-vprn {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-svc-vprn {
         list vprn {
@@ -391,6 +392,7 @@ submodule nokia-conf-svc-vprn {
                             } // list spf-nat-policy
 
                         } // container static-port-forwards
+
 
                         container nat44 {
                             description "Enter the nat44 context";
@@ -2192,6 +2194,19 @@ submodule nokia-conf-svc-vprn {
                         }
 
                     } // list map-domain
+
+                    list map-e-domain {
+                        key "domain-name";
+                        description "Add a list entry for map-e-domain";
+
+                        leaf domain-name {
+                            type leafref {
+                                path "../../../../../nat/map-e/domain/name";
+                            }
+                            description "MAP-E domain name";
+                        }
+
+                    } // list map-e-domain
 
                 } // container map
 
@@ -7177,6 +7192,17 @@ submodule nokia-conf-svc-vprn {
                         description "IPv4 source address";
                     }
 
+                    leaf source-addr {
+                        type types-sros:ip-address;
+                        description "IP source address";
+                    }
+
+                    leaf ipv6 {
+                        type boolean;
+                        default "false";
+                        description "Use the system interface IPv6 as the source address";
+                    }
+
                 } // container auto-discovery
 
                 container intersite-shared {
@@ -8625,7 +8651,14 @@ submodule nokia-conf-svc-vprn {
                         type leafref {
                             path "../../../../../anysec/mpls/service-encryption/encryption-group/group-name";
                         }
+                        sros-ext:auto-restart-to-modify;
                         description "ANYsec encryption group name";
+                    }
+
+                    leaf static-service-label {
+                        type types-sros:mpls-label-or-zero;
+                        sros-ext:auto-restart-to-modify;
+                        description "Static MPLS service label for this VPRN instance";
                     }
 
                     leaf-list apply-groups {
@@ -8981,6 +9014,14 @@ submodule nokia-conf-svc-vprn {
                         description "Resolution options for routes";
                     }
 
+                    leaf anysec-encryption-group {
+                        type leafref {
+                            path "../../../../../anysec/segment-routing-v6/service-encryption/encryption-group/group-name";
+                        }
+                        sros-ext:auto-restart-to-modify;
+                        description "ANYsec encryption group for the SRv6 instance";
+                    }
+
                     leaf-list apply-groups {
                         type leafref {
                             path "../../../../../groups/group/name";
@@ -9164,6 +9205,24 @@ submodule nokia-conf-svc-vprn {
 
                     } // container upa-trigger
 
+                    container gateway-ip {
+                        description "Enter the gateway-ip context";
+
+                        leaf advertise {
+                            type boolean;
+                            sros-ext:auto-restart-to-modify;
+                            default "false";
+                            description "Enable the advertisement of GW-IP in IP prefix routes";
+                        }
+
+                        leaf resolve {
+                            type boolean;
+                            sros-ext:auto-restart-to-modify;
+                            default "false";
+                            description "Enable the resolution of GW-IP in IP prefix routes";
+                        }
+
+                    } // container gateway-ip
 
                 } // list segment-routing-v6
 
@@ -9427,6 +9486,11 @@ submodule nokia-conf-svc-vprn {
                             path "../../../../../anysec/mpls/service-encryption/encryption-group/group-name";
                         }
                         description "ANYsec encryption group name";
+                    }
+
+                    leaf static-service-label {
+                        type types-sros:mpls-label-or-zero;
+                        description "Static MPLS service label for this VPRN instance";
                     }
 
                     container vrf-target {
@@ -9723,6 +9787,14 @@ submodule nokia-conf-svc-vprn {
                         description "Enable flexible algorithm class-based forwarding";
                     }
 
+                    leaf anysec-encryption-group {
+                        type leafref {
+                            path "../../../../../anysec/segment-routing-v6/service-encryption/encryption-group/group-name";
+                        }
+                        sros-ext:auto-restart-to-modify;
+                        description "ANYsec encryption group for the SRv6 instance";
+                    }
+
                     leaf-list apply-groups {
                         type leafref {
                             path "../../../../../groups/group/name";
@@ -9969,6 +10041,12 @@ submodule nokia-conf-svc-vprn {
                             description "Administrative state of the TACACS+ protocol";
                         }
 
+                        leaf single-connection {
+                            type boolean;
+                            default "false";
+                            description "Enable TACACS+ single connection mode";
+                        }
+
                         leaf server-timeout {
                             type types-sros:time-duration {
                                 range "1..90";
@@ -10159,14 +10237,13 @@ submodule nokia-conf-svc-vprn {
                             leaf port {
                                 type types-qos:tcp-udp-match-port;
                                 default "49";
-                                description "TCP port ID on which to contact TACACS+ server";
+                                description "TCP port to communicate with the TACACS+ server";
                             }
 
                             leaf secret {
                                 type types-sros:encrypted-leaf {
-                                    length "1..254";
+                                    length "0..254";
                                 }
-                                mandatory true;
                                 description "Secret key to access the TACACS+ server";
                             }
 
@@ -10187,6 +10264,39 @@ submodule nokia-conf-svc-vprn {
                                 ordered-by user;
                                 description "Exclude a configuration group at this level";
                             }
+
+                            container tls-connection {
+                                description "Enter the tls-connection context";
+
+                                leaf tls-client-profile {
+                                    type leafref {
+                                        path "../../../../../../../../system/security/tls/client-tls-profile/client-profile-name";
+                                    }
+                                    description "TLS client profile for the TACACS+ server TLS connection.";
+                                }
+
+                                leaf tls-port {
+                                    type types-qos:tcp-udp-match-port;
+                                    default "300";
+                                    description "TCP port for the TLS connection to the TACACS+ server.";
+                                }
+
+                                container sni {
+                                    description "Enter the sni context";
+
+                                    leaf host-name {
+                                        type types-sros:fully-qualified-domain-name {
+                                            length "1..253";
+                                            pattern "[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*" {
+                                                error-message "'host-name' must contain valid lowercase 1 to 63 character DNS labels";
+                                            }
+                                        }
+                                        description "Server DNS host name sent as TLS SNI when connecting to the TACACS+ server.";
+                                    }
+
+                                } // container sni
+
+                            } // container tls-connection
 
                         } // list server
 
@@ -10250,7 +10360,7 @@ submodule nokia-conf-svc-vprn {
                                 range "1..65535";
                             }
                             default "1812";
-                            description "UDP port number on which to contact RADIUS server";
+                            description "UDP port to communicate with the RADIUS server";
                         }
 
                         leaf use-default-template {
@@ -10317,14 +10427,14 @@ submodule nokia-conf-svc-vprn {
                                 type types-sros:encrypted-leaf {
                                     length "1..166";
                                 }
-                                description "Secret key to access the RADIUS server";
+                                description "Secret key for RADIUS over UDP";
                             }
 
                             leaf tls-client-profile {
                                 type leafref {
                                     path "../../../../../../../system/security/tls/client-tls-profile/client-profile-name";
                                 }
-                                description "TLS client profile for the RADIUS server";
+                                description "TLS profile for RADIUS over TLS";
                             }
 
                             leaf-list apply-groups {
@@ -11603,6 +11713,7 @@ submodule nokia-conf-svc-vprn {
                         default "false";
                         description "Enable legacy-mode of BGP error handling";
                     }
+
 
                 } // container error-handling
 
@@ -13038,6 +13149,7 @@ submodule nokia-conf-svc-vprn {
                             description "Tolerate non-critical errors in UPDATE messages";
                         }
 
+
                     } // container error-handling
 
                     container damp-peer-oscillations {
@@ -13107,6 +13219,57 @@ submodule nokia-conf-svc-vprn {
                         } // container advertise
 
                     } // container bfd-strict-mode
+
+                    container bfd {
+                        presence "Enable the bfd context";
+                        description "Enable the bfd context";
+
+                        leaf transmit-interval {
+                            type uint32 {
+                                range "10..100000";
+                            }
+                            units "milliseconds";
+                            default "100";
+                            description "Transmit interval for the BFD session";
+                        }
+
+                        leaf receive-interval {
+                            type uint32 {
+                                range "10..100000";
+                            }
+                            units "milliseconds";
+                            default "100";
+                            description "Receive interval for the BFD session";
+                        }
+
+                        leaf multiplier {
+                            type uint32 {
+                                range "1..20";
+                            }
+                            default "3";
+                            description "Multiplier for the BFD session";
+                        }
+
+                        leaf type {
+                            type enumeration {
+                                enum cpm-np {
+                                    value 1;
+                                    description "Processed by the network processor on the CPM";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "System determines the appropriate session type";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Processed on the forwarding plane hardware";
+                                }
+                            }
+                            default "auto";
+                            description "Type of BFD session endpoint to use";
+                        }
+
+                    } // container bfd
 
                     container import {
                         presence "Enable the import context";
@@ -14004,6 +14167,7 @@ submodule nokia-conf-svc-vprn {
                             description "Tolerate non-critical errors in UPDATE messages";
                         }
 
+
                     } // container error-handling
 
                     container damp-peer-oscillations {
@@ -14073,6 +14237,57 @@ submodule nokia-conf-svc-vprn {
                         } // container advertise
 
                     } // container bfd-strict-mode
+
+                    container bfd {
+                        presence "Enable the bfd context";
+                        description "Enable the bfd context";
+
+                        leaf transmit-interval {
+                            type uint32 {
+                                range "10..100000";
+                            }
+                            units "milliseconds";
+                            default "100";
+                            description "Transmit interval for the BFD session";
+                        }
+
+                        leaf receive-interval {
+                            type uint32 {
+                                range "10..100000";
+                            }
+                            units "milliseconds";
+                            default "100";
+                            description "Receive interval for the BFD session";
+                        }
+
+                        leaf multiplier {
+                            type uint32 {
+                                range "1..20";
+                            }
+                            default "3";
+                            description "Multiplier for the BFD session";
+                        }
+
+                        leaf type {
+                            type enumeration {
+                                enum cpm-np {
+                                    value 1;
+                                    description "Processed by the network processor on the CPM";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "System determines the appropriate session type";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Processed on the forwarding plane hardware";
+                                }
+                            }
+                            default "auto";
+                            description "Type of BFD session endpoint to use";
+                        }
+
+                    } // container bfd
 
                     container hold-time {
                         description "Enter the hold-time context";
@@ -16312,7 +16527,7 @@ submodule nokia-conf-svc-vprn {
                                             type boolean;
                                             sros-ext:auto-restart-to-modify;
                                             default "false";
-                                            description "Sustain the automatic establishment";
+                                            description "Enable sustain mode for auto-establish tunnels";
                                         }
 
                                         leaf pre-shared-key {
@@ -16438,7 +16653,7 @@ submodule nokia-conf-svc-vprn {
                                                 }
                                                 sros-ext:auto-restart-to-modify;
                                                 default "0";
-                                                description "The metric to be used for reverse route injection";
+                                                description "Metric to use for reverse route injection";
                                             }
 
                                             leaf preference {
@@ -16447,7 +16662,7 @@ submodule nokia-conf-svc-vprn {
                                                 }
                                                 sros-ext:auto-restart-to-modify;
                                                 default "0";
-                                                description "The preference to be used for reverse route injection";
+                                                description "Preference to use for reverse route injection";
                                             }
 
                                         } // container reverse-route-injection
@@ -16908,7 +17123,7 @@ submodule nokia-conf-svc-vprn {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD transmit interval over this interface";
+                            description "Transmit interval";
                         }
 
                         leaf receive {
@@ -16917,7 +17132,7 @@ submodule nokia-conf-svc-vprn {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD receive interval over this interface";
+                            description "Receive interval";
                         }
 
                         leaf multiplier {
@@ -16938,12 +17153,30 @@ submodule nokia-conf-svc-vprn {
 
                         leaf type {
                             type enumeration {
-                                enum cpm-np                         { value 1; }
-                                enum auto                           { value 2; }
-                                enum fp                             { value 3; }
+                                enum cpm-np {
+                                    value 1;
+                                    description "Terminate on the CPM network processor";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "Terminate on the system-selected termination point";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Terminate on the forwarding plane";
+                                }
                             }
                             default "auto";
                             description "Local termination point for the BFD session";
+                        }
+
+                        leaf padded-size {
+                            type uint32 {
+                                range "0|52..1512";
+                            }
+                            units "bytes";
+                            default "0";
+                            description "BFD payload padded size";
                         }
 
                     } // container bfd
@@ -21398,6 +21631,13 @@ submodule nokia-conf-svc-vprn {
                                 description "Maximum number of recent records";
                             }
 
+                            leaf removed-tunnels {
+                                type uint32 {
+                                    range "1..256";
+                                }
+                                description "Maximum number of removed tunnels to record keys";
+                            }
+
                         } // container max-history-key-records
 
                         container mixed-tunnel-mode {
@@ -21660,7 +21900,7 @@ submodule nokia-conf-svc-vprn {
                                             type boolean;
                                             sros-ext:auto-restart-to-modify;
                                             default "false";
-                                            description "Sustain the automatic establishment";
+                                            description "Enable sustain mode for auto-establish tunnels";
                                         }
 
                                         leaf pre-shared-key {
@@ -21786,7 +22026,7 @@ submodule nokia-conf-svc-vprn {
                                                 }
                                                 sros-ext:auto-restart-to-modify;
                                                 default "0";
-                                                description "The metric to be used for reverse route injection";
+                                                description "Metric to use for reverse route injection";
                                             }
 
                                             leaf preference {
@@ -21795,7 +22035,7 @@ submodule nokia-conf-svc-vprn {
                                                 }
                                                 sros-ext:auto-restart-to-modify;
                                                 default "0";
-                                                description "The preference to be used for reverse route injection";
+                                                description "Preference to use for reverse route injection";
                                             }
 
                                         } // container reverse-route-injection
@@ -22655,7 +22895,7 @@ submodule nokia-conf-svc-vprn {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD transmit interval over this interface";
+                            description "Transmit interval";
                         }
 
                         leaf receive {
@@ -22664,7 +22904,7 @@ submodule nokia-conf-svc-vprn {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD receive interval over this interface";
+                            description "Receive interval";
                         }
 
                         leaf multiplier {
@@ -22685,12 +22925,30 @@ submodule nokia-conf-svc-vprn {
 
                         leaf type {
                             type enumeration {
-                                enum cpm-np                         { value 1; }
-                                enum auto                           { value 2; }
-                                enum fp                             { value 3; }
+                                enum cpm-np {
+                                    value 1;
+                                    description "Terminate on the CPM network processor";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "Terminate on the system-selected termination point";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Terminate on the forwarding plane";
+                                }
                             }
                             default "auto";
                             description "Local termination point for the BFD session";
+                        }
+
+                        leaf padded-size {
+                            type uint32 {
+                                range "0|52..1512";
+                            }
+                            units "bytes";
+                            default "0";
+                            description "BFD payload padded size";
                         }
 
                     } // container bfd
@@ -22905,13 +23163,13 @@ submodule nokia-conf-svc-vprn {
                                     leaf na {
                                         type boolean;
                                         default "false";
-                                        description "Create route based on IA_NA prefix option in relay-reply message";
+                                        description "Create route based on the IA_NA option";
                                     }
 
                                     leaf ta {
                                         type boolean;
                                         default "false";
-                                        description "Create route based on IA_TA prefix option in relay-reply message";
+                                        description "Create route based on IA_TA option";
                                     }
 
                                     container pd {
@@ -22921,7 +23179,7 @@ submodule nokia-conf-svc-vprn {
                                         leaf exclude {
                                             type boolean;
                                             default "false";
-                                            description "Create back hole route based on prefix exclude option in relay-reply message";
+                                            description "Create blackhole route based on prefix exclude option";
                                         }
 
                                     } // container pd
@@ -24254,7 +24512,7 @@ submodule nokia-conf-svc-vprn {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD transmit interval over this interface";
+                            description "Transmit interval";
                         }
 
                         leaf receive {
@@ -24263,7 +24521,7 @@ submodule nokia-conf-svc-vprn {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD receive interval over this interface";
+                            description "Receive interval";
                         }
 
                         leaf multiplier {
@@ -24290,6 +24548,15 @@ submodule nokia-conf-svc-vprn {
                             }
                             default "auto";
                             description "Local termination point for the BFD session";
+                        }
+
+                        leaf padded-size {
+                            type uint32 {
+                                range "0|52..1512";
+                            }
+                            units "bytes";
+                            default "0";
+                            description "BFD payload padded size";
                         }
 
                     } // container bfd
@@ -27571,6 +27838,15 @@ submodule nokia-conf-svc-vprn {
                         description "Syslog timestamp format";
                     }
 
+                    leaf protocol-version {
+                        type enumeration {
+                            enum rfc3164                        { value 0; }
+                            enum rfc5424                        { value 1; }
+                        }
+                        default "rfc3164";
+                        description "Version of the syslog protocol to use";
+                    }
+
                     leaf-list apply-groups {
                         type leafref {
                             path "../../../../../groups/group/name";
@@ -28703,6 +28979,7 @@ submodule nokia-conf-svc-vprn {
                 } // list remote-host
 
             } // list ip-transport
+
 
             uses conf-svc-vprn-dhcp-server;
             uses conf-svc-vprn-isis;

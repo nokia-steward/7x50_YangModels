@@ -36,7 +36,7 @@ submodule nokia-conf-anysec {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-anysec {
         container anysec {
@@ -254,7 +254,7 @@ submodule nokia-conf-anysec {
 
                             leaf peer-ip-address {
                                 type types-sros:ip-unicast-address;
-                                description "Peer IP address of the node SID";
+                                description "Peer IP address for the encryption group";
                             }
 
                             leaf admin-state {
@@ -357,7 +357,7 @@ submodule nokia-conf-anysec {
 
                             leaf peer-ip-address {
                                 type types-sros:ip-unicast-address;
-                                description "Peer IP address of the node SID";
+                                description "Peer IP address for the encryption group";
                             }
 
                             leaf admin-state {
@@ -394,6 +394,111 @@ submodule nokia-conf-anysec {
 
             } // container mpls
 
+            container segment-routing-v6 {
+                description "Enter the segment-routing-v6 context";
+
+                container service-encryption {
+                    description "Enter the service-encryption context";
+
+                    list encryption-group {
+                        key "group-name";
+                        max-elements 1023;
+                        description "Enter the encryption-group list instance";
+
+                        leaf group-name {
+                            type types-sros:named-item;
+                            description "ANYsec encryption group name";
+                        }
+
+                        leaf encryption-label {
+                            type types-sros:mpls-label-or-zero;
+                            sros-ext:auto-restart-to-modify;
+                            description "Label identifying packets sent from the node to peers";
+                        }
+
+                        leaf ca-name {
+                            type leafref {
+                                path "../../../../../macsec/connectivity-association/ca-name";
+                            }
+                            sros-ext:auto-restart-to-modify;
+                            description "Connectivity association for the encryption group";
+                        }
+
+                        leaf admin-state {
+                            type types-sros:admin-state;
+                            default "disable";
+                            description "Administrative state of the encryption group";
+                        }
+
+                        leaf local-address {
+                            type types-sros:ip-unicast-address;
+                            sros-ext:auto-restart-to-modify;
+                            description "Local IP address used as the MKA source";
+                        }
+
+                        leaf-list apply-groups {
+                            type leafref {
+                                path "../../../../../groups/group/name";
+                            }
+                            max-elements 8;
+                            ordered-by user;
+                            sros-ext:auto-restart-to-modify;
+                            description "Apply a configuration group at this level";
+                        }
+
+                        leaf-list apply-groups-exclude {
+                            type leafref {
+                                path "../../../../../groups/group/name";
+                            }
+                            max-elements 8;
+                            ordered-by user;
+                            sros-ext:auto-restart-to-modify;
+                            description "Exclude a configuration group at this level";
+                        }
+
+                        list peer {
+                            key "peer-ip-address";
+                            max-elements 1023;
+                            description "Enter the peer list instance";
+
+                            leaf peer-ip-address {
+                                type types-sros:ip-unicast-address;
+                                description "Peer IP address for the encryption group";
+                            }
+
+                            leaf admin-state {
+                                type types-sros:admin-state;
+                                default "disable";
+                                description "Administrative state of the encryption group peer";
+                            }
+
+                            leaf-list apply-groups {
+                                type leafref {
+                                    path "../../../../../../groups/group/name";
+                                }
+                                max-elements 8;
+                                ordered-by user;
+                                sros-ext:auto-restart-to-modify;
+                                description "Apply a configuration group at this level";
+                            }
+
+                            leaf-list apply-groups-exclude {
+                                type leafref {
+                                    path "../../../../../../groups/group/name";
+                                }
+                                max-elements 8;
+                                ordered-by user;
+                                sros-ext:auto-restart-to-modify;
+                                description "Exclude a configuration group at this level";
+                            }
+
+                        } // list peer
+
+                    } // list encryption-group
+
+                } // container service-encryption
+
+            } // container segment-routing-v6
 
             container security-termination-policies {
                 status obsolete;
@@ -653,6 +758,13 @@ submodule nokia-conf-anysec {
                         description "Allow EL and ELI by this encryption group";
                     }
 
+                    leaf local-address {
+                        status obsolete;
+                        type types-sros:ip-unicast-address;
+                        sros-ext:auto-restart-to-modify;
+                        description "Local IP address used as the MKA source";
+                    }
+
                     leaf-list apply-groups {
                         status obsolete;
                         type leafref {
@@ -712,7 +824,7 @@ submodule nokia-conf-anysec {
                         leaf peer-ip-address {
                             status obsolete;
                             type types-sros:ip-unicast-address;
-                            description "Peer IP address of the node SID";
+                            description "Peer IP address for the encryption group";
                         }
 
                         leaf admin-state {
@@ -818,6 +930,13 @@ submodule nokia-conf-anysec {
                         description "Administrative state of the encryption group";
                     }
 
+                    leaf local-address {
+                        status obsolete;
+                        type types-sros:ip-unicast-address;
+                        sros-ext:auto-restart-to-modify;
+                        description "Local IP address used as the MKA source";
+                    }
+
                     leaf-list apply-groups {
                         status obsolete;
                         type leafref {
@@ -849,7 +968,7 @@ submodule nokia-conf-anysec {
                         leaf peer-ip-address {
                             status obsolete;
                             type types-sros:ip-unicast-address;
-                            description "Peer IP address of the node SID";
+                            description "Peer IP address for the encryption group";
                         }
 
                         leaf admin-state {

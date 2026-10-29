@@ -36,7 +36,7 @@ submodule nokia-conf-macsec {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-macsec {
         container macsec {
@@ -186,6 +186,15 @@ submodule nokia-conf-macsec {
                     sros-ext:auto-restart-to-modify;
                     default "static";
                     description "Type of PSK to use";
+                }
+
+                leaf mka-version {
+                    type enumeration {
+                        enum 1                              { value 1; }
+                        enum 2                              { value 2; }
+                    }
+                    default "2";
+                    description "Version of the MKA protocol announced in the transmitted MKPDUs.";
                 }
 
                 leaf-list apply-groups {
@@ -341,7 +350,7 @@ submodule nokia-conf-macsec {
 
                     leaf generate-interval {
                         type uint32 {
-                            range "10..65000";
+                            range "10..86400";
                         }
                         units "minutes";
                         default "1440";

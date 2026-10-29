@@ -34,7 +34,7 @@ submodule nokia-state-bfd {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-bfd {
         container bfd {
@@ -280,6 +280,12 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                 } // container state
@@ -608,6 +614,13 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        status deprecated;
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                 } // container state
@@ -952,6 +965,12 @@ submodule nokia-state-bfd {
                         description "Negotiated multiplier.";
                     }
 
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
+                    }
+
                 } // container state
 
                 container local-parameters {
@@ -1243,6 +1262,12 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                 } // container state
@@ -1540,6 +1565,12 @@ submodule nokia-state-bfd {
                         description "Negotiated multiplier.";
                     }
 
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
+                    }
+
                 } // container state
 
                 container statistics {
@@ -1748,6 +1779,12 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                 } // container state
@@ -1961,6 +1998,12 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                 } // container state
@@ -2251,6 +2294,12 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                     leaf path-id {
@@ -2575,6 +2624,12 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                     leaf path-id {
@@ -2909,6 +2964,12 @@ submodule nokia-state-bfd {
                         description "Negotiated multiplier.";
                     }
 
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
+                    }
+
                     leaf lag-id {
                         type uint32;
                         description "Number of the lag on which this session is established.";
@@ -3215,6 +3276,12 @@ submodule nokia-state-bfd {
                         type uint32;
                         units "milliseconds";
                         description "Negotiated multiplier.";
+                    }
+
+                    leaf padded-size {
+                        type uint32;
+                        units "bytes";
+                        description "Size to which the BFD payload is padded in hardware.";
                     }
 
                     leaf svc-id {
@@ -3548,6 +3615,12 @@ submodule nokia-state-bfd {
                             description "Negotiated multiplier.";
                         }
 
+                        leaf padded-size {
+                            type uint32;
+                            units "bytes";
+                            description "Size to which the BFD payload is padded in hardware.";
+                        }
+
                     } // container state
 
                     container local-parameters {
@@ -3868,6 +3941,12 @@ submodule nokia-state-bfd {
                             type uint32;
                             units "milliseconds";
                             description "Negotiated multiplier.";
+                        }
+
+                        leaf padded-size {
+                            type uint32;
+                            units "bytes";
+                            description "Size to which the BFD payload is padded in hardware.";
                         }
 
                     } // container state

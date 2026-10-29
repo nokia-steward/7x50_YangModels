@@ -35,7 +35,7 @@ submodule nokia-state-isa-video-group {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-isa-video-group {
         list video-group {
@@ -1510,6 +1510,83 @@ submodule nokia-state-isa-video-group {
                         "The value indicates the number of
                          active Real Time Transport Control Protocol (RTCP) sessions allocated
                          for Fast Channel Change (FCC) and Retransmission (RET) on this virtual application.";
+                }
+
+                leaf rtcp-glb-fcc-in-lim {
+                    type yang:counter64;
+                    description
+                        "The value indicates the total number of
+                         FCC requests within the limit.";
+                }
+
+                leaf rtcp-glb-ret-in-lim {
+                    type yang:counter64;
+                    description
+                        "The value indicates the total number of
+                         RET requests within the limit.";
+                }
+
+                leaf rtcp-glb-fcc-ex-lim {
+                    type yang:counter64;
+                    description
+                        "The value indicates the total number of
+                         FCC requests exceeded the limit.";
+                }
+
+                leaf rtcp-glb-ret-ex-lim {
+                    type yang:counter64;
+                    description
+                        "The value indicates the total number of
+                         RET requests exceeded the limit.";
+                }
+
+                leaf rtcp-ovl-drop {
+                    type yang:counter64;
+                    description
+                        "The value indicates the total number of
+                         RTCP packets dropped due to overload.";
+                }
+
+                leaf rtcp-max-drop-prd {
+                    type yang:counter64;
+                    description
+                        "The value indicates the maximum number of
+                         RTCP packets dropped per period.";
+                }
+
+                leaf rtcp-avg-req {
+                    type yang:counter64;
+                    description "The average number of RTCP requests processed per second.";
+                }
+
+                leaf rtcp-avg-req-in-lim {
+                    type yang:counter64;
+                    description "The average number of RTCP requests processed per second within limit.";
+                }
+
+                leaf rtcp-avg-req-ex-lim {
+                    type yang:counter64;
+                    description "The average number of RTCP requests processed per second exceeded limit.";
+                }
+
+                leaf rtcp-cls-fcc-in-lim {
+                    type yang:gauge32;
+                    description "The number of clients currently within limit for FCC.";
+                }
+
+                leaf rtcp-cls-fcc-ex-lim {
+                    type yang:counter32;
+                    description "The number of clients currently outside limit for FCC.";
+                }
+
+                leaf rtcp-cls-ret-in-lim {
+                    type yang:gauge32;
+                    description "The number of clients currently within limit for RET.";
+                }
+
+                leaf rtcp-cls-ret-ex-lim {
+                    type yang:counter32;
+                    description "The number of clients currently outside limit for RET.";
                 }
 
                 leaf peak-last-hour-abs-ret-bw {

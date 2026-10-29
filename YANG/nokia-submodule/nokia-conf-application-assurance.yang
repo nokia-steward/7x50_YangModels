@@ -35,7 +35,7 @@ submodule nokia-conf-application-assurance {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-application-assurance {
         container application-assurance {
@@ -272,6 +272,52 @@ submodule nokia-conf-application-assurance {
 
             } // list aarp
 
+            list aa-transit-redundancy {
+                key "aatr-id";
+                max-elements 16;
+                description "Enter the aa-transit-redundancy list instance";
+
+                leaf aatr-id {
+                    type types-services:bsx-aatr-id;
+                    description "AATR instance ID";
+                }
+
+                leaf admin-state {
+                    type types-sros:admin-state;
+                    default "disable";
+                    description "Administrative state of the AATR instance";
+                }
+
+                leaf description {
+                    type types-sros:description;
+                    description "Text description";
+                }
+
+                leaf peer {
+                    type types-sros:ip-unicast-address;
+                    sros-ext:auto-restart-to-modify;
+                    description "AATR instance peer";
+                }
+
+                leaf-list apply-groups {
+                    type leafref {
+                        path "../../../groups/group/name";
+                    }
+                    max-elements 8;
+                    ordered-by user;
+                    description "Apply a configuration group at this level";
+                }
+
+                leaf-list apply-groups-exclude {
+                    type leafref {
+                        path "../../../groups/group/name";
+                    }
+                    max-elements 8;
+                    ordered-by user;
+                    description "Exclude a configuration group at this level";
+                }
+
+            } // list aa-transit-redundancy
 
             container cflowd {
                 description "Enter the cflowd context";

@@ -33,7 +33,7 @@ module nokia-sr-openconfig-platform-transceiver-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:config/oc-transceiver:form-factor-preconf {
         deviate not-supported;
@@ -124,15 +124,30 @@ module nokia-sr-openconfig-platform-transceiver-deviations {
         deviate not-supported;
     }
 
-
-
-
-
-
-
-    deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage {
+    deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:avg {
         deviate not-supported;
     }
+
+    deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:min {
+        deviate not-supported;
+    }
+
+    deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:max {
+        deviate not-supported;
+    }
+
+    deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:interval {
+        deviate not-supported;
+    }
+
+    deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:min-time {
+        deviate not-supported;
+    }
+
+    deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:max-time {
+        deviate not-supported;
+    }
+
 
     deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:avg {
         deviate not-supported;

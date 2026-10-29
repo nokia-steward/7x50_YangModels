@@ -32,7 +32,7 @@ module nokia-sr-openconfig-terminal-device-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     deviation /oc-opt-term:terminal-device {
         deviate not-supported;
@@ -61,11 +61,6 @@ module nokia-sr-openconfig-terminal-device-deviations {
     deviation /oc-platform:components/oc-platform:component/oc-opt-term:optical-channel/oc-opt-term:config/oc-opt-term:operational-mode {
         deviate add {
             default "0";
-        }
-        deviate replace {
-            type uint16 {
-                range "0..9|1021|1022|1025..1029|1033|1037|1043|1051|1061|1065|1069|1081..1083|1085|1088..1092|1169|1210|1211|1220|1221|1240|1241|2001..2011";
-            }
         }
     }
 
@@ -96,11 +91,6 @@ module nokia-sr-openconfig-terminal-device-deviations {
     deviation /oc-platform:components/oc-platform:component/oc-opt-term:optical-channel/oc-opt-term:state/oc-opt-term:operational-mode {
         deviate add {
             default "0";
-        }
-        deviate replace {
-            type uint16 {
-                range "0..9|1021|1022|1025..1029|1033|1037|1043|1051|1061|1065|1069|1081..1083|1085|1088..1092|1169|1210|1211|1220|1221|1240|1241|2001..2011";
-            }
         }
     }
 
@@ -204,9 +194,6 @@ module nokia-sr-openconfig-terminal-device-deviations {
         deviate not-supported;
     }
 
-    deviation /oc-platform:components/oc-platform:component/oc-opt-term:optical-channel/oc-opt-term:state/oc-opt-term:fec-uncorrectable-blocks {
-        deviate not-supported;
-    }
 
     deviation /oc-platform:components/oc-platform:component/oc-opt-term:optical-channel/oc-opt-term:state/oc-opt-term:pre-fec-ber/oc-opt-term:min-time {
         deviate not-supported;

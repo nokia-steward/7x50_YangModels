@@ -37,7 +37,7 @@ submodule nokia-conf-mirror {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-mirror {
         container mirror {
@@ -688,7 +688,8 @@ submodule nokia-conf-mirror {
                     }
 
                     leaf file-url {
-                        type types-sros:ts-url-or-sftp-512;
+                        status obsolete;
+                        type types-sros:ts-remote-url-ftp-sftp-512;
                         description "URL and file name for packet capture transfer";
                     }
 
@@ -714,6 +715,47 @@ submodule nokia-conf-mirror {
                         ordered-by user;
                         description "Exclude a configuration group at this level";
                     }
+
+                    container pcap-file-location {
+                        description "Enter the pcap-file-location context";
+
+                        leaf url {
+                            type types-sros:ts-remote-url-ftp-sftp-512;
+                            description "Remote destination file without username or password";
+                        }
+
+                        leaf password {
+                            type types-sros:encrypted-leaf {
+                                length "1..126";
+                            }
+                            description "Password used to access the remote URL";
+                        }
+
+                        leaf username {
+                            type types-sros:encrypted-leaf {
+                                length "1..126";
+                            }
+                            description "Username used to access the remote URL";
+                        }
+
+                    } // container pcap-file-location
+
+                    container ssh-private-key {
+                        description "Enter the ssh-private-key context";
+
+                        leaf url {
+                            type types-sros:cflash-without-slot-url;
+                            description "Location of the file with the SSH client private key";
+                        }
+
+                        leaf passphrase {
+                            type types-sros:encrypted-leaf {
+                                length "1..166";
+                            }
+                            description "Passphrase protecting the SSH client private key file";
+                        }
+
+                    } // container ssh-private-key
 
                 } // list pcap
 

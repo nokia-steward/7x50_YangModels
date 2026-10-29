@@ -35,7 +35,7 @@ submodule nokia-state-router-nat {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-router-nat {
         container nat {
@@ -1267,7 +1267,7 @@ submodule nokia-state-router-nat {
                         type leafref {
                             path "../../../../../service/nat/map-t/domain/name";
                         }
-                        description "The name of the MAP domain.";
+                        description "The name of the MAP-T domain.";
                     }
 
                     container statistics {
@@ -1337,6 +1337,107 @@ submodule nokia-state-router-nat {
                     } // container statistics
 
                 } // list map-domain
+
+                list map-e-domain {
+                    key "domain-name";
+                    description "Enter the map-e-domain list instance";
+
+                    leaf domain-name {
+                        type leafref {
+                            path "../../../../../service/nat/map-e/domain/name";
+                        }
+                        description "The name of the MAP-E domain.";
+                    }
+
+                    container statistics {
+                        status obsolete;
+                        description "Enter the statistics context";
+
+                        container upstream {
+                            status obsolete;
+                            description "Enter the upstream context";
+
+                            leaf forwarded-packets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of packets forwarded in the upstream direction";
+                            }
+
+                            leaf forwarded-octets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of octets forwarded in the upstream direction";
+                            }
+
+                            leaf dropped-packets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of packets dropped in the upstream direction";
+                            }
+
+                            leaf dropped-octets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of octets dropped in the upstream direction";
+                            }
+
+                        } // container upstream
+
+                        container downstream {
+                            status obsolete;
+                            description "Enter the downstream context";
+
+                            leaf forwarded-packets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of packets forwarded in the downstream direction";
+                            }
+
+                            leaf forwarded-octets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of octets forwarded in the downstream direction";
+                            }
+
+                            leaf dropped-packets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of packets dropped in the downstream direction";
+                            }
+
+                            leaf dropped-octets {
+                                status obsolete;
+                                type yang:counter64;
+                                description "Number of octets dropped in the downstream direction";
+                            }
+
+                        } // container downstream
+
+                    } // container statistics
+
+                } // list map-e-domain
+
+                container resource-usage {
+                    description "Enter the resource-usage context";
+
+                    leaf number-of-map-subscribers {
+                        type yang:gauge64;
+                        description
+                            "Number of configured MAP-E subscribers across all enabled
+                             MAP-E domains. The count is the sum of two raised to the
+                             power of the number of EA bits over every mapping rule of
+                             every enabled MAP-E domain.";
+                    }
+
+                    leaf timestamp {
+                        type types-sros:date-time;
+                        description
+                            "Time when the number of MAP subscribers last changed;
+                             absent if the subscriber count has not changed since
+                             system startup.";
+                    }
+
+                } // container resource-usage
 
             } // container map
 

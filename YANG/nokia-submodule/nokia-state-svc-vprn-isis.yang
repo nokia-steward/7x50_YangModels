@@ -38,7 +38,7 @@ submodule nokia-state-svc-vprn-isis {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-svc-vprn-isis {
         list isis {
@@ -683,6 +683,117 @@ submodule nokia-state-svc-vprn-isis {
 
                 } // container statistics
 
+                container fast-flooding-oper {
+                    description "Enter the fast-flooding-oper context";
+
+                    container lsp-receiver {
+                        description "Enter the lsp-receiver context";
+
+                        leaf enabled {
+                            type boolean;
+                            description "Indicates if fast flooding is effectively enabled for the LSP receiver on this interface.";
+                        }
+
+                        leaf advertise-flooding-tlv {
+                            type boolean;
+                            description "Indicates if the fast flooding TLV is effectively advertised to neighbors on this interface.";
+                        }
+
+                        leaf burst-size {
+                            type uint32 {
+                                range "1..200";
+                            }
+                            description "Indicates the effective burst size on this interface.";
+                        }
+
+                        leaf psnp-interval {
+                            type uint32 {
+                                range "50..1000";
+                            }
+                            units "milliseconds";
+                            description "Indicates the effective interval between periodic PSNP transmissions on this interface.";
+                        }
+
+                        leaf lsp-per-psnp {
+                            type uint32 {
+                                range "1..90";
+                            }
+                            description "Indicates the effective number of received LSPs that triggers immediate PSNP transmission.";
+                        }
+
+                        leaf lsp-transmit-interval {
+                            type uint32 {
+                                range "1..1000";
+                            }
+                            units "milliseconds";
+                            description "Indicates the effective minimum interval between LSP transmissions that can be sustained on reception.";
+                        }
+
+                        leaf receive-window {
+                            type uint32 {
+                                range "10..1000";
+                            }
+                            description "Indicates the effective Receive Window (RWIN) on this interface.";
+                        }
+
+                    } // container lsp-receiver
+
+                    container lsp-sender {
+                        description "Enter the lsp-sender context";
+
+                        leaf enabled {
+                            type boolean;
+                            description "Indicates if fast flooding sender behavior towards each neighbor is effectively enabled on this interface.";
+                        }
+
+                        leaf enforce-receive-window {
+                            type boolean;
+                            description "Indicates if the LSP sender effectively enforces the Receive Window (RWIN) on this interface.";
+                        }
+
+                        leaf enforce-burst-size {
+                            type boolean;
+                            description "Indicates if the LSP sender effectively enforces the Burst Size on this interface.";
+                        }
+
+                        container local-defaults {
+                            description "Enter the local-defaults context";
+
+                            leaf receive-window {
+                                type uint32 {
+                                    range "10..1000";
+                                }
+                                description "Indicates the effective default Receive Window (RWIN) on this interface.";
+                            }
+
+                            leaf burst-size {
+                                type uint32 {
+                                    range "1..200";
+                                }
+                                description "Indicates the effective default burst size on this interface.";
+                            }
+
+                            leaf lsp-per-psnp {
+                                type uint32 {
+                                    range "1..90";
+                                }
+                                description "Indicates the effective default number of LSPs per PSNP on this interface.";
+                            }
+
+                            leaf lsp-transmit-interval {
+                                type uint32 {
+                                    range "1..1000";
+                                }
+                                units "milliseconds";
+                                description "Indicates the effective default minimum interval between LSP transmissions on this interface.";
+                            }
+
+                        } // container local-defaults
+
+                    } // container lsp-sender
+
+                } // container fast-flooding-oper
+
                 list level {
                     key "level-number";
                     description "Enter the level list instance";
@@ -1103,6 +1214,55 @@ submodule nokia-state-svc-vprn-isis {
                         } // container id4
 
                     } // container multi-topology
+
+                    container fast-flooding {
+                        description "Enter the fast-flooding context";
+
+                        leaf receive-window {
+                            type uint32;
+                            description "The Receive Window advertised by the neighbor for fast flooding.";
+                        }
+
+                        leaf burst-size {
+                            type uint32;
+                            description "The burst size advertised by the neighbor for fast flooding.";
+                        }
+
+                        leaf lsp-transmit-interval {
+                            type uint32;
+                            units "milliseconds";
+                            description
+                                "The minimum interval, in milliseconds, between LSP transmissions that the
+                                 neighbor advertises as sustainable on reception.";
+                        }
+
+                        leaf lsps-per-psnp {
+                            type uint32;
+                            description
+                                "The number of received LSPs that triggers immediate transmission of a
+                                 Partial Sequence Number PDU (PSNP), as advertised by the neighbor.";
+                        }
+
+                        leaf psnp-interval {
+                            type uint32;
+                            units "milliseconds";
+                            description
+                                "The interval between periodic PSNP transmissions, in milliseconds, as
+                                 advertised by the neighbor.";
+                        }
+
+                        leaf flags {
+                            type bits {
+                                bit bit-o                          { position 0; }
+                            }
+                            description
+                                "The value indicates the flags advertised by the neighbor for fast flooding.
+
+                                 bit-o   (0)  - Ordered acknowledgment flag. If set, then the LSP sender
+                                     will acknowledge the LSPs in the order as received.";
+                        }
+
+                    } // container fast-flooding
 
                     list area-address {
                         key "area-address";

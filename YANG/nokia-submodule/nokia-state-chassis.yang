@@ -33,7 +33,7 @@ submodule nokia-state-chassis {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-chassis {
         list chassis {
@@ -813,6 +813,15 @@ submodule nokia-state-chassis {
                         enum right-to-left                  { value 3; }
                     }
                     description "If the fan direction is 'front-to-back' or 'back-to-front' or 'right-to-left'.";
+                }
+
+                leaf equipped-fan-module-type {
+                    type enumeration {
+                        enum unknown                        { value 0; }
+                        enum fan-sar-10x-f                  { value 2; }
+                        enum fan-sar-10x-r                  { value 3; }
+                    }
+                    description "The type of fan tray module that is physically inserted.";
                 }
 
                 container hardware-data {

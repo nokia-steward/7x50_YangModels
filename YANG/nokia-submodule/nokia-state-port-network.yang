@@ -32,7 +32,7 @@ submodule nokia-state-port-network {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-port-network {
         container network {
@@ -416,6 +416,66 @@ submodule nokia-state-port-network {
                         leaf forward-octets {
                             type yang:counter64;
                             description "The number of octets forwarded.";
+                        }
+
+                        leaf forward-ecn-queue-tail-packets {
+                            type yang:counter64;
+                            description "The number of packets forwarded with ECN marking due to queue tail.";
+                        }
+
+                        leaf forward-ecn-queue-tail-octets {
+                            type yang:counter64;
+                            description "The number of octets forwarded with ECN marking due to queue tail.";
+                        }
+
+                        leaf forward-ecn-pool-exceed-slope-packets {
+                            type yang:counter64;
+                            description "The number of packets forwarded with ECN marking due to pool exceed slope.";
+                        }
+
+                        leaf forward-ecn-pool-exceed-slope-octets {
+                            type yang:counter64;
+                            description "The number of octets forwarded with ECN marking due to pool exceed slope.";
+                        }
+
+                        leaf forward-ecn-pool-low-slope-packets {
+                            type yang:counter64;
+                            description "The number of packets forwarded with ECN marking due to pool low slope.";
+                        }
+
+                        leaf forward-ecn-pool-low-slope-octets {
+                            type yang:counter64;
+                            description "The number of octets forwarded with ECN marking due to pool low slope.";
+                        }
+
+                        leaf forward-ecn-pool-high-slope-packets {
+                            type yang:counter64;
+                            description "The number of packets forwarded with ECN marking due to pool high slope.";
+                        }
+
+                        leaf forward-ecn-pool-high-slope-octets {
+                            type yang:counter64;
+                            description "The number of octets forwarded with ECN marking due to pool high slope.";
+                        }
+
+                        leaf forward-ecn-pool-highplus-slope-packets {
+                            type yang:counter64;
+                            description "The number of packets forwarded with ECN marking due to pool highplus slope.";
+                        }
+
+                        leaf forward-ecn-pool-highplus-slope-octets {
+                            type yang:counter64;
+                            description "The number of octets forwarded with ECN marking due to pool highplus slope.";
+                        }
+
+                        leaf forward-ecn-other-packets {
+                            type yang:counter64;
+                            description "The number of packets forwarded with ECN marking due to other reasons.";
+                        }
+
+                        leaf forward-ecn-other-octets {
+                            type yang:counter64;
+                            description "The number of octets forwarded with ECN marking due to other reasons.";
                         }
 
                         leaf discard-other-packets {

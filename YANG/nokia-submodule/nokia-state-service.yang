@@ -41,7 +41,7 @@ submodule nokia-state-service {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-service {
         container service {
@@ -505,6 +505,8 @@ submodule nokia-state-service {
                                     enum single-active-no-esi-label     { value 2; }
                                     enum all-active                     { value 3; }
                                     enum all-active-no-esi-label        { value 4; }
+                                    enum port-active                    { value 5; }
+                                    enum port-active-no-esi-label       { value 6; }
                                 }
                                 description "Indicates the operational state of multi-homing of the ethernet segment entry.";
                             }
@@ -716,6 +718,58 @@ submodule nokia-state-service {
                                 } // container df-candidates
 
                             } // list isid
+
+                            container port-active {
+                                description "Enter the port-active context";
+
+                                leaf df {
+                                    type boolean;
+                                    description "Indicates if the ethernet segment port-active entry is a designated forwarder.";
+                                }
+
+                                leaf remaining-activation-time {
+                                    type int32;
+                                    units "seconds";
+                                    description "Indicates the value of the remaining activation timer for the port-active entry.";
+                                }
+
+                                leaf df-last-changed {
+                                    type types-sros:date-time;
+                                    description "Indicates the sysUpTime at the time of the last modification of Designated Forwarder.";
+                                }
+
+                                container df-candidates {
+                                    description "Enter the df-candidates context";
+
+                                    list ip-address {
+                                        key "ip-address";
+                                        description "Enter the ip-address list instance";
+
+                                        leaf ip-address {
+                                            type types-sros:ip-address;
+                                            description "Port-active candidate PE IP address.";
+                                        }
+
+                                        leaf time-added {
+                                            type types-sros:date-time;
+                                            description "Indicates the time at which this entry was added in the DF candidate list.";
+                                        }
+
+                                        leaf operational-preference-value {
+                                            type uint32;
+                                            description "Indicates the operational preference value assigned while electing the designated forwarder.";
+                                        }
+
+                                        leaf do-not-preempt-status {
+                                            type boolean;
+                                            description "Indicates the status of the don't peempt bit used in electing the next designated forwarder.";
+                                        }
+
+                                    } // list ip-address
+
+                                } // container df-candidates
+
+                            } // container port-active
 
                         } // list ethernet-segment
 

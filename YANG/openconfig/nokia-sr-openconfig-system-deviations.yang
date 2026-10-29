@@ -34,7 +34,7 @@ module nokia-sr-openconfig-system-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     deviation /oc-sys:system/oc-sys:config/oc-sys:hostname {
         deviate not-supported;
@@ -52,183 +52,14 @@ module nokia-sr-openconfig-system-deviations {
         deviate not-supported;
     }
 
-    deviation /oc-sys:system/oc-sys:state/oc-sys:hostname {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:state/oc-sys:domain-name {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:state/oc-sys:login-banner {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:state/oc-sys:motd-banner {
-        deviate not-supported;
-    }
 
 
 
-    deviation /oc-sys:system/oc-sys:clock/oc-sys:config/oc-sys:timezone-name {
-        deviate replace {
-            type oc-sys:timezone-name-type {
-                pattern "Etc/UTC|Etc/GMT|Europe/Lisbon|Europe/Paris|Europe/Helsinki|America/New_York|America/Cancun|America/Chicago|America/Denver|America/Phoenix|America/Los_Angeles|Pacific/Honolulu|America/Anchorage|America/St_Johns|Pacific/Auckland|Australia/Perth|Australia/Sydney|Australia/Darwin|America/Bermuda|America/Puerto_Rico|Europe/Moscow|MSD";
-            }
-        }
-    }
 
-    deviation /oc-sys:system/oc-sys:clock/oc-sys:state/oc-sys:timezone-name {
-        deviate replace {
-            type oc-sys:timezone-name-type {
-                pattern "Etc/UTC|Etc/GMT|Europe/Lisbon|Europe/Paris|Europe/Helsinki|America/New_York|America/Cancun|America/Chicago|America/Denver|America/Phoenix|America/Los_Angeles|Pacific/Honolulu|America/Anchorage|America/St_Johns|Pacific/Auckland|Australia/Perth|Australia/Sydney|Australia/Darwin|America/Bermuda|America/Puerto_Rico|Europe/Moscow|MSD";
-            }
-        }
-    }
 
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:config/oc-sys:enable-ntp-auth {
-        deviate replace {
-            default "true";
-        }
-    }
 
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:state/oc-sys:enable-ntp-auth {
-        deviate replace {
-            default "true";
-        }
-    }
 
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:config/oc-sys:key-id {
-        deviate replace {
-            type uint16 {
-                range "1..255";
-            }
-        }
-    }
 
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:config/oc-sys:key-type {
-        deviate add {
-            mandatory true;
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:config/oc-sys:key-value {
-        deviate replace {
-            type oc-types:routing-password {
-                length "1..126";
-                pattern "(.{1,32})|(.{1,64} hash)|(.{1,64} hash2)|(.{1,120} hash3)|(.{1,64} custom)";
-            }
-        }
-        deviate add {
-            mandatory true;
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:state/oc-sys:key-id {
-        deviate replace {
-            type uint16 {
-                range "1..255";
-            }
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:state/oc-sys:key-type {
-        deviate add {
-            mandatory true;
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:state/oc-sys:key-value {
-        deviate replace {
-            type oc-types:routing-password {
-                length "1..126";
-                pattern "(.{1,32})|(.{1,64} hash)|(.{1,64} hash2)|(.{1,120} hash3)|(.{1,64} custom)";
-            }
-        }
-        deviate add {
-            mandatory true;
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:address {
-        description "address limited to ip-address";
-        deviate replace {
-            type oc-inet:ip-address;
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:port {
-        deviate replace {
-            type oc-inet:port-number {
-                range "123";
-            }
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:version {
-        deviate replace {
-            type uint8 {
-                range "2..4";
-            }
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:association-type {
-        description "enumeration values limited to SERVER";
-        deviate replace {
-            type enumeration {
-                enum SERVER;
-            }
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:iburst {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:address {
-        description "address limited to ip-address";
-        deviate replace {
-            type oc-inet:ip-address;
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:port {
-        deviate replace {
-            type oc-inet:port-number {
-                range "123";
-            }
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:version {
-        deviate replace {
-            type uint8 {
-                range "2..4";
-            }
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:association-type {
-        description "enumeration values limited to SERVER";
-        deviate replace {
-            type enumeration {
-                enum SERVER;
-            }
-        }
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:iburst {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:root-delay {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:root-dispersion {
-        deviate not-supported;
-    }
 
     deviation /oc-sys:system/oc-sys:aaa/oc-sys:authentication/oc-sys:config/oc-sys:authentication-method {
         description
@@ -622,16 +453,42 @@ module nokia-sr-openconfig-system-deviations {
         }
     }
 
-    deviation /oc-sys:system/oc-sys:memory/oc-sys:config {
+    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:args {
         deviate not-supported;
     }
 
-    deviation /oc-sys:system/oc-sys:memory {
+    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:start-time {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:cpu-usage-user {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:cpu-usage-system {
+        deviate not-supported;
+    }
+
+
+    deviation /oc-sys:system/oc-sys:license {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:clock/oc-sys:config/oc-sys:timezone-name {
         deviate replace {
-            config false;
+            type oc-sys:timezone-name-type {
+                pattern "Etc/UTC|Etc/GMT|Europe/Lisbon|Europe/Paris|Europe/Helsinki|America/New_York|America/Cancun|America/Chicago|America/Denver|America/Phoenix|America/Los_Angeles|Pacific/Honolulu|America/Anchorage|America/St_Johns|Pacific/Auckland|Australia/Perth|Australia/Sydney|Australia/Darwin|America/Bermuda|America/Puerto_Rico|Europe/Moscow|MSD";
+            }
         }
     }
 
+    deviation /oc-sys:system/oc-sys:clock/oc-sys:state/oc-sys:timezone-name {
+        deviate replace {
+            type oc-sys:timezone-name-type {
+                pattern "Etc/UTC|Etc/GMT|Europe/Lisbon|Europe/Paris|Europe/Helsinki|America/New_York|America/Cancun|America/Chicago|America/Denver|America/Phoenix|America/Los_Angeles|Pacific/Honolulu|America/Anchorage|America/St_Johns|Pacific/Auckland|Australia/Perth|Australia/Sydney|Australia/Darwin|America/Bermuda|America/Puerto_Rico|Europe/Moscow|MSD";
+            }
+        }
+    }
 
     deviation /oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:total/oc-sys:min {
         deviate not-supported;
@@ -690,33 +547,208 @@ module nokia-sr-openconfig-system-deviations {
     }
 
 
-    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:args {
+    deviation /oc-sys:system/oc-sys:memory/oc-sys:config {
         deviate not-supported;
     }
 
-    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:start-time {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:cpu-usage-user {
-        deviate not-supported;
-    }
-
-    deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:cpu-usage-system {
+    deviation /oc-sys:system/oc-sys:memory/oc-sys:state/oc-sys:counters {
         deviate not-supported;
     }
 
 
-    deviation /oc-sys:system/oc-sys:messages {
+
+    deviation /oc-sys:system/oc-sys:memory {
+        deviate replace {
+            config false;
+        }
+    }
+
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:config/oc-sys:enable-ntp-auth {
+        deviate replace {
+            default "true";
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:state/oc-sys:enable-ntp-auth {
+        deviate replace {
+            default "true";
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:config/oc-sys:key-id {
+        deviate replace {
+            type uint16 {
+                range "1..255";
+            }
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:config/oc-sys:key-type {
+        deviate add {
+            mandatory true;
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:config/oc-sys:key-value {
+        deviate replace {
+            type oc-types:routing-password {
+                length "1..126";
+                pattern "(.{1,32})|(.{1,64} hash)|(.{1,64} hash2)|(.{1,120} hash3)|(.{1,64} custom)";
+            }
+        }
+        deviate add {
+            mandatory true;
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:state/oc-sys:key-id {
+        deviate replace {
+            type uint16 {
+                range "1..255";
+            }
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:state/oc-sys:key-type {
+        deviate add {
+            mandatory true;
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys/oc-sys:ntp-key/oc-sys:state/oc-sys:key-value {
+        deviate replace {
+            type oc-types:routing-password {
+                length "1..126";
+                pattern "(.{1,32})|(.{1,64} hash)|(.{1,64} hash2)|(.{1,120} hash3)|(.{1,64} custom)";
+            }
+        }
+        deviate add {
+            mandatory true;
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:address {
+        description "address limited to ip-address";
+        deviate replace {
+            type oc-inet:ip-address;
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:port {
+        deviate replace {
+            type oc-inet:port-number {
+                range "123";
+            }
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:version {
+        deviate replace {
+            type uint8 {
+                range "2..4";
+            }
+        }
+    }
+
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:association-type {
+        description "enumeration values limited to SERVER and PEER";
+        deviate replace {
+            type enumeration {
+                enum SERVER;
+                enum PEER;
+            }
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:iburst {
         deviate not-supported;
     }
 
-    deviation /oc-sys:system/oc-sys:license {
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:network-instance {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:key-id {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:address {
+        description "address limited to ip-address";
+        deviate replace {
+            type oc-inet:ip-address;
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:port {
+        deviate replace {
+            type oc-inet:port-number {
+                range "123";
+            }
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:version {
+        deviate replace {
+            type uint8 {
+                range "2..4";
+            }
+        }
+    }
+
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:association-type {
+        description "enumeration values limited to SERVER and PEER";
+        deviate replace {
+            type enumeration {
+                enum SERVER;
+                enum PEER;
+            }
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:iburst {
+        deviate not-supported;
+    }
+
+
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:network-instance {
+        deviate replace {
+            type string;
+        }
+    }
+
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:key-id {
+        deviate replace {
+            type union {
+                type uint16;
+                type string;
+            }
+        }
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:root-delay {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:ntp/oc-sys:servers/oc-sys:server/oc-sys:state/oc-sys:root-dispersion {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:mount-points {
         deviate not-supported;
     }
 
 
     deviation /oc-sys:system/oc-sys:dns {
+        deviate not-supported;
+    }
+
+    deviation /oc-sys:system/oc-sys:mac-address {
         deviate not-supported;
     }
 

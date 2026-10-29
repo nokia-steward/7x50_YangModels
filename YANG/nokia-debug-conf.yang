@@ -46,7 +46,7 @@ module nokia-debug-conf {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     container debug {
         description "Configure application or protocol tracing";
@@ -544,6 +544,36 @@ module nokia-debug-conf {
                     type types-sros:named-item;
                     description "IPsec gateway name";
                 }
+
+                list idi {
+                    key "idi-regex";
+                    max-elements 1;
+                    description "Enter the idi list instance";
+
+                    leaf idi-regex {
+                        type types-sros:display-string;
+                        description "Regular expression pattern used to match the peer IDi";
+                    }
+
+                    leaf detail {
+                        type boolean;
+                        default "false";
+                        description "Display detailed debug information";
+                    }
+
+                    leaf suppress-dpd-debug {
+                        type boolean;
+                        default "false";
+                        description "Display debug output without DPD information";
+                    }
+
+                    leaf display-keys {
+                        type boolean;
+                        default "false";
+                        description "Display keys in the debug output";
+                    }
+
+                } // list idi
 
                 list tunnel {
                     key "ip-address port";
@@ -3979,6 +4009,7 @@ module nokia-debug-conf {
 
             } // container radius
 
+
             container igmp {
                 description "Enter the igmp context";
 
@@ -6408,7 +6439,7 @@ module nokia-debug-conf {
                 when "../router-instance = 'Base'" {
                     description "LDP protocol is only supported in router Base";
                 }
-                description "Enter the ldp context";
+                description "Enable the ldp context";
 
                 list peer {
                     key "ip-address";

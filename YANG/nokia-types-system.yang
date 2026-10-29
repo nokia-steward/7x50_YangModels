@@ -33,7 +33,7 @@ module nokia-types-system {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     typedef device-state {
         type enumeration {
@@ -221,6 +221,7 @@ module nokia-types-system {
             enum tftp                           { value 42; }
             enum twamp                          { value 43; }
             enum needs-icmp                     { value 44; }
+            enum mka-over-udp                   { value 45; }
         }
         description
             "Indicates the protocols supported for the distributed CPU

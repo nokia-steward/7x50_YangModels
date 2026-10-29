@@ -67,7 +67,7 @@ submodule nokia-state-svc-vprn {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-svc-vprn {
         list vprn {
@@ -1362,7 +1362,7 @@ submodule nokia-state-svc-vprn {
                             type leafref {
                                 path "../../../../../nat/map-t/domain/name";
                             }
-                            description "The name of the MAP domain.";
+                            description "The name of the MAP-T domain.";
                         }
 
                         container statistics {
@@ -1432,6 +1432,107 @@ submodule nokia-state-svc-vprn {
                         } // container statistics
 
                     } // list map-domain
+
+                    list map-e-domain {
+                        key "domain-name";
+                        description "Enter the map-e-domain list instance";
+
+                        leaf domain-name {
+                            type leafref {
+                                path "../../../../../nat/map-e/domain/name";
+                            }
+                            description "The name of the MAP-E domain.";
+                        }
+
+                        container statistics {
+                            status obsolete;
+                            description "Enter the statistics context";
+
+                            container upstream {
+                                status obsolete;
+                                description "Enter the upstream context";
+
+                                leaf forwarded-packets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of packets forwarded in the upstream direction";
+                                }
+
+                                leaf forwarded-octets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of octets forwarded in the upstream direction";
+                                }
+
+                                leaf dropped-packets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of packets dropped in the upstream direction";
+                                }
+
+                                leaf dropped-octets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of octets dropped in the upstream direction";
+                                }
+
+                            } // container upstream
+
+                            container downstream {
+                                status obsolete;
+                                description "Enter the downstream context";
+
+                                leaf forwarded-packets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of packets forwarded in the downstream direction";
+                                }
+
+                                leaf forwarded-octets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of octets forwarded in the downstream direction";
+                                }
+
+                                leaf dropped-packets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of packets dropped in the downstream direction";
+                                }
+
+                                leaf dropped-octets {
+                                    status obsolete;
+                                    type yang:counter64;
+                                    description "Number of octets dropped in the downstream direction";
+                                }
+
+                            } // container downstream
+
+                        } // container statistics
+
+                    } // list map-e-domain
+
+                    container resource-usage {
+                        description "Enter the resource-usage context";
+
+                        leaf number-of-map-subscribers {
+                            type yang:gauge64;
+                            description
+                                "Number of configured MAP-E subscribers across all enabled
+                                 MAP-E domains. The count is the sum of two raised to the
+                                 power of the number of EA bits over every mapping rule of
+                                 every enabled MAP-E domain.";
+                        }
+
+                        leaf timestamp {
+                            type types-sros:date-time;
+                            description
+                                "Time when the number of MAP subscribers last changed;
+                                 absent if the subscriber count has not changed since
+                                 system startup.";
+                        }
+
+                    } // container resource-usage
 
                 } // container map
 
@@ -5722,6 +5823,187 @@ submodule nokia-state-svc-vprn {
 
 
 
+                list amt-gateway {
+                    key "relay-anycast-prefix gateway-address gateway-port";
+                    description "Enter the amt-gateway list instance";
+
+                    leaf relay-anycast-prefix {
+                        type types-sros:ip-prefix;
+                        description "Anycast prefix of the AMT relay that learned this gateway tunnel.";
+                    }
+
+                    leaf gateway-address {
+                        type types-sros:ip-address;
+                        description "Address of the AMT gateway that established this tunnel.";
+                    }
+
+                    leaf gateway-port {
+                        type types-sros:tcp-udp-port;
+                        description "UDP port of the AMT gateway that established this tunnel.";
+                    }
+
+                    container statistics {
+                        description "Enter the statistics context";
+
+                        container received {
+                            description "Enter the received context";
+
+                            leaf v2-reports {
+                                type yang:counter32;
+                                description "V2 Reports.";
+                            }
+
+                            leaf v3-reports {
+                                type yang:counter32;
+                                description "V3 Reports.";
+                            }
+
+                            leaf leaves {
+                                type yang:counter32;
+                                description "Leaves.";
+                            }
+
+                            leaf drops {
+                                type yang:counter32;
+                                description "Total number of dropped packets.";
+                            }
+
+                        } // container received
+
+                        container transmitted {
+                            description "Enter the transmitted context";
+
+                            leaf general-queries {
+                                type yang:counter32;
+                                description "General Queries.";
+                            }
+
+                            leaf errors {
+                                type yang:counter32;
+                                description "Transmission Errors.";
+                            }
+
+                        } // container transmitted
+
+                        container error {
+                            description "Enter the error context";
+
+                            leaf bad-length {
+                                type yang:counter32;
+                                description "Bad length.";
+                            }
+
+                            leaf bad-ip-checksum {
+                                type yang:counter32;
+                                description "Bad Ip checksum.";
+                            }
+
+                            leaf unknown-type {
+                                type yang:counter32;
+                                description "Unknown type.";
+                            }
+
+                            leaf wrong-version {
+                                type yang:counter32;
+                                description "Wrong version.";
+                            }
+
+                            leaf import-policy-drops {
+                                type yang:counter32;
+                                description
+                                    "Number of times we matched the host IP address or group or
+                                     source addresses specified in the import policy.";
+                            }
+
+                            leaf missing-router-alert {
+                                type yang:counter32;
+                                description "Router alert flag is not set.";
+                            }
+
+                            leaf bad-encoding {
+                                type yang:counter32;
+                                description "Badly encoded.";
+                            }
+
+                            leaf out-of-memory-drops {
+                                type yang:counter32;
+                                description "Number of times a join is dropped because we ran out of memory.";
+                            }
+
+                        } // container error
+
+                    } // container statistics
+
+                    list group {
+                        key "group-address";
+                        description "Enter the group list instance";
+
+                        leaf group-address {
+                            type types-sros:ipv4-multicast-address;
+                            description "Group address of multicast channel.";
+                        }
+
+                        leaf filter-mode {
+                            type types-igmp:filter-mode;
+                        }
+
+                        leaf expiry-time {
+                            type uint32;
+                            units "seconds";
+                            description "The time left before multicast group timeout.";
+                        }
+
+                        leaf up-time {
+                            type uint32;
+                            units "seconds";
+                            description "The time elapsed since this entry was created.";
+                        }
+
+                        leaf v2-host-timer {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The time remaining until the local router will assume that
+                                 there are no longer any version 2 members.";
+                        }
+
+                        leaf igmp-compatibility-mode {
+                            type types-igmp:igmp-version;
+                            description "Compatibility with older version routers.";
+                        }
+
+                        list source {
+                            key "source-address";
+                            description "Enter the source list instance";
+
+                            leaf source-address {
+                                type types-sros:ipv4-address;
+                                description "Source address of multicast channel.";
+                            }
+
+                            leaf forwarding-state {
+                                type types-igmp:forwarding-state;
+                                description "Traffic forwardeding state on this port.";
+                            }
+
+                            leaf expiry-time {
+                                type uint32;
+                                units "seconds";
+                                description "The time left before multicast group timeout.";
+                            }
+
+                            leaf up-time {
+                                type uint32;
+                                units "seconds";
+                                description "The time elapsed since this entry was created.";
+                            }
+
+                        } // list source
+
+                    } // list group
+
+                } // list amt-gateway
+
             } // container igmp
 
             container ipsec {
@@ -8292,6 +8574,187 @@ submodule nokia-state-svc-vprn {
                     } // list group
 
                 } // list ipsec-ru-tunnel
+
+                list amt-gateway {
+                    key "relay-anycast-prefix gateway-address gateway-port";
+                    description "Enter the amt-gateway list instance";
+
+                    leaf relay-anycast-prefix {
+                        type types-sros:ip-prefix;
+                        description "Anycast prefix of the AMT relay that learned this gateway tunnel.";
+                    }
+
+                    leaf gateway-address {
+                        type types-sros:ip-address;
+                        description "Address of the AMT gateway that established this tunnel.";
+                    }
+
+                    leaf gateway-port {
+                        type types-sros:tcp-udp-port;
+                        description "UDP port of the AMT gateway that established this tunnel.";
+                    }
+
+                    container statistics {
+                        description "Enter the statistics context";
+
+                        container received {
+                            description "Enter the received context";
+
+                            leaf v1-reports {
+                                type yang:counter32;
+                                description "V1 Reports.";
+                            }
+
+                            leaf v2-reports {
+                                type yang:counter32;
+                                description "V2 Reports.";
+                            }
+
+                            leaf leaves {
+                                type yang:counter32;
+                                description "Leaves.";
+                            }
+
+                            leaf drops {
+                                type yang:counter32;
+                                description "Total number of dropped packets.";
+                            }
+
+                        } // container received
+
+                        container transmitted {
+                            description "Enter the transmitted context";
+
+                            leaf general-queries {
+                                type yang:counter32;
+                                description "General Queries.";
+                            }
+
+                            leaf errors {
+                                type yang:counter32;
+                                description "Transmission Errors.";
+                            }
+
+                        } // container transmitted
+
+                        container error {
+                            description "Enter the error context";
+
+                            leaf bad-length {
+                                type yang:counter32;
+                                description "Bad length.";
+                            }
+
+                            leaf bad-ip-checksum {
+                                type yang:counter32;
+                                description "Bad Ip checksum.";
+                            }
+
+                            leaf unknown-type {
+                                type yang:counter32;
+                                description "Unknown type.";
+                            }
+
+                            leaf wrong-version {
+                                type yang:counter32;
+                                description "Wrong version.";
+                            }
+
+                            leaf import-policy-drops {
+                                type yang:counter32;
+                                description
+                                    "Number of times we matched the host IP address or group or
+                                     source addresses specified in the import policy.";
+                            }
+
+                            leaf missing-router-alert {
+                                type yang:counter32;
+                                description "Router alert flag is not set.";
+                            }
+
+                            leaf bad-encoding {
+                                type yang:counter32;
+                                description "Badly encoded.";
+                            }
+
+                            leaf out-of-memory-drops {
+                                type yang:counter32;
+                                description "Number of times a join is dropped because we ran out of memory.";
+                            }
+
+                        } // container error
+
+                    } // container statistics
+
+                    list group {
+                        key "group-address";
+                        description "Enter the group list instance";
+
+                        leaf group-address {
+                            type types-sros:ipv6-multicast-address;
+                            description "Group address of multicast channel.";
+                        }
+
+                        leaf filter-mode {
+                            type types-igmp:filter-mode;
+                        }
+
+                        leaf expiry-time {
+                            type uint32;
+                            units "seconds";
+                            description "The time left before multicast group timeout.";
+                        }
+
+                        leaf up-time {
+                            type uint32;
+                            units "seconds";
+                            description "The time elapsed since this entry was created.";
+                        }
+
+                        leaf v1-host-timer {
+                            type uint32;
+                            units "seconds";
+                            description
+                                "The time remaining until the local router will assume that
+                                 there are no longer any version 1 members.";
+                        }
+
+                        leaf mld-compatibility-mode {
+                            type types-igmp:mld-version;
+                            description "Compatibility with older version routers.";
+                        }
+
+                        list source {
+                            key "source-address";
+                            description "Enter the source list instance";
+
+                            leaf source-address {
+                                type types-sros:ipv6-address;
+                                description "Source address of multicast channel.";
+                            }
+
+                            leaf forwarding-state {
+                                type types-igmp:forwarding-state;
+                                description "Traffic forwardeding state on this port.";
+                            }
+
+                            leaf expiry-time {
+                                type uint32;
+                                units "seconds";
+                                description "The time left before multicast group timeout.";
+                            }
+
+                            leaf up-time {
+                                type uint32;
+                                units "seconds";
+                                description "The time elapsed since this entry was created.";
+                            }
+
+                        } // list source
+
+                    } // list group
+
+                } // list amt-gateway
 
             } // container mld
 
@@ -13811,6 +14274,16 @@ submodule nokia-state-svc-vprn {
                         description "The type of route-distinguisher that is currently in use by the system for this service.";
                     }
 
+                    leaf oper-service-label {
+                        type types-sros:mpls-label-or-zero;
+                        description
+                            "The operational MPLS service label currently in use for this
+                             VPRN BGP-VPN instance. When a static service-label is configured
+                             the operational value mirrors the static value; otherwise it
+                             reflects the per-VRF label dynamically allocated by BGP. A value
+                             of 0 indicates no label is currently in use.";
+                    }
+
                     leaf oper-state {
                         type types-sros:enabled-disabled;
                         description "Operational state";
@@ -13901,6 +14374,16 @@ submodule nokia-state-svc-vprn {
                             enum default                        { value 5; }
                         }
                         description "The type of route-distinguisher that is currently in use by the system for this service.";
+                    }
+
+                    leaf oper-service-label {
+                        type types-sros:mpls-label-or-zero;
+                        description
+                            "The operational MPLS service label currently in use for this
+                             VPRN BGP-VPN instance. When a static service-label is configured
+                             the operational value mirrors the static value; otherwise it
+                             reflects the per-VRF label dynamically allocated by BGP. A value
+                             of 0 indicates no label is currently in use.";
                     }
 
                     leaf oper-state {
@@ -17990,7 +18473,7 @@ submodule nokia-state-svc-vprn {
 
                             leaf security-association {
                                 type uint32 {
-                                    range "1..16";
+                                    range "1..32";
                                 }
                                 description "The unique identifier of an security association (SA).";
                             }
@@ -21539,6 +22022,182 @@ submodule nokia-state-svc-vprn {
                                                 } // container v4-v6
 
                                             }
+                                            case ecn-marked {
+
+                                                container ecn-marked {
+                                                    description "Enter the ecn-marked context";
+
+                                                    leaf all-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf all-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf all-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf all-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ecn-unmarked-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded packets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                    }
+
+                                                    leaf ecn-unmarked-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded octets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                    }
+
+                                                    leaf ecn-marked-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded packets that were ECN-marked (CE codepoint set) by the policer";
+                                                    }
+
+                                                    leaf ecn-marked-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded octets that were ECN-marked (CE codepoint set) by the policer";
+                                                    }
+
+                                                } // container ecn-marked
+
+                                            }
+                                            case ecn-codepoints {
+
+                                                container ecn-codepoints {
+                                                    description "Enter the ecn-codepoints context";
+
+                                                    leaf l4s-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT (Non-ECN-Capable-Transport) packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                } // container ecn-codepoints
+
+                                            }
                                         }
                                     } // container statistics
 
@@ -22830,6 +23489,116 @@ submodule nokia-state-svc-vprn {
                                                 } // container v4-v6
 
                                             }
+                                            case ecn-marked {
+
+                                                container ecn-marked {
+                                                    description "Enter the ecn-marked context";
+
+                                                    leaf ecn-unmarked-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of forwarded packets that were not ECN-marked
+                                                             (CE codepoint not set).";
+                                                    }
+
+                                                    leaf ecn-unmarked-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of forwarded octets that were not ECN-marked
+                                                             (CE codepoint not set).";
+                                                    }
+
+                                                    leaf ecn-marked-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of forwarded packets that were ECN-marked
+                                                             (CE codepoint set).";
+                                                    }
+
+                                                    leaf ecn-marked-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of forwarded octets that were ECN-marked
+                                                             (CE codepoint set).";
+                                                    }
+
+                                                    leaf dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of packets discarded.";
+                                                    }
+
+                                                    leaf dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of octets discarded.";
+                                                    }
+
+                                                } // container ecn-marked
+
+                                            }
+                                            case mismatch {
+
+                                                container mismatch {
+                                                    description "Enter the mismatch context";
+
+                                                    leaf in-inplus-profile-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of in-profile/in-plus-profile packets
+                                                             (rate below CIR) forwarded.";
+                                                    }
+
+                                                    leaf in-inplus-profile-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of in-profile/in-plus-profile octets
+                                                             (rate below CIR) forwarded.";
+                                                    }
+
+                                                    leaf out-exceed-profile-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of out-profile/exceed-profile packets
+                                                             (rate above CIR) forwarded.";
+                                                    }
+
+                                                    leaf out-exceed-profile-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of out-profile/exceed-profile octets
+                                                             (rate above CIR) forwarded.";
+                                                    }
+
+                                                    leaf in-inplus-profile-dropped-packets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of in-profile/in-plus-profile packets
+                                                             discarded.";
+                                                    }
+
+                                                    leaf in-inplus-profile-dropped-octets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of in-profile/in-plus-profile octets
+                                                             discarded.";
+                                                    }
+
+                                                    leaf out-exceed-profile-dropped-packets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of out-profile/exceed-profile packets
+                                                             discarded.";
+                                                    }
+
+                                                    leaf out-exceed-profile-dropped-octets {
+                                                        type yang:counter64;
+                                                        description
+                                                            "The number of out-profile/exceed-profile octets
+                                                             discarded.";
+                                                    }
+
+                                                } // container mismatch
+
+                                            }
                                         }
                                     } // container statistics
 
@@ -23674,6 +24443,182 @@ submodule nokia-state-svc-vprn {
                                                     }
 
                                                 } // container bonding
+
+                                            }
+                                            case ecn-marked {
+
+                                                container ecn-marked {
+                                                    description "Enter the ecn-marked context";
+
+                                                    leaf all-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf all-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf all-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf all-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ecn-unmarked-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded packets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                    }
+
+                                                    leaf ecn-unmarked-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded octets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                    }
+
+                                                    leaf ecn-marked-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded packets that were ECN-marked (CE codepoint set) by the policer";
+                                                    }
+
+                                                    leaf ecn-marked-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of forwarded octets that were ECN-marked (CE codepoint set) by the policer";
+                                                    }
+
+                                                } // container ecn-marked
+
+                                            }
+                                            case ecn-codepoints {
+
+                                                container ecn-codepoints {
+                                                    description "Enter the ecn-codepoints context";
+
+                                                    leaf l4s-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf l4s-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of L4S (ECT(1)) octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf ce-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of CE-marked octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT (Non-ECN-Capable-Transport) packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf non-ect-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of NonECT octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-offered-packets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) packets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-offered-octets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) octets offered by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-dropped-packets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) packets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-dropped-octets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) octets dropped by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-forwarded-packets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) packets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                    leaf classic-ecn-forwarded-octets {
+                                                        type yang:counter64;
+                                                        description "The number of Classic ECN-Capable-Transport (ECT(0)) octets forwarded by the packet processor to traffic manager";
+                                                    }
+
+                                                } // container ecn-codepoints
 
                                             }
                                         }
@@ -25014,7 +25959,7 @@ submodule nokia-state-svc-vprn {
 
                             leaf security-association {
                                 type uint32 {
-                                    range "1..16";
+                                    range "1..32";
                                 }
                                 description "The unique identifier of an security association (SA).";
                             }
@@ -26409,7 +27354,7 @@ submodule nokia-state-svc-vprn {
 
                                 leaf security-association {
                                     type uint32 {
-                                        range "1..16";
+                                        range "1..32";
                                     }
                                     description "The unique identifier of an security association (SA).";
                                 }
@@ -27020,7 +27965,7 @@ submodule nokia-state-svc-vprn {
 
                             leaf security-association {
                                 type uint32 {
-                                    range "1..16";
+                                    range "1..32";
                                 }
                                 description "The unique identifier of an security association (SA).";
                             }
@@ -35531,6 +36476,7 @@ submodule nokia-state-svc-vprn {
                 } // list remote-host
 
             } // list ip-transport
+
 
             uses state-svc-vprn-dhcp-server;
             uses state-svc-vprn-isis;

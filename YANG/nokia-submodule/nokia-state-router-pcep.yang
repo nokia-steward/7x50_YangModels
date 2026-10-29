@@ -32,7 +32,7 @@ submodule nokia-state-router-pcep {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-router-pcep {
         container pcep {
@@ -477,6 +477,7 @@ submodule nokia-state-router-pcep {
                             enum mbb-success                    { value 3; }
                             enum update-delegation              { value 4; }
                             enum lsp-down                       { value 5; }
+                            enum lsp-up                         { value 6; }
                         }
                         description
                             "The value indicates the state of LSP
@@ -486,7 +487,8 @@ submodule nokia-state-router-pcep {
                              mbb-fail          (2) - MBB procedure failed.
                              mbb-success       (3) - MBB procedure succeeded.
                              update-delegation (4) - delegation update is being processed.
-                             lsp-down          (5) - LSP down update is being processed.";
+                             lsp-down          (5) - LSP down update is being processed.
+                             lsp-up            (6) - LSP up update is being processed.";
                     }
 
                 } // list lsp-update

@@ -39,7 +39,7 @@ submodule nokia-conf-aa-group {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-aa-group {
         list group {
@@ -3518,6 +3518,21 @@ submodule nokia-conf-aa-group {
                     type boolean;
                     default "false";
                     description "Enable shallow inspection";
+                }
+
+                leaf tcp-strict-order {
+                    type enumeration {
+                        enum not-enforced {
+                            value 0;
+                            description "not enforced";
+                        }
+                        enum bidirectional {
+                            value 1;
+                            description "both directions are enforced";
+                        }
+                    }
+                    default "not-enforced";
+                    description "Specifies whether this partition monitors and enforces strict TCP sequence numbering for TCP flows for during the traffic identification phase. Packets where the TCP sequence number jumps ahead from the previous sequence plus payload are discarded before identification so that traffic is seen in order for identification and URL-filtering.";
                 }
 
                 leaf ip-identification-contribute {
@@ -7495,6 +7510,13 @@ submodule nokia-conf-aa-group {
                             type boolean;
                             default "false";
                             description "Monitor inactivity on auto-created transit subscribers";
+                        }
+
+                        leaf aa-transit-redundancy {
+                            type leafref {
+                                path "../../../../../aa-transit-redundancy/aatr-id";
+                            }
+                            description "AATR instance to use in the transit IP policy";
                         }
 
                     } // container transit-auto-create

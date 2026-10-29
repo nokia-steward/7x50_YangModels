@@ -31,7 +31,7 @@ module nokia-types-esa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     typedef esa-id {
         type int32 {
@@ -96,6 +96,26 @@ module nokia-types-esa {
                 - No-mismatch : Device is in no mismatch state.
                 - Mismatch    : Device is in mismatch state.
                 - Unsupported : Device mismatch state reporting is unsupported.";
+    }
+
+    typedef frequency-mhz-value {
+        type int32 {
+            range "0..10000";
+        }
+        units "megahertz";
+        description "ESA CPU frequency in megahertz.";
+    }
+
+    typedef frequency-mhz {
+        type union {
+            type frequency-mhz-value;
+            type enumeration {
+                enum unrestricted                   { value -1; }
+            }
+        }
+        description
+            "ESA CPU frequency in megahertz. The value unrestricted means
+             the frequency is not capped.";
     }
 
 }

@@ -38,7 +38,7 @@ submodule nokia-conf-router-nat {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-router-nat {
         container nat {
@@ -130,6 +130,7 @@ submodule nokia-conf-router-nat {
                         } // list spf-nat-policy
 
                     } // container static-port-forwards
+
 
                     container nat44 {
                         description "Enter the nat44 context";
@@ -1914,6 +1915,19 @@ submodule nokia-conf-router-nat {
                     }
 
                 } // list map-domain
+
+                list map-e-domain {
+                    key "domain-name";
+                    description "Add a list entry for map-e-domain";
+
+                    leaf domain-name {
+                        type leafref {
+                            path "../../../../../service/nat/map-e/domain/name";
+                        }
+                        description "MAP-E domain name";
+                    }
+
+                } // list map-e-domain
 
             } // container map
 

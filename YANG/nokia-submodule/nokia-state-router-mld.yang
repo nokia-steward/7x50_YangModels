@@ -40,7 +40,7 @@ submodule nokia-state-router-mld {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-router-mld {
         container mld {
@@ -2570,6 +2570,187 @@ submodule nokia-state-router-mld {
                 } // list group
 
             } // list ipsec-ru-tunnel
+
+            list amt-gateway {
+                key "relay-anycast-prefix gateway-address gateway-port";
+                description "Enter the amt-gateway list instance";
+
+                leaf relay-anycast-prefix {
+                    type types-sros:ip-prefix;
+                    description "Anycast prefix of the AMT relay that learned this gateway tunnel.";
+                }
+
+                leaf gateway-address {
+                    type types-sros:ip-address;
+                    description "Address of the AMT gateway that established this tunnel.";
+                }
+
+                leaf gateway-port {
+                    type types-sros:tcp-udp-port;
+                    description "UDP port of the AMT gateway that established this tunnel.";
+                }
+
+                container statistics {
+                    description "Enter the statistics context";
+
+                    container received {
+                        description "Enter the received context";
+
+                        leaf v1-reports {
+                            type yang:counter32;
+                            description "V1 Reports.";
+                        }
+
+                        leaf v2-reports {
+                            type yang:counter32;
+                            description "V2 Reports.";
+                        }
+
+                        leaf leaves {
+                            type yang:counter32;
+                            description "Leaves.";
+                        }
+
+                        leaf drops {
+                            type yang:counter32;
+                            description "Total number of dropped packets.";
+                        }
+
+                    } // container received
+
+                    container transmitted {
+                        description "Enter the transmitted context";
+
+                        leaf general-queries {
+                            type yang:counter32;
+                            description "General Queries.";
+                        }
+
+                        leaf errors {
+                            type yang:counter32;
+                            description "Transmission Errors.";
+                        }
+
+                    } // container transmitted
+
+                    container error {
+                        description "Enter the error context";
+
+                        leaf bad-length {
+                            type yang:counter32;
+                            description "Bad length.";
+                        }
+
+                        leaf bad-ip-checksum {
+                            type yang:counter32;
+                            description "Bad Ip checksum.";
+                        }
+
+                        leaf unknown-type {
+                            type yang:counter32;
+                            description "Unknown type.";
+                        }
+
+                        leaf wrong-version {
+                            type yang:counter32;
+                            description "Wrong version.";
+                        }
+
+                        leaf import-policy-drops {
+                            type yang:counter32;
+                            description
+                                "Number of times we matched the host IP address or group or
+                                 source addresses specified in the import policy.";
+                        }
+
+                        leaf missing-router-alert {
+                            type yang:counter32;
+                            description "Router alert flag is not set.";
+                        }
+
+                        leaf bad-encoding {
+                            type yang:counter32;
+                            description "Badly encoded.";
+                        }
+
+                        leaf out-of-memory-drops {
+                            type yang:counter32;
+                            description "Number of times a join is dropped because we ran out of memory.";
+                        }
+
+                    } // container error
+
+                } // container statistics
+
+                list group {
+                    key "group-address";
+                    description "Enter the group list instance";
+
+                    leaf group-address {
+                        type types-sros:ipv6-multicast-address;
+                        description "Group address of multicast channel.";
+                    }
+
+                    leaf filter-mode {
+                        type types-igmp:filter-mode;
+                    }
+
+                    leaf expiry-time {
+                        type uint32;
+                        units "seconds";
+                        description "The time left before multicast group timeout.";
+                    }
+
+                    leaf up-time {
+                        type uint32;
+                        units "seconds";
+                        description "The time elapsed since this entry was created.";
+                    }
+
+                    leaf v1-host-timer {
+                        type uint32;
+                        units "seconds";
+                        description
+                            "The time remaining until the local router will assume that
+                             there are no longer any version 1 members.";
+                    }
+
+                    leaf mld-compatibility-mode {
+                        type types-igmp:mld-version;
+                        description "Compatibility with older version routers.";
+                    }
+
+                    list source {
+                        key "source-address";
+                        description "Enter the source list instance";
+
+                        leaf source-address {
+                            type types-sros:ipv6-address;
+                            description "Source address of multicast channel.";
+                        }
+
+                        leaf forwarding-state {
+                            type types-igmp:forwarding-state;
+                            description "Traffic forwardeding state on this port.";
+                        }
+
+                        leaf expiry-time {
+                            type uint32;
+                            units "seconds";
+                            description "The time left before multicast group timeout.";
+                        }
+
+                        leaf up-time {
+                            type uint32;
+                            units "seconds";
+                            description "The time elapsed since this entry was created.";
+                        }
+
+                    } // list source
+
+                } // list group
+
+            } // list amt-gateway
 
         } // container mld
 

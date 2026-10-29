@@ -66,7 +66,7 @@ submodule nokia-conf-svc-vpls {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-svc-vpls {
         list vpls {
@@ -8269,6 +8269,12 @@ submodule nokia-conf-svc-vpls {
                 }
                 container ingress {
                     description "Enter the ingress context";
+
+                    leaf forward-l3-only {
+                        type boolean;
+                        default "false";
+                        description "Forward frames with Ethertype IPv4, IPv6, or ARP";
+                    }
 
                     leaf shared-policer {
                         type leafref {

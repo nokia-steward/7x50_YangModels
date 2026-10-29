@@ -33,7 +33,7 @@ module nokia-sr-ietf-netconf-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     deviation /nc:get-config/nc:input/nc:source/nc:config-source/nc:startup {
         description "get-config operation from startup datastore is not supported.";
@@ -57,6 +57,16 @@ module nokia-sr-ietf-netconf-deviations {
 
     deviation /nc:validate/nc:input/nc:source/nc:config-source/nc:url {
         description "validate operation for URL-based config content is not supported.";
+        deviate not-supported;
+    }
+
+    deviation /nc:lock/nc:input/nc:target/nc:config-target/nc:startup {
+        description "lock operation for startup datastore is not supported.";
+        deviate not-supported;
+    }
+
+    deviation /nc:unlock/nc:input/nc:target/nc:config-target/nc:startup {
+        description "unlock operation for startup datastore is not supported.";
         deviate not-supported;
     }
 

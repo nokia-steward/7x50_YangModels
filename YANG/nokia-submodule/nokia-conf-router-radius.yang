@@ -11,6 +11,9 @@ submodule nokia-conf-router-radius {
     include nokia-conf-groups;
     include nokia-conf-isa;
     include nokia-conf-python;
+    include nokia-conf-system;
+    include nokia-conf-system-security;
+    include nokia-conf-system-security-tls;
 
     sros-ext:sros-major-release "rel26";
     organization "Nokia";
@@ -35,7 +38,7 @@ submodule nokia-conf-router-radius {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-router-radius {
         container radius {
@@ -134,6 +137,13 @@ submodule nokia-conf-router-radius {
                         path "../../../../python/python-policy/name";
                     }
                     description "Python script policy to modify CoA messages";
+                }
+
+                leaf tls-client-profile {
+                    type leafref {
+                        path "../../../../system/security/tls/client-tls-profile/client-profile-name";
+                    }
+                    description "Use the TLS client profile for RADIUS over TLS";
                 }
 
                 leaf-list apply-groups {

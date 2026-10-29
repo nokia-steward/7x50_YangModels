@@ -99,6 +99,7 @@ module nokia-state {
     include nokia-state-submgt-local-user-db;
     include nokia-state-submgt-service-chaining;
     include nokia-state-submgt-subscriber;
+    include nokia-state-submgt-up-resiliency;
     include nokia-state-submgt-vrgw;
     include nokia-state-submgt-wlangw;
     include nokia-state-subscriber-mgmt;
@@ -175,7 +176,7 @@ module nokia-state {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     container state {
         config false;

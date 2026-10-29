@@ -51,7 +51,7 @@ submodule nokia-conf-svc-ies-grp-if-wlangw {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-svc-ies-grp-if-wlangw-wlan-gw {
         container wlan-gw {
@@ -454,7 +454,7 @@ submodule nokia-conf-svc-ies-grp-if-wlangw {
                             error-message "'range' must be VLAN tag, range low..high, or unmatched";
                         }
                     }
-                    description "IEEE 802.1q VLAN tag range";
+                    description "VLAN tag range";
                 }
 
                 leaf dynamic-service {
@@ -960,6 +960,22 @@ submodule nokia-conf-svc-ies-grp-if-wlangw {
 
                     } // container accounting-update
 
+                    container dynamic-policer {
+                        description "Enter the dynamic-policer context";
+
+                        leaf cir-adaptation-rule {
+                            type types-qos:adaptation-rule;
+                            default "closest";
+                            description "CIR adaptation rule for dynamically installed policers";
+                        }
+
+                        leaf pir-adaptation-rule {
+                            type types-qos:adaptation-rule;
+                            default "closest";
+                            description "PIR adaptation rule for dynamically installed policers";
+                        }
+
+                    } // container dynamic-policer
 
                     container ingress {
                         description "Enter the ingress context";

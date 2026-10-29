@@ -34,7 +34,7 @@ submodule nokia-state-svc-cpipe {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-svc-cpipe {
         list cpipe {
@@ -1877,6 +1877,182 @@ submodule nokia-state-svc-cpipe {
                                             } // container v4-v6
 
                                         }
+                                        case ecn-marked {
+
+                                            container ecn-marked {
+                                                description "Enter the ecn-marked context";
+
+                                                leaf all-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf all-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf all-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf all-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ecn-unmarked-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded packets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                }
+
+                                                leaf ecn-unmarked-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded octets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                }
+
+                                                leaf ecn-marked-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded packets that were ECN-marked (CE codepoint set) by the policer";
+                                                }
+
+                                                leaf ecn-marked-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded octets that were ECN-marked (CE codepoint set) by the policer";
+                                                }
+
+                                            } // container ecn-marked
+
+                                        }
+                                        case ecn-codepoints {
+
+                                            container ecn-codepoints {
+                                                description "Enter the ecn-codepoints context";
+
+                                                leaf l4s-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT (Non-ECN-Capable-Transport) packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                            } // container ecn-codepoints
+
+                                        }
                                     }
                                 } // container statistics
 
@@ -2422,6 +2598,116 @@ submodule nokia-state-svc-cpipe {
                                                 }
 
                                             } // container v4-v6
+
+                                        }
+                                        case ecn-marked {
+
+                                            container ecn-marked {
+                                                description "Enter the ecn-marked context";
+
+                                                leaf ecn-unmarked-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of forwarded packets that were not ECN-marked
+                                                         (CE codepoint not set).";
+                                                }
+
+                                                leaf ecn-unmarked-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of forwarded octets that were not ECN-marked
+                                                         (CE codepoint not set).";
+                                                }
+
+                                                leaf ecn-marked-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of forwarded packets that were ECN-marked
+                                                         (CE codepoint set).";
+                                                }
+
+                                                leaf ecn-marked-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of forwarded octets that were ECN-marked
+                                                         (CE codepoint set).";
+                                                }
+
+                                                leaf dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of packets discarded.";
+                                                }
+
+                                                leaf dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of octets discarded.";
+                                                }
+
+                                            } // container ecn-marked
+
+                                        }
+                                        case mismatch {
+
+                                            container mismatch {
+                                                description "Enter the mismatch context";
+
+                                                leaf in-inplus-profile-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of in-profile/in-plus-profile packets
+                                                         (rate below CIR) forwarded.";
+                                                }
+
+                                                leaf in-inplus-profile-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of in-profile/in-plus-profile octets
+                                                         (rate below CIR) forwarded.";
+                                                }
+
+                                                leaf out-exceed-profile-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of out-profile/exceed-profile packets
+                                                         (rate above CIR) forwarded.";
+                                                }
+
+                                                leaf out-exceed-profile-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of out-profile/exceed-profile octets
+                                                         (rate above CIR) forwarded.";
+                                                }
+
+                                                leaf in-inplus-profile-dropped-packets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of in-profile/in-plus-profile packets
+                                                         discarded.";
+                                                }
+
+                                                leaf in-inplus-profile-dropped-octets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of in-profile/in-plus-profile octets
+                                                         discarded.";
+                                                }
+
+                                                leaf out-exceed-profile-dropped-packets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of out-profile/exceed-profile packets
+                                                         discarded.";
+                                                }
+
+                                                leaf out-exceed-profile-dropped-octets {
+                                                    type yang:counter64;
+                                                    description
+                                                        "The number of out-profile/exceed-profile octets
+                                                         discarded.";
+                                                }
+
+                                            } // container mismatch
 
                                         }
                                     }
@@ -3482,6 +3768,182 @@ submodule nokia-state-svc-cpipe {
                                                 }
 
                                             } // container bonding
+
+                                        }
+                                        case ecn-marked {
+
+                                            container ecn-marked {
+                                                description "Enter the ecn-marked context";
+
+                                                leaf all-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf all-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf all-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf all-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ecn-unmarked-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded packets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                }
+
+                                                leaf ecn-unmarked-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded octets that were not ECN-marked (CE codepoint not set) by the policer";
+                                                }
+
+                                                leaf ecn-marked-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded packets that were ECN-marked (CE codepoint set) by the policer";
+                                                }
+
+                                                leaf ecn-marked-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of forwarded octets that were ECN-marked (CE codepoint set) by the policer";
+                                                }
+
+                                            } // container ecn-marked
+
+                                        }
+                                        case ecn-codepoints {
+
+                                            container ecn-codepoints {
+                                                description "Enter the ecn-codepoints context";
+
+                                                leaf l4s-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf l4s-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of L4S (ECT(1)) octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf ce-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of CE-marked octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT (Non-ECN-Capable-Transport) packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf non-ect-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of NonECT octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-offered-packets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) packets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-offered-octets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) octets offered by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-dropped-packets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) packets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-dropped-octets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) octets dropped by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-forwarded-packets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) packets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                                leaf classic-ecn-forwarded-octets {
+                                                    type yang:counter64;
+                                                    description "The number of Classic ECN-Capable-Transport (ECT(0)) octets forwarded by the packet processor to traffic manager";
+                                                }
+
+                                            } // container ecn-codepoints
 
                                         }
                                     }

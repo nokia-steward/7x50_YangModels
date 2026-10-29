@@ -64,7 +64,7 @@ submodule nokia-conf-svc-vprn-sub-if {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-svc-vprn-sub-if-subscriber-interface {
         list subscriber-interface {
@@ -305,7 +305,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                         }
                         units "milliseconds";
                         default "100";
-                        description "BFD transmit interval over this interface";
+                        description "Transmit interval";
                     }
 
                     leaf receive {
@@ -314,7 +314,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                         }
                         units "milliseconds";
                         default "100";
-                        description "BFD receive interval over this interface";
+                        description "Receive interval";
                     }
 
                     leaf multiplier {
@@ -335,12 +335,30 @@ submodule nokia-conf-svc-vprn-sub-if {
 
                     leaf type {
                         type enumeration {
-                            enum cpm-np                         { value 1; }
-                            enum auto                           { value 2; }
-                            enum fp                             { value 3; }
+                            enum cpm-np {
+                                value 1;
+                                description "Terminate on the CPM network processor";
+                            }
+                            enum auto {
+                                value 2;
+                                description "Terminate on the system-selected termination point";
+                            }
+                            enum fp {
+                                value 3;
+                                description "Terminate on the forwarding plane";
+                            }
                         }
                         default "auto";
                         description "Local termination point for the BFD session";
+                    }
+
+                    leaf padded-size {
+                        type uint32 {
+                            range "0|52..1512";
+                        }
+                        units "bytes";
+                        default "0";
+                        description "BFD payload padded size";
                     }
 
                 } // container bfd
@@ -858,7 +876,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                         }
                         units "milliseconds";
                         default "100";
-                        description "BFD transmit interval over this interface";
+                        description "Transmit interval";
                     }
 
                     leaf receive {
@@ -867,7 +885,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                         }
                         units "milliseconds";
                         default "100";
-                        description "BFD receive interval over this interface";
+                        description "Receive interval";
                     }
 
                     leaf multiplier {
@@ -888,12 +906,30 @@ submodule nokia-conf-svc-vprn-sub-if {
 
                     leaf type {
                         type enumeration {
-                            enum cpm-np                         { value 1; }
-                            enum auto                           { value 2; }
-                            enum fp                             { value 3; }
+                            enum cpm-np {
+                                value 1;
+                                description "Terminate on the CPM network processor";
+                            }
+                            enum auto {
+                                value 2;
+                                description "Terminate on the system-selected termination point";
+                            }
+                            enum fp {
+                                value 3;
+                                description "Terminate on the forwarding plane";
+                            }
                         }
                         default "auto";
                         description "Local termination point for the BFD session";
+                    }
+
+                    leaf padded-size {
+                        type uint32 {
+                            range "0|52..1512";
+                        }
+                        units "bytes";
+                        default "0";
+                        description "BFD payload padded size";
                     }
 
                 } // container bfd
@@ -2208,7 +2244,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD transmit interval over this interface";
+                            description "Transmit interval";
                         }
 
                         leaf receive {
@@ -2217,7 +2253,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD receive interval over this interface";
+                            description "Receive interval";
                         }
 
                         leaf multiplier {
@@ -2238,12 +2274,30 @@ submodule nokia-conf-svc-vprn-sub-if {
 
                         leaf type {
                             type enumeration {
-                                enum cpm-np                         { value 1; }
-                                enum auto                           { value 2; }
-                                enum fp                             { value 3; }
+                                enum cpm-np {
+                                    value 1;
+                                    description "Terminate on the CPM network processor";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "Terminate on the system-selected termination point";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Terminate on the forwarding plane";
+                                }
                             }
                             default "auto";
                             description "Local termination point for the BFD session";
+                        }
+
+                        leaf padded-size {
+                            type uint32 {
+                                range "0|52..1512";
+                            }
+                            units "bytes";
+                            default "0";
+                            description "BFD payload padded size";
                         }
 
                     } // container bfd
@@ -2756,7 +2810,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD transmit interval over this interface";
+                            description "Transmit interval";
                         }
 
                         leaf receive {
@@ -2765,7 +2819,7 @@ submodule nokia-conf-svc-vprn-sub-if {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD receive interval over this interface";
+                            description "Receive interval";
                         }
 
                         leaf multiplier {
@@ -2786,12 +2840,30 @@ submodule nokia-conf-svc-vprn-sub-if {
 
                         leaf type {
                             type enumeration {
-                                enum cpm-np                         { value 1; }
-                                enum auto                           { value 2; }
-                                enum fp                             { value 3; }
+                                enum cpm-np {
+                                    value 1;
+                                    description "Terminate on the CPM network processor";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "Terminate on the system-selected termination point";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Terminate on the forwarding plane";
+                                }
                             }
                             default "auto";
                             description "Local termination point for the BFD session";
+                        }
+
+                        leaf padded-size {
+                            type uint32 {
+                                range "0|52..1512";
+                            }
+                            units "bytes";
+                            default "0";
+                            description "BFD payload padded size";
                         }
 
                     } // container bfd

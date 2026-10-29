@@ -31,11 +31,16 @@ submodule nokia-state-port-eth-efm-oam {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-port-eth-efm-oam {
         container efm-oam {
             description "Enter the efm-oam context";
+
+            leaf override-lag-name {
+                type types-sros:lag-interface;
+                description "Name of the lag that has the Ethernet EFM configuration that overrides this one.";
+            }
 
             leaf config-revision {
                 type uint32;

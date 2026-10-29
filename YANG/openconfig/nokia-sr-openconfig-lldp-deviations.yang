@@ -31,7 +31,7 @@ module nokia-sr-openconfig-lldp-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     deviation /oc-lldp:lldp/oc-lldp:config/oc-lldp:hello-timer {
         deviate replace {
@@ -98,14 +98,6 @@ module nokia-sr-openconfig-lldp-deviations {
     }
 
     deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:state/oc-lldp:counters/oc-lldp:last-clear {
-        deviate not-supported;
-    }
-
-    deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:state/oc-lldp:management-address {
-        deviate not-supported;
-    }
-
-    deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:state/oc-lldp:management-address-type {
         deviate not-supported;
     }
 

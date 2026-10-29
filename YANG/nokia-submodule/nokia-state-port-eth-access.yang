@@ -35,7 +35,7 @@ submodule nokia-state-port-eth-access {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-port-eth-access {
         container access {
@@ -322,6 +322,116 @@ submodule nokia-state-port-eth-access {
                                         }
 
                                     } // container profile
+
+                                }
+                                case ecn-marked {
+
+                                    container ecn-marked {
+                                        description "Enter the ecn-marked context";
+
+                                        leaf ecn-unmarked-forwarded-packets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of forwarded packets that were not ECN-marked
+                                                 (CE codepoint not set).";
+                                        }
+
+                                        leaf ecn-unmarked-forwarded-octets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of forwarded octets that were not ECN-marked
+                                                 (CE codepoint not set).";
+                                        }
+
+                                        leaf ecn-marked-forwarded-packets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of forwarded packets that were ECN-marked
+                                                 (CE codepoint set).";
+                                        }
+
+                                        leaf ecn-marked-forwarded-octets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of forwarded octets that were ECN-marked
+                                                 (CE codepoint set).";
+                                        }
+
+                                        leaf dropped-packets {
+                                            type yang:counter64;
+                                            description "The number of packets discarded.";
+                                        }
+
+                                        leaf dropped-octets {
+                                            type yang:counter64;
+                                            description "The number of octets discarded.";
+                                        }
+
+                                    } // container ecn-marked
+
+                                }
+                                case mismatch {
+
+                                    container mismatch {
+                                        description "Enter the mismatch context";
+
+                                        leaf in-inplus-profile-forwarded-packets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of in-profile/in-plus-profile packets
+                                                 (rate below CIR) forwarded.";
+                                        }
+
+                                        leaf in-inplus-profile-forwarded-octets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of in-profile/in-plus-profile octets
+                                                 (rate below CIR) forwarded.";
+                                        }
+
+                                        leaf in-inplus-profile-dropped-packets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of in-profile/in-plus-profile packets
+                                                 discarded.";
+                                        }
+
+                                        leaf in-inplus-profile-dropped-octets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of in-profile/in-plus-profile octets
+                                                 discarded.";
+                                        }
+
+                                        leaf out-exceed-profile-forwarded-packets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of out-profile/exceed-profile packets
+                                                 (rate above CIR) forwarded.";
+                                        }
+
+                                        leaf out-exceed-profile-forwarded-octets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of out-profile/exceed-profile octets
+                                                 (rate above CIR) forwarded.";
+                                        }
+
+                                        leaf out-exceed-profile-dropped-packets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of out-profile/exceed-profile packets
+                                                 discarded.";
+                                        }
+
+                                        leaf out-exceed-profile-dropped-octets {
+                                            type yang:counter64;
+                                            description
+                                                "The number of out-profile/exceed-profile octets
+                                                 discarded.";
+                                        }
+
+                                    } // container mismatch
 
                                 }
                             }

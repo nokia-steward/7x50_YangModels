@@ -10,7 +10,11 @@ submodule nokia-state-router-isis {
     import nokia-types-igp                { prefix "types-igp"; }
     import nokia-types-isis               { prefix "types-isis"; }
     import nokia-types-router             { prefix "types-router"; }
+    import nokia-types-sr-mpls            { prefix "types-sr-mpls"; }
     import nokia-types-sros               { prefix "types-sros"; }
+
+    include nokia-state-router;
+    include nokia-state-router-segment-routing;
 
     sros-ext:sros-major-release "rel26";
     organization "Nokia";
@@ -35,7 +39,7 @@ submodule nokia-state-router-isis {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-router-isis {
         list isis {
@@ -1673,6 +1677,7 @@ submodule nokia-state-router-isis {
                                 enum pq-node                        { value 2; }
                                 enum tr-node                        { value 3; }
                                 enum q-node                         { value 4; }
+                                enum nbr-node                       { value 5; }
                             }
                             description "The value indicates the node type.";
                         }
@@ -1984,6 +1989,117 @@ submodule nokia-state-router-isis {
                         }
                     }
                 } // container ipv6-shared-sid
+
+                container fast-flooding-oper {
+                    description "Enter the fast-flooding-oper context";
+
+                    container lsp-receiver {
+                        description "Enter the lsp-receiver context";
+
+                        leaf enabled {
+                            type boolean;
+                            description "Indicates if fast flooding is effectively enabled for the LSP receiver on this interface.";
+                        }
+
+                        leaf advertise-flooding-tlv {
+                            type boolean;
+                            description "Indicates if the fast flooding TLV is effectively advertised to neighbors on this interface.";
+                        }
+
+                        leaf burst-size {
+                            type uint32 {
+                                range "1..200";
+                            }
+                            description "Indicates the effective burst size on this interface.";
+                        }
+
+                        leaf psnp-interval {
+                            type uint32 {
+                                range "50..1000";
+                            }
+                            units "milliseconds";
+                            description "Indicates the effective interval between periodic PSNP transmissions on this interface.";
+                        }
+
+                        leaf lsp-per-psnp {
+                            type uint32 {
+                                range "1..90";
+                            }
+                            description "Indicates the effective number of received LSPs that triggers immediate PSNP transmission.";
+                        }
+
+                        leaf lsp-transmit-interval {
+                            type uint32 {
+                                range "1..1000";
+                            }
+                            units "milliseconds";
+                            description "Indicates the effective minimum interval between LSP transmissions that can be sustained on reception.";
+                        }
+
+                        leaf receive-window {
+                            type uint32 {
+                                range "10..1000";
+                            }
+                            description "Indicates the effective Receive Window (RWIN) on this interface.";
+                        }
+
+                    } // container lsp-receiver
+
+                    container lsp-sender {
+                        description "Enter the lsp-sender context";
+
+                        leaf enabled {
+                            type boolean;
+                            description "Indicates if fast flooding sender behavior towards each neighbor is effectively enabled on this interface.";
+                        }
+
+                        leaf enforce-receive-window {
+                            type boolean;
+                            description "Indicates if the LSP sender effectively enforces the Receive Window (RWIN) on this interface.";
+                        }
+
+                        leaf enforce-burst-size {
+                            type boolean;
+                            description "Indicates if the LSP sender effectively enforces the Burst Size on this interface.";
+                        }
+
+                        container local-defaults {
+                            description "Enter the local-defaults context";
+
+                            leaf receive-window {
+                                type uint32 {
+                                    range "10..1000";
+                                }
+                                description "Indicates the effective default Receive Window (RWIN) on this interface.";
+                            }
+
+                            leaf burst-size {
+                                type uint32 {
+                                    range "1..200";
+                                }
+                                description "Indicates the effective default burst size on this interface.";
+                            }
+
+                            leaf lsp-per-psnp {
+                                type uint32 {
+                                    range "1..90";
+                                }
+                                description "Indicates the effective default number of LSPs per PSNP on this interface.";
+                            }
+
+                            leaf lsp-transmit-interval {
+                                type uint32 {
+                                    range "1..1000";
+                                }
+                                units "milliseconds";
+                                description "Indicates the effective default minimum interval between LSP transmissions on this interface.";
+                            }
+
+                        } // container local-defaults
+
+                    } // container lsp-sender
+
+                } // container fast-flooding-oper
 
                 list level {
                     key "level-number";
@@ -2406,6 +2522,55 @@ submodule nokia-state-router-isis {
 
                     } // container multi-topology
 
+                    container fast-flooding {
+                        description "Enter the fast-flooding context";
+
+                        leaf receive-window {
+                            type uint32;
+                            description "The Receive Window advertised by the neighbor for fast flooding.";
+                        }
+
+                        leaf burst-size {
+                            type uint32;
+                            description "The burst size advertised by the neighbor for fast flooding.";
+                        }
+
+                        leaf lsp-transmit-interval {
+                            type uint32;
+                            units "milliseconds";
+                            description
+                                "The minimum interval, in milliseconds, between LSP transmissions that the
+                                 neighbor advertises as sustainable on reception.";
+                        }
+
+                        leaf lsps-per-psnp {
+                            type uint32;
+                            description
+                                "The number of received LSPs that triggers immediate transmission of a
+                                 Partial Sequence Number PDU (PSNP), as advertised by the neighbor.";
+                        }
+
+                        leaf psnp-interval {
+                            type uint32;
+                            units "milliseconds";
+                            description
+                                "The interval between periodic PSNP transmissions, in milliseconds, as
+                                 advertised by the neighbor.";
+                        }
+
+                        leaf flags {
+                            type bits {
+                                bit bit-o                          { position 0; }
+                            }
+                            description
+                                "The value indicates the flags advertised by the neighbor for fast flooding.
+
+                                 bit-o   (0)  - Ordered acknowledgment flag. If set, then the LSP sender
+                                     will acknowledge the LSPs in the order as received.";
+                        }
+
+                    } // container fast-flooding
+
                     container sr-ipv4 {
                         description "Enter the sr-ipv4 context";
 
@@ -2429,6 +2594,11 @@ submodule nokia-state-router-isis {
                             description "The value of the object sid-protected indicates the if the SID for this adjacency is eligible for protection.";
                         }
 
+                        leaf sid-allocation {
+                            type types-sros:srv6-function-type;
+                            description "The value indicates how the SID for this adjacency is allocated.";
+                        }
+
                         leaf secondary-sid-type {
                             type enumeration {
                                 enum none                           { value 0; }
@@ -2447,6 +2617,11 @@ submodule nokia-state-router-isis {
                         leaf secondary-sid-protected {
                             type boolean;
                             description "The value of the object secondary-sid-protected indicates the if the secondary SID for this adjacency is eligible for protection.";
+                        }
+
+                        leaf secondary-sid-allocation {
+                            type types-sros:srv6-function-type;
+                            description "The value indicates how the secondary SID for this adjacency is allocated.";
                         }
 
                         leaf secondary-sid-mtu {
@@ -2600,17 +2775,12 @@ submodule nokia-state-router-isis {
                             }
 
                             list backup-node {
-                                key "system-id";
+                                key "system-id node-type sid-value";
                                 description "Enter the backup-node list instance";
 
                                 leaf system-id {
                                     type types-igp:system-id;
                                     description "Specifies the ID for this instance of the Integrated IS-IS protocol.";
-                                }
-
-                                leaf sid-value {
-                                    type uint32;
-                                    description "The value indicates the SID label or index for this node.";
                                 }
 
                                 leaf node-type {
@@ -2622,6 +2792,11 @@ submodule nokia-state-router-isis {
                                         enum nbr-node                       { value 5; }
                                     }
                                     description "The value indicates the node type.";
+                                }
+
+                                leaf sid-value {
+                                    type uint32;
+                                    description "The value indicates the SID label or index for this node.";
                                 }
 
                                 leaf sid-type {
@@ -2662,6 +2837,11 @@ submodule nokia-state-router-isis {
                             description "The value of the object sid-protected indicates the if the SID for this adjacency is eligible for protection.";
                         }
 
+                        leaf sid-allocation {
+                            type types-sros:srv6-function-type;
+                            description "The value indicates how the SID for this adjacency is allocated.";
+                        }
+
                         leaf secondary-sid-type {
                             type enumeration {
                                 enum none                           { value 0; }
@@ -2680,6 +2860,11 @@ submodule nokia-state-router-isis {
                         leaf secondary-sid-protected {
                             type boolean;
                             description "The value of the object secondary-sid-protected indicates the if the secondary SID for this adjacency is eligible for protection.";
+                        }
+
+                        leaf secondary-sid-allocation {
+                            type types-sros:srv6-function-type;
+                            description "The value indicates how the secondary SID for this adjacency is allocated.";
                         }
 
                         leaf secondary-sid-mtu {
@@ -2833,17 +3018,12 @@ submodule nokia-state-router-isis {
                             }
 
                             list backup-node {
-                                key "system-id";
+                                key "system-id node-type sid-value";
                                 description "Enter the backup-node list instance";
 
                                 leaf system-id {
                                     type types-igp:system-id;
                                     description "Specifies the ID for this instance of the Integrated IS-IS protocol.";
-                                }
-
-                                leaf sid-value {
-                                    type uint32;
-                                    description "The value indicates the SID label or index for this node.";
                                 }
 
                                 leaf node-type {
@@ -2855,6 +3035,11 @@ submodule nokia-state-router-isis {
                                         enum nbr-node                       { value 5; }
                                     }
                                     description "The value indicates the node type.";
+                                }
+
+                                leaf sid-value {
+                                    type uint32;
+                                    description "The value indicates the SID label or index for this node.";
                                 }
 
                                 leaf sid-type {
@@ -2871,6 +3056,208 @@ submodule nokia-state-router-isis {
                         } // container sr-lfa-info
 
                     } // container sr-ipv6
+
+                    container segment-routing-v6 {
+                        description "Enter the segment-routing-v6 context";
+
+                        list segment-identifier {
+                            key "segment-identifier";
+                            description "Enter the segment-identifier list instance";
+
+                            leaf segment-identifier {
+                                type types-sros:ipv6-address;
+                                description "The value specifies the IPv6 address of the SRv6 segment identifier.";
+                            }
+
+                            leaf algorithm {
+                                type int32 {
+                                    range "0|128..255";
+                                }
+                                description "The value indicates the algorithm related to the adjacency SID.";
+                            }
+
+                            leaf allocation {
+                                type types-sros:srv6-function-type;
+                                description "The value indicates how the SRv6 function for this adjacency SID is allocated.";
+                            }
+
+                            leaf function {
+                                type uint32;
+                                description "The value indicates the SRv6 function value for this adjacency SID.";
+                            }
+
+                            leaf locator {
+                                type types-sros:named-item;
+                                description "The value indicates the SRv6 locator associated with this adjacency SID.";
+                            }
+
+                            leaf protection {
+                                type enumeration {
+                                    enum unprotected                    { value 0; }
+                                    enum protected                      { value 1; }
+                                }
+                                description "The value indicates whether the adjacency SID is protected or not.";
+                            }
+
+                            leaf srh-mode {
+                                type types-sr-mpls:srh-mode;
+                                description "The value indicates the Segment Routing Header (SRH) mode for this adjacency SID.";
+                            }
+
+                            leaf type {
+                                type enumeration {
+                                    enum end-x                          { value 1; }
+                                    enum ua                             { value 2; }
+                                }
+                                description "The value indicates the SRv6 endpoint function type for this adjacency SID.";
+                            }
+
+                        } // list segment-identifier
+
+                    } // container segment-routing-v6
+
+                    list srv6-lfa-info {
+                        key "algorithm locator-name sid";
+                        description "Enter the srv6-lfa-info list instance";
+
+                        leaf algorithm {
+                            type int32 {
+                                range "0|128..255";
+                            }
+                            description "The value indicates the algorithm.";
+                        }
+
+                        leaf locator-name {
+                            type leafref {
+                                path "../../../../../../router/segment-routing/segment-routing-v6/micro-segment-locator/locator-name";
+                            }
+                            description "Locator name";
+                        }
+
+                        leaf sid {
+                            type types-sros:ipv6-address;
+                            description "The value specifies the IPv6 address of the SID.";
+                        }
+
+                        leaf multi-topology-id {
+                            type uint32;
+                            description "The value specifies the multi-topology id number for the SID.";
+                        }
+
+                        leaf sid-type {
+                            type enumeration {
+                                enum end.x                          { value 1; }
+                                enum ua                             { value 2; }
+                            }
+                            description "The value indicates the sid type.";
+                        }
+
+                        leaf backup-path-ip {
+                            type types-sros:ip-address-with-zone;
+                            description "The value specifies the IP address of the backup path.";
+                        }
+
+                        leaf backup-lfa-type {
+                            type enumeration {
+                                enum lfa                            { value 0; }
+                                enum tilfa                          { value 1; }
+                                enum rlfa                           { value 2; }
+                            }
+                            description "The value indicates the type of LFA used by the backup path.";
+                        }
+
+                        leaf backup-lfa-protection-type {
+                            type enumeration {
+                                enum not-applicable                 { value 0; }
+                                enum node-protection                { value 1; }
+                                enum link-protection                { value 2; }
+                            }
+                            description
+                                "The value indicates the type of protection used by the backup next-hop.
+
+                                 The value 'not-applicable' indicates that the backup next hop type
+                                 is not applicable
+                                 the value 'node-protection' indicates that the backup next hop uses a
+                                 node-protection mechanism
+                                 the value 'link-protection' indicates that the backup next hop uses
+                                 link-protection mechanism.";
+                        }
+
+                        leaf backup-num-nodes {
+                            type uint32;
+                            description "The value indicates the number of backup nodes used in the backup path.";
+                        }
+
+                        list backup-node {
+                            key "system-id node-type sid";
+                            description "Enter the backup-node list instance";
+
+                            leaf system-id {
+                                type types-igp:system-id;
+                                description "Specifies the ID for this instance of the Integrated IS-IS protocol.";
+                            }
+
+                            leaf node-type {
+                                type enumeration {
+                                    enum p-node                         { value 1; }
+                                    enum pq-node                        { value 2; }
+                                    enum tr-node                        { value 3; }
+                                    enum q-node                         { value 4; }
+                                    enum nbr-node                       { value 5; }
+                                }
+                                description "The value indicates the node type.";
+                            }
+
+                            leaf sid {
+                                type types-sros:ipv6-address;
+                                description "The value specifies the IPv6 address of the backup-node SID.";
+                            }
+
+                            leaf multi-topology-id {
+                                type uint32;
+                                description "The value specifies the multi-topology id number for the SID.";
+                            }
+
+                            leaf sid-type {
+                                type enumeration {
+                                    enum none                           { value 0; }
+                                    enum end                            { value 1; }
+                                    enum end.x                          { value 2; }
+                                    enum un                             { value 3; }
+                                    enum ua                             { value 4; }
+                                }
+                                description "The value indicates the sid type.";
+                            }
+
+                            leaf endpoint-behavior {
+                                type types-isis:srv6-endpoint-behavior-type;
+                                description "The value indicates the SRv6 endpoint behavior advertised in the SID sub-TLV.";
+                            }
+
+                            leaf srh-mode {
+                                type enumeration {
+                                    enum psp                            { value 0; }
+                                    enum usp                            { value 1; }
+                                    enum psp-usd                        { value 2; }
+                                    enum usp-usd                        { value 3; }
+                                    enum psp-usp-usd                    { value 4; }
+                                    enum not-applicable                 { value 5; }
+                                }
+                                description "The value indicates the srh mode of the backup node.";
+                            }
+
+                            leaf node-protection-type {
+                                type enumeration {
+                                    enum unprotected                    { value 1; }
+                                    enum protected                      { value 2; }
+                                    enum not-applicable                 { value 3; }
+                                }
+                                description "The value indicates the protection type of the backup node.";
+                            }
+
+                        } // list backup-node
+
+                    } // list srv6-lfa-info
 
                     list area-address {
                         key "area-address";

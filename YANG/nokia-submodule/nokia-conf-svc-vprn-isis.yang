@@ -39,7 +39,7 @@ submodule nokia-conf-svc-vprn-isis {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-svc-vprn-isis {
         list isis {
@@ -644,6 +644,138 @@ submodule nokia-conf-svc-vprn-isis {
 
             } // container loopfree-alternate
 
+            container fast-flooding {
+                description "Enter the fast-flooding context";
+
+                leaf-list apply-groups {
+                    type leafref {
+                        path "../../../../../groups/group/name";
+                    }
+                    max-elements 8;
+                    ordered-by user;
+                    description "Apply a configuration group at this level";
+                }
+
+                leaf-list apply-groups-exclude {
+                    type leafref {
+                        path "../../../../../groups/group/name";
+                    }
+                    max-elements 8;
+                    ordered-by user;
+                    description "Exclude a configuration group at this level";
+                }
+
+                container lsp-receiver {
+                    presence "Enable the lsp-receiver context";
+                    description "Enable the lsp-receiver context";
+
+                    leaf advertise-flooding-tlv {
+                        type boolean;
+                        default "false";
+                        description "Enable the advertise-flooding-tlv context";
+                    }
+
+                    leaf burst-size {
+                        type uint32 {
+                            range "1..200";
+                        }
+                        default "30";
+                        description "Maximum number of LSPs receivable without an intervening delay";
+                    }
+
+                    leaf psnp-interval {
+                        type uint32 {
+                            range "50..1000";
+                        }
+                        units "milliseconds";
+                        default "200";
+                        description "Interval between periodic transmissions of Partial Sequence Number PDUs (PSNPs)";
+                    }
+
+                    leaf lsp-per-psnp {
+                        type uint32 {
+                            range "1..90";
+                        }
+                        default "15";
+                        description "Number of received LSPs that triggers the immediate sending of a PSNP";
+                    }
+
+                    leaf lsp-transmit-interval {
+                        type uint32 {
+                            range "1..1000";
+                        }
+                        units "milliseconds";
+                        default "100";
+                        description "Interval between LSP transmissions that can be sustained on reception";
+                    }
+
+                    leaf receive-window {
+                        type uint32 {
+                            range "10..1000";
+                        }
+                        default "30";
+                        description "Maximum receive window";
+                    }
+
+                } // container lsp-receiver
+
+                container lsp-sender {
+                    presence "Enable the lsp-sender context";
+                    description "Enable the lsp-sender context";
+
+                    leaf enforce-receive-window {
+                        type boolean;
+                        default "false";
+                        description "Enforce the advertised receive window";
+                    }
+
+                    leaf enforce-burst-size {
+                        type boolean;
+                        default "false";
+                        description "Enforce to not exceed the advertised LSP burst size";
+                    }
+
+                    container local-defaults {
+                        description "Enter the local-defaults context";
+
+                        leaf receive-window {
+                            type uint32 {
+                                range "10..1000";
+                            }
+                            default "30";
+                            description "Default receive window.";
+                        }
+
+                        leaf burst-size {
+                            type uint32 {
+                                range "1..200";
+                            }
+                            default "30";
+                            description "Default burst size";
+                        }
+
+                        leaf lsp-per-psnp {
+                            type uint32 {
+                                range "1..90";
+                            }
+                            default "15";
+                            description "Default number of LSPs per PSNP";
+                        }
+
+                        leaf lsp-transmit-interval {
+                            type uint32 {
+                                range "1..1000";
+                            }
+                            units "milliseconds";
+                            default "100";
+                            description "Default interval between LSP transmissions";
+                        }
+
+                    } // container local-defaults
+
+                } // container lsp-sender
+
+            } // container fast-flooding
 
             container multi-part-tlv {
                 description "Enter the multi-part-tlv context";
@@ -902,6 +1034,147 @@ submodule nokia-conf-svc-vprn-isis {
                     } // container ipv6
 
                 } // container bfd-liveness
+
+                container fast-flooding {
+                    description "Enter the fast-flooding context";
+
+                    leaf-list apply-groups {
+                        type leafref {
+                            path "../../../../../../groups/group/name";
+                        }
+                        max-elements 8;
+                        ordered-by user;
+                        description "Apply a configuration group at this level";
+                    }
+
+                    leaf-list apply-groups-exclude {
+                        type leafref {
+                            path "../../../../../../groups/group/name";
+                        }
+                        max-elements 8;
+                        ordered-by user;
+                        description "Exclude a configuration group at this level";
+                    }
+
+                    container lsp-receiver {
+                        description "Enter the lsp-receiver context";
+
+                        leaf admin-state {
+                            type types-sros:admin-state-with-inherit;
+                            description "Administrative state of the LSP receiver";
+                        }
+
+                        leaf advertise-flooding-tlv {
+                            type boolean;
+                            default "false";
+                            description "Enable the advertise-flooding-tlv context";
+                        }
+
+                        leaf burst-size {
+                            type uint32 {
+                                range "1..200";
+                            }
+                            default "30";
+                            description "Maximum number of LSPs receivable without an intervening delay";
+                        }
+
+                        leaf psnp-interval {
+                            type uint32 {
+                                range "50..1000";
+                            }
+                            units "milliseconds";
+                            default "200";
+                            description "Interval between periodic transmissions of Partial Sequence Number PDUs (PSNPs)";
+                        }
+
+                        leaf lsp-per-psnp {
+                            type uint32 {
+                                range "1..90";
+                            }
+                            default "15";
+                            description "Number of received LSPs that triggers the immediate sending of a PSNP";
+                        }
+
+                        leaf lsp-transmit-interval {
+                            type uint32 {
+                                range "1..1000";
+                            }
+                            units "milliseconds";
+                            default "100";
+                            description "Interval between LSP transmissions that can be sustained on reception";
+                        }
+
+                        leaf receive-window {
+                            type uint32 {
+                                range "10..1000";
+                            }
+                            default "30";
+                            description "Maximum receive window";
+                        }
+
+                    } // container lsp-receiver
+
+                    container lsp-sender {
+                        description "Enter the lsp-sender context";
+
+                        leaf admin-state {
+                            type types-sros:admin-state-with-inherit;
+                            description "Administrative state of the LSP sender";
+                        }
+
+                        leaf enforce-receive-window {
+                            type boolean;
+                            default "false";
+                            description "Enforce the advertised receive window";
+                        }
+
+                        leaf enforce-burst-size {
+                            type boolean;
+                            default "false";
+                            description "Enforce to not exceed the advertised LSP burst size";
+                        }
+
+                        container local-defaults {
+                            description "Enter the local-defaults context";
+
+                            leaf receive-window {
+                                type uint32 {
+                                    range "10..1000";
+                                }
+                                default "30";
+                                description "Default receive window.";
+                            }
+
+                            leaf burst-size {
+                                type uint32 {
+                                    range "1..200";
+                                }
+                                default "30";
+                                description "Default burst size";
+                            }
+
+                            leaf lsp-per-psnp {
+                                type uint32 {
+                                    range "1..90";
+                                }
+                                default "15";
+                                description "Default number of LSPs per PSNP";
+                            }
+
+                            leaf lsp-transmit-interval {
+                                type uint32 {
+                                    range "1..1000";
+                                }
+                                units "milliseconds";
+                                default "100";
+                                description "Default interval between LSP transmissions";
+                            }
+
+                        } // container local-defaults
+
+                    } // container lsp-sender
+
+                } // container fast-flooding
 
                 list level {
                     key "level-number";

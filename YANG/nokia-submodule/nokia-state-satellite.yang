@@ -33,7 +33,7 @@ submodule nokia-state-satellite {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-satellite {
         container satellite {
@@ -58,6 +58,34 @@ submodule nokia-state-satellite {
                     description "The status of console access for this satellite.";
                 }
 
+                leaf equipped-type {
+                    type types-chassis:sat-type-state;
+                    description "Indicates the satellite type that is physically present.";
+                }
+
+                container secure-boot {
+                    description "Enter the secure-boot context";
+
+                    leaf secure-boot-enabled {
+                        type boolean;
+                        description
+                            "Indicates whether secure-boot has been enabled for this
+                             ethernet satellite. This feature, once enabled, cannot be
+                             disabled. If in use, the satellite will boot only into
+                             signed software images.";
+                    }
+
+                    leaf uefi-variables-status {
+                        type enumeration {
+                            enum ok                             { value 1; }
+                            enum update-required                { value 2; }
+                        }
+                        description
+                            "Indicates whether the UEFI variables for the satellite agree
+                             with those expected by the system.";
+                    }
+
+                } // container secure-boot
 
                 container central-frequency-clock {
                     description "Enter the central-frequency-clock context";

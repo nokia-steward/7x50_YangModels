@@ -31,7 +31,7 @@ submodule nokia-state-port-dwdm-coherent {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-port-dwdm-coherent {
         container coherent {
@@ -203,6 +203,24 @@ submodule nokia-state-port-dwdm-coherent {
                 description
                     "Indicates the network received estimated optical SNR
                      (Signal-to-Noise Ratio) of Y polarization.";
+            }
+
+            leaf-list module-operational-modes {
+                type uint16;
+                description "Operational modes supported by this module.";
+            }
+
+            leaf-list supported-operational-modes {
+                type uint16;
+                description "Operational modes supported by this module and the connector breakout.";
+            }
+
+            leaf mode-select-method {
+                type enumeration {
+                    enum compatibility                  { value 1; }
+                    enum operational-mode               { value 2; }
+                }
+                description "Indicates which config leaf is used to configure the operational mode.";
             }
 
             container statistics {

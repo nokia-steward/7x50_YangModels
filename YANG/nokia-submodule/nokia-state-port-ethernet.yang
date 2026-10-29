@@ -43,7 +43,7 @@ submodule nokia-state-port-ethernet {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-port-ethernet {
         container ethernet {
@@ -1391,6 +1391,93 @@ submodule nokia-state-port-ethernet {
 
             } // container storm-control
 
+            container host-if-fec {
+                description "Enter the host-if-fec context";
+
+                container router-rx {
+                    description "Enter the router-rx context";
+
+                    leaf status {
+                        type enumeration {
+                            enum initializing                   { value 0; }
+                            enum am-locked                      { value 1; }
+                            enum deskew-done                    { value 2; }
+                            enum locked                         { value 3; }
+                        }
+                        description "Operational status of FEC";
+                    }
+
+                    leaf last-fetched-time {
+                        type yang:date-and-time;
+                        description
+                            "Indicates the time, since system startup, when the counters in this
+                             RS-FEC state were last fetched.";
+                    }
+
+                    leaf last-cleared-time {
+                        type yang:date-and-time;
+                        description
+                            "Indicates the time, since system startup, when the counters in this
+                             RS-FEC state were last cleared.";
+                    }
+
+                    container statistics {
+                        description "Enter the statistics context";
+
+                        leaf total-blocks {
+                            type yang:counter64;
+                            description "The number of total FEC blocks";
+                        }
+
+                        leaf uncorrectable-blocks {
+                            type yang:counter64;
+                            description "The number of uncorrectable FEC blocks";
+                        }
+
+                        leaf corrected-blocks {
+                            type yang:counter64;
+                            description "The number of corrected blocks";
+                        }
+
+                        leaf corrected-symbols {
+                            type yang:counter64;
+                            description "The number of corrected symbols";
+                        }
+
+                        leaf corrected-bits {
+                            type yang:counter64;
+                            description "The number of corrected bits";
+                        }
+
+                        container pre-fec-ber {
+                            description "Enter the pre-fec-ber context";
+
+                            leaf instant {
+                                type decimal64 {
+                                    fraction-digits 18;
+                                }
+                                description "The instantaneous value of the ber";
+                            }
+
+                        } // container pre-fec-ber
+
+                        container post-fec-ber {
+                            description "Enter the post-fec-ber context";
+
+                            leaf instant {
+                                type decimal64 {
+                                    fraction-digits 18;
+                                }
+                                description "The instantaneous value of the ber";
+                            }
+
+                        } // container post-fec-ber
+
+                    } // container statistics
+
+                } // container router-rx
+
+            } // container host-if-fec
 
             uses state-port-eth-access;
             uses state-port-eth-dot1x;

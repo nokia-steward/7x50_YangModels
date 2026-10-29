@@ -31,7 +31,7 @@ module nokia-sr-openconfig-platform-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:install-position {
         deviate not-supported;
@@ -57,9 +57,6 @@ module nokia-sr-openconfig-platform-deviations {
         }
     }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:redundant-role {
-        deviate not-supported;
-    }
 
     deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-poweroff-reason {
         deviate not-supported;
@@ -69,34 +66,19 @@ module nokia-sr-openconfig-platform-deviations {
         deviate not-supported;
     }
 
-
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-switchover-reason {
+    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-switchover-reason/oc-platform:trigger {
         deviate not-supported;
     }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-switchover-time {
-        deviate not-supported;
-    }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-reboot-reason {
-        deviate not-supported;
-    }
+
 
     deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-reboot-time {
         deviate not-supported;
     }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:boot-time {
-        deviate not-supported;
-    }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:switchover-ready {
-        deviate not-supported;
-    }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:base-mac-address {
-        deviate not-supported;
-    }
 
     deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:temperature/oc-platform:avg {
         deviate not-supported;
@@ -134,9 +116,6 @@ module nokia-sr-openconfig-platform-deviations {
         deviate not-supported;
     }
 
-    deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:used-power {
-        deviate not-supported;
-    }
 
     deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:pcie {
         deviate not-supported;

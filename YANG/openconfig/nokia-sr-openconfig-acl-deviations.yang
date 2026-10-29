@@ -31,13 +31,13 @@ module nokia-sr-openconfig-acl-deviations {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:config/oc-acl:name {
         deviate replace {
             type string {
                 length "1..64";
-                pattern "(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-5][0-9][0-9][0-9][0-9]|6[0-4][0-9][0-9][0-9]|65[0-4][0-9][0-9]|655[0-2][0-9]|6553[0-5])|(([^f0-9_ ]|f($|[^S]|S($|[^p]|p($|[^e]|e($|[^c]|c($|[^-]|-($|[^0-9]+)))))))\\P{C}*))";
+                pattern "(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-5][0-9][0-9][0-9][0-9]|6[0-4][0-9][0-9][0-9]|65[0-4][0-9][0-9]|655[0-2][0-9]|6553[0-5])|(\\P{C}+))";
             }
         }
     }
@@ -55,7 +55,7 @@ module nokia-sr-openconfig-acl-deviations {
         deviate replace {
             type string {
                 length "1..64";
-                pattern "(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-5][0-9][0-9][0-9][0-9]|6[0-4][0-9][0-9][0-9]|65[0-4][0-9][0-9]|655[0-2][0-9]|6553[0-5])|(([^f0-9_ ]|f($|[^S]|S($|[^p]|p($|[^e]|e($|[^c]|c($|[^-]|-($|[^0-9]+)))))))\\P{C}*))";
+                pattern "(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-5][0-9][0-9][0-9][0-9]|6[0-4][0-9][0-9][0-9]|65[0-4][0-9][0-9]|655[0-2][0-9]|6553[0-5])|(\\P{C}+))";
             }
         }
     }
@@ -72,7 +72,7 @@ module nokia-sr-openconfig-acl-deviations {
     deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:config/oc-acl:sequence-id {
         deviate replace {
             type uint32 {
-                range "1..196607";
+                range "1..2097151";
             }
         }
     }
@@ -89,7 +89,7 @@ module nokia-sr-openconfig-acl-deviations {
     deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:state/oc-acl:sequence-id {
         deviate replace {
             type uint32 {
-                range "1..196607";
+                range "1..2097151";
             }
         }
     }

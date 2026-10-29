@@ -35,7 +35,7 @@ submodule nokia-state-system-ptp {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-system-ptp {
         container ptp {
@@ -78,6 +78,45 @@ submodule nokia-state-system-ptp {
                     leaf clock-identity {
                         type types-ptp:clock-identity-type;
                         description "The clock identity of the local clock.";
+                    }
+
+                    leaf number-ports {
+                        type uint32;
+                        description "The number of PTP ports on the local clock (defaultDS.numberPorts).";
+                    }
+
+                    leaf sdo-id {
+                        type uint32;
+                        description
+                            "The Standards Development Organization identifier from the default data set
+                             (defaultDS.sdoId).";
+                    }
+
+                    leaf clock-mode {
+                        type enumeration {
+                            enum free-run                       { value 0; }
+                            enum acquiring                      { value 1; }
+                            enum locked                         { value 2; }
+                            enum holdover-within-specification  { value 3; }
+                            enum holdover-out-of-specification  { value 4; }
+                        }
+                        description
+                            "The synchronization mode of the PTP clock.  This corresponds to the
+                             defaultDS.clockMode attribute defined in ITU-T G.8275.1 and G.8275.2.";
+                    }
+
+                    leaf clock-mode-secs {
+                        type uint32;
+                        units "seconds";
+                        description "The number of seconds elapsed for the current value of clock-mode.";
+                    }
+
+                    leaf ptp-profile-identifier {
+                        type types-ptp:ptp-profile-identifier-type;
+                        description
+                            "The PTP profile identifier of the primary PTP profile configured on the local clock
+                             (defaultDS.profileIdentifier).  The value is that of the primary PTP profile
+                             even when PTP ports use alternate profiles.";
                     }
 
                     container clock-quality {
@@ -882,6 +921,14 @@ submodule nokia-state-system-ptp {
                              by this attribute.";
                     }
 
+                    leaf ptp-profile-identifier {
+                        type types-ptp:ptp-profile-identifier-type;
+                        description
+                            "The PTP profile identifier for this PTP port.
+                             This corresponds to the profileIdentifier member of the descriptionPortDS
+                             of IEEE 1588-2019.";
+                    }
+
                     container statistics {
                         description "Enter the statistics context";
 
@@ -941,6 +988,27 @@ submodule nokia-state-system-ptp {
                         leaf grandmaster-priority2 {
                             type uint8;
                             description "The priority2 attribute of the grandmaster clock.";
+                        }
+
+                        leaf ptsf-loss-announce {
+                            type boolean;
+                            description
+                                "Indicates if this peer clock is currently in the packet timing signal fail -
+                                 loss of announce (PTSF-lossAnno) condition.";
+                        }
+
+                        leaf ptsf-loss-sync {
+                            type boolean;
+                            description
+                                "Indicates if this peer clock is currently in the packet timing signal fail -
+                                 loss of sync (PTSF-lossSync) condition.";
+                        }
+
+                        leaf ptsf-loss-of-timing-msgs {
+                            type boolean;
+                            description
+                                "Indicates if this peer clock is currently in the packet timing signal fail -
+                                 loss of timing messages (PTSF-lossOfTimingMsgs) condition.";
                         }
 
                         leaf best-master {
@@ -1912,6 +1980,13 @@ submodule nokia-state-system-ptp {
                             description
                                 "Indicates whether or not the neighboring PTP clock
                                  has Packet Timing Signal Fail (PTSF) unusable set.";
+                        }
+
+                        leaf ptsf-loss-of-timing-msgs {
+                            type boolean;
+                            description
+                                "Indicates if this neighbor clock is currently in the packet timing signal fail -
+                                 loss of timing messages (PTSF-LOTM) condition.";
                         }
 
                         leaf monitor-time-state {

@@ -42,7 +42,7 @@ submodule nokia-conf-isa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-isa {
         container isa {
@@ -493,7 +493,7 @@ submodule nokia-conf-isa {
                         range "1..20";
                     }
                     default "5";
-                    description "The buffered number of fragments per packet";
+                    description "Maximum number of fragments per packet for downstream";
                 }
 
                 leaf-list apply-groups {
@@ -523,14 +523,14 @@ submodule nokia-conf-isa {
                         type leafref {
                             path "../../../../esa/esa-id";
                         }
-                        description "ESA used by the ISA NAT MAP-E group.";
+                        description "ESA used by the ISA NAT MAP-E group";
                     }
 
                     leaf vm {
                         type leafref {
                             path "../../../../esa[esa-id=current()/../esa-id]/vm/vm-id";
                         }
-                        description "ESA-VM used by the ISA NAT MAP-E group.";
+                        description "ESA-VM used by the ISA NAT MAP-E group";
                     }
 
                 } // list esa

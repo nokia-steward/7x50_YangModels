@@ -47,7 +47,7 @@ submodule nokia-state-port {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-port {
         list port {
@@ -84,6 +84,7 @@ submodule nokia-state-port {
                     bit oper-group-down                { position 11; }
                     bit sat-host-port-down             { position 12; }
                     bit sat-uplink-port-down           { position 13; }
+                    bit evpn-mh-standby                { position 14; }
                 }
                 description
                     "Indicates the reason for why the port is operationally down.
@@ -121,7 +122,10 @@ submodule nokia-state-port {
                          sat-host-port-down      - The host port for this satellite
                                                    uplink port is down.
                          sat-uplink-port-down    - The active satellite uplink port for
-                                                   this satellite client port is down.";
+                                                   this satellite client port is down.
+                         evpn-mh-standby         - The port is in EVPN multi-homing
+                                                   port-active mode and is a
+                                                   non-designated-forwarder.";
             }
 
             leaf far-end-port-id {
@@ -1950,6 +1954,31 @@ submodule nokia-state-port {
 
                 } // container aggregate-queue
 
+                container mda-discards {
+                    description "Enter the mda-discards context";
+
+                    list threshold {
+                        key "threshold-index";
+                        description "Enter the threshold list instance";
+
+                        leaf threshold-index {
+                            type uint32;
+                            description "The threshold index which identifies a QOS priority and forwarding class.";
+                        }
+
+                        leaf dropped-packets {
+                            type yang:counter64;
+                            description "The number of packets dropped on the oversubscribed MDA for this port.";
+                        }
+
+                        leaf dropped-octets {
+                            type yang:counter64;
+                            description "The number of octets dropped on the oversubscribed MDA for this port.";
+                        }
+
+                    } // list threshold
+
+                } // container mda-discards
 
             } // container statistics
 

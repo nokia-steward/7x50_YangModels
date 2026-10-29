@@ -38,10 +38,126 @@ module nokia-li-conf {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     container li {
         description "Configure lawful intercept";
+
+        list li-dest {
+            key "service-name";
+            description "Enter the li-dest list instance";
+
+            leaf service-name {
+                type types-services:service-name;
+                description "Name of the LI mirror destination service";
+            }
+
+            leaf type {
+                type types-services:mirror-type;
+                sros-ext:immutable;
+                default "ip-only";
+                description "Configure mirror type information.";
+            }
+
+            leaf admin-state {
+                type types-sros:admin-state;
+                default "disable";
+                description "Enable/disable mirror service.";
+            }
+
+            leaf description {
+                type types-sros:description;
+                description "Specifies the description for this entry.";
+            }
+
+            leaf service-id {
+                type types-services:external-service-id;
+                sros-ext:immutable;
+                description "Service identifier";
+            }
+
+            container encap {
+                description "Enter the encap context";
+
+                container layer-3-encap {
+                    presence "Enable the layer-3-encap context";
+                    description "Enable the layer-3-encap context";
+
+                    leaf header-type {
+                        type enumeration {
+                            enum ip-udp-shim {
+                                value 1;
+                                description "Add IPv4, UDP, LI shim headers";
+                            }
+                            enum ip-gre {
+                                value 2;
+                                description "Add IPv4 and GRE headers";
+                            }
+                            enum ip-udp-shim-sampled {
+                                value 4;
+                                description "Add IPv4 header, UDP header, mirror shim header";
+                            }
+                        }
+                        sros-ext:immutable;
+                        mandatory true;
+                        description "Header type of the Layer 3 encapsulation";
+                    }
+
+                    leaf direction-bit {
+                        type boolean;
+                        default "false";
+                        description "Use highest bit to indicate mirrored traffic direction";
+                    }
+
+                    leaf router-instance {
+                        type types-sros:router-instance;
+                        default "Base";
+                        description "Virtual router instance";
+                    }
+
+                    container gateway {
+                        presence "Enable the gateway context";
+                        description "Enable the gateway context";
+
+                        container ip-address {
+                            description "Enter the ip-address context";
+
+                            leaf source {
+                                type types-sros:ipv4-unicast-address;
+                                description "IPv4 source address for the gateway";
+                            }
+
+                            leaf destination {
+                                type types-sros:ipv4-unicast-address;
+                                description "IPv4 destination address for the gateway";
+                            }
+
+                        } // container ip-address
+
+                        container udp-port {
+                            description "Enter the udp-port context";
+
+                            leaf source {
+                                type types-sros:tcp-udp-port;
+                                default "0";
+                                description "UDP source port used with this gateway";
+                            }
+
+                            leaf destination {
+                                type types-sros:tcp-udp-port;
+                                default "0";
+                                description "UDP destination port used with this gateway";
+                            }
+
+                        } // container udp-port
+
+                    } // container gateway
+
+                } // container layer-3-encap
+
+            } // container encap
+
+        } // list li-dest
 
 
         container li-filter {

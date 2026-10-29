@@ -31,7 +31,7 @@ module nokia-types-dms {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef genome-list {
         type enumeration {
@@ -1119,8 +1119,19 @@ module nokia-types-dms {
             bit group-admin-down               { position 1; }
             bit config-in-progress             { position 2; }
             bit pxc-down                       { position 3; }
+            bit genome-list-anomaly            { position 4; }
         }
         description "DMS advanced counter-measures group esa-vm failure types.";
+    }
+
+    typedef isa-oper-flags-type {
+        type bits {
+            bit isa-down                       { position 0; }
+            bit group-admin-down               { position 1; }
+            bit config-in-progress             { position 2; }
+            bit genome-list-anomaly            { position 3; }
+        }
+        description "DMS advanced counter-measures group isa failure types.";
     }
 
     typedef genome-list-import-conditions-type {

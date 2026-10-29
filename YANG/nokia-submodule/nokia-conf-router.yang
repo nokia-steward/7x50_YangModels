@@ -21,6 +21,7 @@ submodule nokia-conf-router {
     include nokia-conf-groups;
     include nokia-conf-ipsec;
     include nokia-conf-isa;
+    include nokia-conf-isa-application-assurance-group;
     include nokia-conf-log;
     include nokia-conf-mcast-mgmt;
     include nokia-conf-policy-options;
@@ -90,7 +91,7 @@ submodule nokia-conf-router {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-router {
         list router {
@@ -2299,7 +2300,7 @@ submodule nokia-conf-router {
                                             type boolean;
                                             sros-ext:auto-restart-to-modify;
                                             default "false";
-                                            description "Sustain the automatic establishment";
+                                            description "Enable sustain mode for auto-establish tunnels";
                                         }
 
                                         leaf pre-shared-key {
@@ -2425,7 +2426,7 @@ submodule nokia-conf-router {
                                                 }
                                                 sros-ext:auto-restart-to-modify;
                                                 default "0";
-                                                description "The metric to be used for reverse route injection";
+                                                description "Metric to use for reverse route injection";
                                             }
 
                                             leaf preference {
@@ -2434,7 +2435,7 @@ submodule nokia-conf-router {
                                                 }
                                                 sros-ext:auto-restart-to-modify;
                                                 default "0";
-                                                description "The preference to be used for reverse route injection";
+                                                description "Preference to use for reverse route injection";
                                             }
 
                                         } // container reverse-route-injection
@@ -3543,7 +3544,7 @@ submodule nokia-conf-router {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD transmit interval over this interface";
+                            description "Transmit interval";
                         }
 
                         leaf receive {
@@ -3552,7 +3553,7 @@ submodule nokia-conf-router {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD receive interval over this interface";
+                            description "Receive interval";
                         }
 
                         leaf multiplier {
@@ -3573,12 +3574,30 @@ submodule nokia-conf-router {
 
                         leaf type {
                             type enumeration {
-                                enum cpm-np                         { value 1; }
-                                enum auto                           { value 2; }
-                                enum fp                             { value 3; }
+                                enum cpm-np {
+                                    value 1;
+                                    description "Terminate on the CPM network processor";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "Terminate on the system-selected termination point";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Terminate on the forwarding plane";
+                                }
                             }
                             default "auto";
                             description "Local termination point for the BFD session";
+                        }
+
+                        leaf padded-size {
+                            type uint32 {
+                                range "0|52..1512";
+                            }
+                            units "bytes";
+                            default "0";
+                            description "BFD payload padded size";
                         }
 
                     } // container bfd
@@ -4470,7 +4489,7 @@ submodule nokia-conf-router {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD transmit interval over this interface";
+                            description "Transmit interval";
                         }
 
                         leaf receive {
@@ -4479,7 +4498,7 @@ submodule nokia-conf-router {
                             }
                             units "milliseconds";
                             default "100";
-                            description "BFD receive interval over this interface";
+                            description "Receive interval";
                         }
 
                         leaf multiplier {
@@ -4500,12 +4519,30 @@ submodule nokia-conf-router {
 
                         leaf type {
                             type enumeration {
-                                enum cpm-np                         { value 1; }
-                                enum auto                           { value 2; }
-                                enum fp                             { value 3; }
+                                enum cpm-np {
+                                    value 1;
+                                    description "Terminate on the CPM network processor";
+                                }
+                                enum auto {
+                                    value 2;
+                                    description "Terminate on the system-selected termination point";
+                                }
+                                enum fp {
+                                    value 3;
+                                    description "Terminate on the forwarding plane";
+                                }
                             }
                             default "auto";
                             description "Local termination point for the BFD session";
+                        }
+
+                        leaf padded-size {
+                            type uint32 {
+                                range "0|52..1512";
+                            }
+                            units "bytes";
+                            default "0";
+                            description "BFD payload padded size";
                         }
 
                     } // container bfd
@@ -6686,6 +6723,7 @@ submodule nokia-conf-router {
                 } // container dhcpv4
 
             } // container subscriber-mgmt
+
 
             uses conf-router-bgp;
             uses conf-router-bier;

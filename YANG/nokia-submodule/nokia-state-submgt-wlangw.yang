@@ -36,7 +36,7 @@ submodule nokia-state-submgt-wlangw {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-submgt-wlangw-wlan-gw {
         container wlan-gw {
@@ -343,6 +343,16 @@ submodule nokia-state-submgt-wlangw {
                                     description "The actual egress PIR (Peak Information Rate)";
                                 }
 
+                                leaf mbs {
+                                    type types-qos:isa-policer-burst-size;
+                                    description "The egress MBS (Maximum Burst Size)";
+                                }
+
+                                leaf cbs {
+                                    type types-qos:isa-policer-burst-size;
+                                    description "The egress CBS (Committed Burst Size)";
+                                }
+
                             } // container egress
 
                             container ingress {
@@ -361,6 +371,16 @@ submodule nokia-state-submgt-wlangw {
                                 leaf oper-pir {
                                     type types-qos:isa-policer-pir-rate;
                                     description "The actual ingress PIR (Peak Information Rate)";
+                                }
+
+                                leaf mbs {
+                                    type types-qos:isa-policer-burst-size;
+                                    description "The ingress MBS (Maximum Burst Size)";
+                                }
+
+                                leaf cbs {
+                                    type types-qos:isa-policer-burst-size;
+                                    description "The ingress CBS (Committed Burst Size)";
                                 }
 
                             } // container ingress

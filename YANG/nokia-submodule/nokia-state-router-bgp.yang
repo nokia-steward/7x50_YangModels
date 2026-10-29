@@ -37,7 +37,7 @@ submodule nokia-state-router-bgp {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-router-bgp {
         container bgp {
@@ -1983,6 +1983,7 @@ submodule nokia-state-router-bgp {
 
                 } // container epe-sid
 
+
             } // list neighbor
 
             container rib {
@@ -2212,6 +2213,10 @@ submodule nokia-state-router-bgp {
                                 type union {
                                     type uint8;
                                     type enumeration {
+                                        enum all {
+                                            value -2;
+                                            description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                        }
                                         enum multipath {
                                             value -1;
                                             description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";
@@ -2551,6 +2556,10 @@ submodule nokia-state-router-bgp {
                                     type union {
                                         type uint8;
                                         type enumeration {
+                                            enum all {
+                                                value -2;
+                                                description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                            }
                                             enum multipath {
                                                 value -1;
                                                 description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";
@@ -2889,6 +2898,10 @@ submodule nokia-state-router-bgp {
                                 type union {
                                     type uint8;
                                     type enumeration {
+                                        enum all {
+                                            value -2;
+                                            description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                        }
                                         enum multipath {
                                             value -1;
                                             description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";
@@ -3228,6 +3241,10 @@ submodule nokia-state-router-bgp {
                                     type union {
                                         type uint8;
                                         type enumeration {
+                                            enum all {
+                                                value -2;
+                                                description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                            }
                                             enum multipath {
                                                 value -1;
                                                 description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";
@@ -3566,6 +3583,10 @@ submodule nokia-state-router-bgp {
                                 type union {
                                     type uint8;
                                     type enumeration {
+                                        enum all {
+                                            value -2;
+                                            description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                        }
                                         enum multipath {
                                             value -1;
                                             description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";
@@ -3920,6 +3941,10 @@ submodule nokia-state-router-bgp {
                                     type union {
                                         type uint8;
                                         type enumeration {
+                                            enum all {
+                                                value -2;
+                                                description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                            }
                                             enum multipath {
                                                 value -1;
                                                 description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";
@@ -4343,6 +4368,10 @@ submodule nokia-state-router-bgp {
                                 type union {
                                     type uint8;
                                     type enumeration {
+                                        enum all {
+                                            value -2;
+                                            description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                        }
                                         enum multipath {
                                             value -1;
                                             description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";
@@ -4682,6 +4711,10 @@ submodule nokia-state-router-bgp {
                                     type union {
                                         type uint8;
                                         type enumeration {
+                                            enum all {
+                                                value -2;
+                                                description "Indicates that all valid paths for this route will be advertised to peers using add-paths";
+                                            }
                                             enum multipath {
                                                 value -1;
                                                 description "Indicates that the ECMP paths available for this routes will be advertised to peers using add-paths";

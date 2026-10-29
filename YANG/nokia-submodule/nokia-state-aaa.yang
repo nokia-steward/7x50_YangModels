@@ -35,7 +35,7 @@ submodule nokia-state-aaa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-aaa {
         container aaa {
@@ -95,6 +95,28 @@ submodule nokia-state-aaa {
                             leaf overload-time {
                                 type types-sros:time-duration;
                                 description "Number of seconds that RADIUS server was overloaded";
+                            }
+
+                            leaf tls-oper-state {
+                                type enumeration {
+                                    enum unknown                        { value 1; }
+                                    enum in-service                     { value 2; }
+                                    enum out-of-service                 { value 3; }
+                                }
+                                description "Operational state of the TLS connection of the RADIUS server";
+                            }
+
+                            leaf tls-error {
+                                type enumeration {
+                                    enum none                           { value 1; }
+                                    enum internal                       { value 2; }
+                                    enum no-route                       { value 3; }
+                                    enum timeout                        { value 4; }
+                                    enum handshake-failure              { value 5; }
+                                    enum closed-by-remote               { value 6; }
+                                    enum profile-disabled               { value 7; }
+                                }
+                                description "Error reason when TLS connection is out of service";
                             }
 
                             container statistics {
@@ -903,6 +925,11 @@ submodule nokia-state-aaa {
                                     description "The value of the Origin-State-Id AVP used in multi-chassis operation";
                                 }
 
+                                leaf new-origin-state-id {
+                                    type uint32;
+                                    description "The new value of the Origin-State-Id AVP used in multi-chassis operation";
+                                }
+
                             } // container mc
 
                         } // container remote
@@ -931,6 +958,11 @@ submodule nokia-state-aaa {
                                 leaf origin-state-id {
                                     type uint32;
                                     description "The value of the Origin-State-Id AVP used in multi-chassis operation";
+                                }
+
+                                leaf new-origin-state-id {
+                                    type uint32;
+                                    description "The new value of the Origin-State-Id AVP used in multi-chassis operation";
                                 }
 
                             } // container mc

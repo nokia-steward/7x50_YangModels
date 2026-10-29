@@ -32,7 +32,7 @@ module nokia-types-services {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef sdp-id {
         type uint32 {
@@ -315,7 +315,7 @@ module nokia-types-services {
 
     typedef service-id-maf {
         type uint32 {
-            range "1..2147483647|2147483648|2147483649|2147483650|2147483651..2147483690|2147483691..2148007980|2148007981..2148012076|2148012077..2148016172|2148016173..2148278316|2148278317|2148278318..2148278381|2148278382|2148278383..2148278386|2148278387..2148282482";
+            range "1..2147483647|2147483648|2147483649|2147483650|2147483651..2147483690|2147483691..2148007980|2148007981..2148012076|2148012077..2148016172|2148016173..2148278316|2148278317|2148278318..2148278381|2148278382|2148278383..2148278386|2148278387..2148282482|2148282483..2148282486";
         }
         description
             "A number used to identify a  external or internal service. This ID
@@ -748,7 +748,7 @@ module nokia-types-services {
 
     typedef bsx-aatr-id {
         type uint32 {
-            range "1..128";
+            range "1..16";
         }
         description
             "Identifies an instance of the AA Transit-IP
@@ -770,7 +770,7 @@ module nokia-types-services {
 
     typedef bsx-aatr-id-or-zero {
         type uint32 {
-            range "0..128";
+            range "0..16";
         }
         description
             "Identifies an instance of the AA Transit-IP
@@ -1752,9 +1752,18 @@ module nokia-types-services {
 
     typedef bgp-evpn-force-vc-forwarding {
         type enumeration {
-            enum vlan                           { value 1; }
-            enum qinq-c-tag-c-tag               { value 2; }
-            enum qinq-s-tag-c-tag               { value 3; }
+            enum vlan {
+                value 1;
+                description "Push VLAN ID and 802.1p bits of service-delimiting qtag";
+            }
+            enum qinq-c-tag-c-tag {
+                value 2;
+                description "Push two tags identical to inner service-delimiting tag";
+            }
+            enum qinq-s-tag-c-tag {
+                value 3;
+                description "Push two tags based on QinQ service-delimiting values";
+            }
         }
         description "Force VC forwarding options for BGP EVPN.";
     }
@@ -2228,7 +2237,7 @@ module nokia-types-services {
 
     typedef epipe-srv6-instance {
         type int32 {
-            range "1";
+            range "1..2";
         }
         description "SRv6 instance range";
     }

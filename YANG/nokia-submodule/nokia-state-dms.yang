@@ -7,6 +7,7 @@ submodule nokia-state-dms {
     import ietf-yang-types                { prefix "yang"; }
     import nokia-sros-yang-extensions     { prefix "sros-ext"; }
     import nokia-types-dms                { prefix "types-dms"; }
+    import nokia-types-isa                { prefix "types-isa"; }
     import nokia-types-sros               { prefix "types-sros"; }
 
     include nokia-state-esa;
@@ -34,7 +35,7 @@ submodule nokia-state-dms {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     grouping state-dms-defender-mitigation-system {
         container defender-mitigation-system {
@@ -1082,6 +1083,26 @@ submodule nokia-state-dms {
 
                 } // list esa
 
+                list isa {
+                    key "mda-id";
+                    description "Enter the isa list instance";
+
+                    leaf mda-id {
+                        type types-isa:slot-mda;
+                        description "Specifies an MDA/ISA identifier <card slot number>/<mda slot number>";
+                    }
+
+                    leaf oper-state {
+                        type types-sros:oper-state;
+                        description "The operational state of the DMS isa.";
+                    }
+
+                    leaf oper-flags {
+                        type types-dms:isa-oper-flags-type;
+                        description "The different failure conditions that affect the operating status of the DMS isa.";
+                    }
+
+                } // list isa
 
             } // container advanced-countermeasures-group
 
@@ -1101,6 +1122,11 @@ submodule nokia-state-dms {
                 leaf in-progress {
                     type boolean;
                     description "Indicates 'true' if there is a genome list import attempt currently in progress.";
+                }
+
+                leaf file-version {
+                    type uint32;
+                    description "The JSON schema version of the file from the last successful genome list import.";
                 }
 
                 leaf last-attempt-time {
@@ -1238,6 +1264,11 @@ submodule nokia-state-dms {
                 leaf in-progress {
                     type boolean;
                     description "Indicates 'true' if there is a user list import attempt currently in progress.";
+                }
+
+                leaf file-version {
+                    type uint32;
+                    description "The JSON schema version of the file from the last successful user list import.";
                 }
 
                 leaf last-attempt-time {
@@ -1538,6 +1569,23 @@ submodule nokia-state-dms {
 
                                 } // container ip-fragments
 
+                                container countermeasure {
+                                    description "Enter the countermeasure context";
+
+                                    leaf octets {
+                                        type yang:counter64;
+                                        units "bytes";
+                                        description "Number of bytes of packets that bypassed countermeasures for a Protected Object.";
+                                    }
+
+                                    leaf packets {
+                                        type yang:counter64;
+                                        units "packets";
+                                        description "Number of packets that bypassed countermeasures for a Protected Object.";
+                                    }
+
+                                } // container countermeasure
+
                             } // container bypass
 
                             container discards {
@@ -1559,6 +1607,89 @@ submodule nokia-state-dms {
                                     }
 
                                 } // container malformed
+
+                                container checksum-verification {
+                                    description "Enter the checksum-verification context";
+
+                                    container ipv4 {
+                                        description "Enter the ipv4 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv4
+
+                                    container ipv6 {
+                                        description "Enter the ipv6 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv6
+
+                                } // container checksum-verification
 
                                 container ip-fragments {
                                     description "Enter the ip-fragments context";
@@ -1716,6 +1847,7 @@ submodule nokia-state-dms {
                                     }
 
                                 } // container session-exhaust
+
 
                                 container mitigation-rules {
                                     description "Enter the mitigation-rules context";
@@ -1994,6 +2126,23 @@ submodule nokia-state-dms {
 
                                 } // container ip-fragments
 
+                                container countermeasure {
+                                    description "Enter the countermeasure context";
+
+                                    leaf octets {
+                                        type yang:counter64;
+                                        units "bytes";
+                                        description "Number of bytes of packets that bypassed outbound countermeasures for a Protected Object.";
+                                    }
+
+                                    leaf packets {
+                                        type yang:counter64;
+                                        units "packets";
+                                        description "Number of packets that bypassed outbound countermeasures for a Protected Object.";
+                                    }
+
+                                } // container countermeasure
+
                             } // container bypass
 
                             container discards {
@@ -2015,6 +2164,89 @@ submodule nokia-state-dms {
                                     }
 
                                 } // container malformed
+
+                                container checksum-verification {
+                                    description "Enter the checksum-verification context";
+
+                                    container ipv4 {
+                                        description "Enter the ipv4 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv4
+
+                                    container ipv6 {
+                                        description "Enter the ipv6 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv6
+
+                                } // container checksum-verification
 
                                 container ip-fragments {
                                     description "Enter the ip-fragments context";
@@ -2500,6 +2732,23 @@ submodule nokia-state-dms {
 
                                 } // container ip-fragments
 
+                                container countermeasure {
+                                    description "Enter the countermeasure context";
+
+                                    leaf octets {
+                                        type yang:counter64;
+                                        units "bytes";
+                                        description "Number of bytes of packets that bypassed countermeasures for a Protected Object.";
+                                    }
+
+                                    leaf packets {
+                                        type yang:counter64;
+                                        units "packets";
+                                        description "Number of packets that bypassed countermeasures for a Protected Object.";
+                                    }
+
+                                } // container countermeasure
+
                             } // container bypass
 
                             container discards {
@@ -2521,6 +2770,89 @@ submodule nokia-state-dms {
                                     }
 
                                 } // container malformed
+
+                                container checksum-verification {
+                                    description "Enter the checksum-verification context";
+
+                                    container ipv4 {
+                                        description "Enter the ipv4 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv4
+
+                                    container ipv6 {
+                                        description "Enter the ipv6 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv6
+
+                                } // container checksum-verification
 
                                 container ip-fragments {
                                     description "Enter the ip-fragments context";
@@ -2678,6 +3010,7 @@ submodule nokia-state-dms {
                                     }
 
                                 } // container session-exhaust
+
 
                                 container mitigation-rules {
                                     description "Enter the mitigation-rules context";
@@ -2956,6 +3289,23 @@ submodule nokia-state-dms {
 
                                 } // container ip-fragments
 
+                                container countermeasure {
+                                    description "Enter the countermeasure context";
+
+                                    leaf octets {
+                                        type yang:counter64;
+                                        units "bytes";
+                                        description "Number of bytes of packets that bypassed outbound countermeasures for a Protected Object.";
+                                    }
+
+                                    leaf packets {
+                                        type yang:counter64;
+                                        units "packets";
+                                        description "Number of packets that bypassed outbound countermeasures for a Protected Object.";
+                                    }
+
+                                } // container countermeasure
+
                             } // container bypass
 
                             container discards {
@@ -2977,6 +3327,89 @@ submodule nokia-state-dms {
                                     }
 
                                 } // container malformed
+
+                                container checksum-verification {
+                                    description "Enter the checksum-verification context";
+
+                                    container ipv4 {
+                                        description "Enter the ipv4 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv4 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv4
+
+                                    container ipv6 {
+                                        description "Enter the ipv6 context";
+
+                                        container tcp-errors {
+                                            description "Enter the tcp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 TCP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container tcp-errors
+
+                                        container udp-errors {
+                                            description "Enter the udp-errors context";
+
+                                            leaf octets {
+                                                type yang:counter64;
+                                                units "bytes";
+                                                description "Number of bytes discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                            leaf packets {
+                                                type yang:counter64;
+                                                units "packets";
+                                                description "Number of packets discarded due to IPv6 UDP checksum errors for a Protected Object.";
+                                            }
+
+                                        } // container udp-errors
+
+                                    } // container ipv6
+
+                                } // container checksum-verification
 
                                 container ip-fragments {
                                     description "Enter the ip-fragments context";
@@ -3673,6 +4106,14 @@ submodule nokia-state-dms {
                                                  in monitor mode.";
                                         }
 
+                                        leaf dropped {
+                                            type yang:counter64;
+                                            units "packets";
+                                            description
+                                                "The total number of DNS requests that exceeded the DNS auto-protect limit
+                                                 of simultaneous transactions per tracked session and were dropped.";
+                                        }
+
                                     } // container monitor
 
                                     container protect {
@@ -3700,7 +4141,8 @@ submodule nokia-state-dms {
                                             units "packets";
                                             description
                                                 "The total number of DNS requests that did not match the DNS auto-protect
-                                                 success filter criteria in protect mode and were dropped.";
+                                                 success filter criteria or exceeded the DNS auto-protect limit of
+                                                 simultaneous transactions per tracked session, and were dropped.";
                                         }
 
                                     } // container protect
@@ -3967,6 +4409,14 @@ submodule nokia-state-dms {
                                                  in monitor mode.";
                                         }
 
+                                        leaf dropped {
+                                            type yang:counter64;
+                                            units "packets";
+                                            description
+                                                "The total number of DNS requests that exceeded the DNS auto-protect limit
+                                                 of simultaneous transactions per tracked session and were dropped.";
+                                        }
+
                                     } // container monitor
 
                                     container protect {
@@ -3994,7 +4444,8 @@ submodule nokia-state-dms {
                                             units "packets";
                                             description
                                                 "The total number of DNS requests that did not match the DNS auto-protect
-                                                 success filter criteria in protect mode and were dropped.";
+                                                 success filter criteria or exceeded the DNS auto-protect limit of
+                                                 simultaneous transactions per tracked session, and were dropped.";
                                         }
 
                                     } // container protect
@@ -4208,14 +4659,104 @@ submodule nokia-state-dms {
                                             leaf octets {
                                                 type yang:counter64;
                                                 units "bytes";
-                                                description "Number of bytes discarded by actions of this dns-filter entry.";
+                                                description "Total number of bytes discarded by all actions of this dns-filter entry.";
                                             }
 
                                             leaf packets {
                                                 type yang:counter64;
                                                 units "packets";
-                                                description "Number of packets discarded by actions of this dns-filter entry.";
+                                                description "Total number of packets discarded by all actions of this dns-filter entry.";
                                             }
+
+                                            container action {
+                                                description "Enter the action context";
+
+                                                container drop {
+                                                    description "Enter the drop context";
+
+                                                    leaf octets {
+                                                        type yang:counter64;
+                                                        units "bytes";
+                                                        description "Number of bytes discarded by the drop action of this dns-filter entry.";
+                                                    }
+
+                                                    leaf packets {
+                                                        type yang:counter64;
+                                                        units "packets";
+                                                        description "Number of packets discarded by the drop action of this dns-filter entry.";
+                                                    }
+
+                                                } // container drop
+
+                                                container dns-auto-protect {
+                                                    description "Enter the dns-auto-protect context";
+
+                                                    leaf octets {
+                                                        type yang:counter64;
+                                                        units "bytes";
+                                                        description "Number of bytes discarded by the dns-auto-protect action of this dns-filter entry.";
+                                                    }
+
+                                                    leaf packets {
+                                                        type yang:counter64;
+                                                        units "packets";
+                                                        description "Number of packets discarded by the dns-auto-protect action of this dns-filter entry.";
+                                                    }
+
+                                                } // container dns-auto-protect
+
+                                                container protected-object-request-rate {
+                                                    description "Enter the protected-object-request-rate context";
+
+                                                    leaf octets {
+                                                        type yang:counter64;
+                                                        units "bytes";
+                                                        description "Number of bytes discarded by the PO request rate policer action of this dns-filter entry.";
+                                                    }
+
+                                                    leaf packets {
+                                                        type yang:counter64;
+                                                        units "packets";
+                                                        description "Number of packets discarded by the PO request rate policer action of this dns-filter entry.";
+                                                    }
+
+                                                } // container protected-object-request-rate
+
+                                                container source-request-rate {
+                                                    description "Enter the source-request-rate context";
+
+                                                    leaf octets {
+                                                        type yang:counter64;
+                                                        units "bytes";
+                                                        description "Number of bytes discarded by the source request rate policer action of this dns-filter entry.";
+                                                    }
+
+                                                    leaf packets {
+                                                        type yang:counter64;
+                                                        units "packets";
+                                                        description "Number of packets discarded by the source request rate policer action of this dns-filter entry.";
+                                                    }
+
+                                                } // container source-request-rate
+
+                                                container query-name-entropy-out-of-range {
+                                                    description "Enter the query-name-entropy-out-of-range context";
+
+                                                    leaf octets {
+                                                        type yang:counter64;
+                                                        units "bytes";
+                                                        description "Number of bytes discarded by the query-name entropy range action of this dns-filter entry.";
+                                                    }
+
+                                                    leaf packets {
+                                                        type yang:counter64;
+                                                        units "packets";
+                                                        description "Number of packets discarded by the query-name entropy range action of this dns-filter entry.";
+                                                    }
+
+                                                } // container query-name-entropy-out-of-range
+
+                                            } // container action
 
                                         } // container discard
 

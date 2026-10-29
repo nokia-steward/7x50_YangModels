@@ -36,7 +36,7 @@ submodule nokia-conf-router-origin-validation {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-router-origin-validation {
         container origin-validation {
@@ -204,6 +204,22 @@ submodule nokia-conf-router-origin-validation {
 
                 } // container refresh-time
 
+                container tls-transport-security {
+                    description "Enter the tls-transport-security context";
+
+                    leaf tls-client-profile {
+                        type leafref {
+                            path "../../../../../system/security/tls/client-tls-profile/client-profile-name";
+                        }
+                        description "TLS client profile for the RPKI session";
+                    }
+
+                    leaf server-san-dns-auth {
+                        type types-sros:named-item-255;
+                        description "DNS name used to authenticate the server SAN";
+                    }
+
+                } // container tls-transport-security
 
             } // list rpki-session
 

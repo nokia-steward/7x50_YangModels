@@ -35,7 +35,7 @@ submodule nokia-state-router-segment-routing {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping state-router-segment-routing {
         container segment-routing {
@@ -360,6 +360,54 @@ submodule nokia-state-router-segment-routing {
                         }
 
                     } // list srv6-binding-sid
+
+                    container dynamic {
+                        description "Enter the dynamic context";
+
+                        leaf oper-path-computation-method {
+                            type enumeration {
+                                enum none                           { value 1; }
+                                enum pce                            { value 2; }
+                            }
+                            description "Operational path computation method for the dynamic candidate path.";
+                        }
+
+                        leaf oper-pce-update-id {
+                            type uint32;
+                            description
+                                "PCE update identifier for the dynamic candidate path.
+
+                                 The value zero indicates that no PCE update identifier is available.";
+                        }
+
+                        leaf oper-pce-update-state {
+                            type enumeration {
+                                enum none                           { value 1; }
+                                enum down                           { value 2; }
+                                enum await-computation              { value 3; }
+                                enum computed                       { value 4; }
+                                enum mbb-in-prog                    { value 5; }
+                                enum destroy                        { value 6; }
+                            }
+                            description "PCE update state for the dynamic candidate path.";
+                        }
+
+                        leaf oper-pce-update-fail-code {
+                            type uint32;
+                            description
+                                "PCE update failure code for the dynamic candidate path.
+
+                                 The value zero indicates no error.";
+                        }
+
+                        leaf oper-metric-value {
+                            type uint32 {
+                                range "0..16777215";
+                            }
+                            description "Operational optimization metric value for the dynamic candidate path.";
+                        }
+
+                    } // container dynamic
 
                     list sr-path-seg-list {
                         key "seg-list-index";

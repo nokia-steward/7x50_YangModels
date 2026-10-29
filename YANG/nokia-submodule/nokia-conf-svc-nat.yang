@@ -37,7 +37,7 @@ submodule nokia-conf-svc-nat {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-svc-nat {
         container nat {
@@ -170,6 +170,18 @@ submodule nokia-conf-svc-nat {
 
                 } // container alg
 
+                container dnat {
+                    description "Enter the dnat context";
+
+                    leaf classifier {
+                        type leafref {
+                            path "../../../classifier/name";
+                        }
+                        sros-ext:isa-auto-clear-on-modify;
+                        description "NAT classifier";
+                    }
+
+                } // container dnat
 
                 container port-limits {
                     description "Enter the port-limits context";
@@ -882,7 +894,7 @@ submodule nokia-conf-svc-nat {
                     leaf dnat-ip-address {
                         type types-sros:ip-unicast-address;
                         sros-ext:isa-auto-clear-on-modify;
-                        description "Default destination IP address for matching entries with dNAT action";
+                        description "Default DNAT destination IP address";
                     }
 
                     container action {
@@ -912,7 +924,7 @@ submodule nokia-conf-svc-nat {
 
                                     leaf ip-address {
                                         type types-sros:ip-unicast-address;
-                                        description "Substitute destination IP address of matching packets";
+                                        description "Replacement destination IP address";
                                     }
 
                                 } // container destination-nat
@@ -993,7 +1005,7 @@ submodule nokia-conf-svc-nat {
 
                                     leaf ip-address {
                                         type types-sros:ip-unicast-address;
-                                        description "Replacement destination IP address for packets";
+                                        description "Replacement destination IP address";
                                     }
 
                                 } // container destination-nat
@@ -2485,6 +2497,167 @@ submodule nokia-conf-svc-nat {
 
             } // container map-t
 
+            container map-e {
+                description "Enter the map-e context";
+
+                list domain {
+                    key "name";
+                    max-elements 63;
+                    description "Enter the domain list instance";
+
+                    leaf name {
+                        type types-sros:named-item;
+                        description "MAP-E domain name";
+                    }
+
+                    leaf description {
+                        type types-sros:description;
+                        description "Text description";
+                    }
+
+                    leaf border-relay-address {
+                        type types-sros:ipv6-unicast-or-zero-address;
+                        sros-ext:auto-restart-to-modify;
+                        default "::";
+                        description "BR IPv6 address of the MAP-E domain";
+                    }
+
+                    leaf fpe {
+                        type leafref {
+                            path "../../../../../fwd-path-ext/fpe/fpe-id";
+                        }
+                        sros-ext:auto-restart-to-modify;
+                        description "FPE and domain association";
+                    }
+
+                    leaf reassembly {
+                        type boolean;
+                        default "true";
+                        description "Reassemble fragmented IPv6 MAP-E packets";
+                    }
+
+                    leaf map-e-group {
+                        type leafref {
+                            path "../../../../../isa/map-e-group/id";
+                        }
+                        sros-ext:auto-restart-to-modify;
+                        description "MAP-E group with domain association";
+                    }
+
+                    leaf mtu {
+                        type uint32 {
+                            range "160..8686";
+                        }
+                        default "8686";
+                        description "IPv6 MTU for the domain";
+                    }
+
+                    leaf admin-state {
+                        type types-sros:admin-state;
+                        default "disable";
+                        description "Administrative state of the MAP-E domain";
+                    }
+
+                    leaf-list apply-groups {
+                        type leafref {
+                            path "../../../../../groups/group/name";
+                        }
+                        max-elements 8;
+                        ordered-by user;
+                        description "Apply a configuration group at this level";
+                    }
+
+                    leaf-list apply-groups-exclude {
+                        type leafref {
+                            path "../../../../../groups/group/name";
+                        }
+                        max-elements 8;
+                        ordered-by user;
+                        description "Exclude a configuration group at this level";
+                    }
+
+                    list mapping-rule {
+                        key "rule-name";
+                        max-elements 16383;
+                        description "Enter the mapping-rule list instance";
+
+                        leaf rule-name {
+                            type types-sros:named-item;
+                            description "Mapping rule name";
+                        }
+
+                        leaf description {
+                            type types-sros:description;
+                            description "Text description";
+                        }
+
+                        leaf ipv4-prefix {
+                            type types-sros:ipv4-prefix;
+                            sros-ext:auto-restart-to-modify;
+                            description "IPv4 prefix of the mapping rule";
+                        }
+
+                        leaf ea-length {
+                            type uint32 {
+                                range "0..48";
+                            }
+                            sros-ext:auto-restart-to-modify;
+                            default "0";
+                            description "Length of EA bits in the MAP rule";
+                        }
+
+                        leaf psid-offset {
+                            type uint32 {
+                                range "0..16";
+                            }
+                            sros-ext:auto-restart-to-modify;
+                            default "6";
+                            description "PSID offset within the IPv6 address";
+                        }
+
+                        leaf rule-prefix {
+                            type types-sros:ipv6-prefix;
+                            sros-ext:auto-restart-to-modify;
+                            description "MAP-E rule prefix";
+                        }
+
+                        leaf admin-state {
+                            type types-sros:admin-state;
+                            default "disable";
+                            description "Administrative state of the MAP-E rule";
+                        }
+
+                        leaf statistics-collection {
+                            type boolean;
+                            default "false";
+                            description "Enable statistics collection";
+                        }
+
+                        leaf-list apply-groups {
+                            type leafref {
+                                path "../../../../../../groups/group/name";
+                            }
+                            max-elements 8;
+                            ordered-by user;
+                            sros-ext:auto-restart-to-modify;
+                            description "Apply a configuration group at this level";
+                        }
+
+                        leaf-list apply-groups-exclude {
+                            type leafref {
+                                path "../../../../../../groups/group/name";
+                            }
+                            max-elements 8;
+                            ordered-by user;
+                            sros-ext:auto-restart-to-modify;
+                            description "Exclude a configuration group at this level";
+                        }
+
+                    } // list mapping-rule
+
+                } // list domain
+
+            } // container map-e
 
         } // container nat
 

@@ -6,6 +6,7 @@ submodule nokia-state-eth-cfm {
 
     import ietf-yang-types                { prefix "yang"; }
     import nokia-sros-yang-extensions     { prefix "sros-ext"; }
+    import nokia-types-card               { prefix "types-card"; }
     import nokia-types-eth-cfm            { prefix "types-eth-cfm"; }
     import nokia-types-lldp               { prefix "types-lldp"; }
     import nokia-types-services           { prefix "types-services"; }
@@ -34,7 +35,7 @@ submodule nokia-state-eth-cfm {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
 
     grouping state-eth-cfm {
         container eth-cfm {
@@ -578,6 +579,67 @@ submodule nokia-state-eth-cfm {
                         }
 
                     } // container remote-mep
+
+                    list fp {
+                        key "slot-number fp-number";
+                        description "Enter the fp list instance";
+
+                        leaf slot-number {
+                            type types-card:iom-card-slot;
+                            description "The card slot number.";
+                        }
+
+                        leaf fp-number {
+                            type types-card:fp-id;
+                            description "The forwarding plane number within the card.";
+                        }
+
+                        container int-meg-id-format {
+                            description "Enter the int-meg-id-format context";
+
+                            leaf current-usage {
+                                type yang:counter32;
+                                description "Indicates the current resource usage of the ETH-CFM component.";
+                            }
+
+                            leaf system-limit {
+                                type yang:counter32;
+                                description "Indicates the maximum resource usage limit of the ETH-CFM component.";
+                            }
+
+                        } // container int-meg-id-format
+
+                        container icc-meg-id-format {
+                            description "Enter the icc-meg-id-format context";
+
+                            leaf current-usage {
+                                type yang:counter32;
+                                description "Indicates the current resource usage of the ETH-CFM component.";
+                            }
+
+                            leaf system-limit {
+                                type yang:counter32;
+                                description "Indicates the maximum resource usage limit of the ETH-CFM component.";
+                            }
+
+                        } // container icc-meg-id-format
+
+                        container other-meg-id-format {
+                            description "Enter the other-meg-id-format context";
+
+                            leaf current-usage {
+                                type yang:counter32;
+                                description "Indicates the current resource usage of the ETH-CFM component.";
+                            }
+
+                            leaf system-limit {
+                                type yang:counter32;
+                                description "Indicates the maximum resource usage limit of the ETH-CFM component.";
+                            }
+
+                        } // container other-meg-id-format
+
+                    } // list fp
 
                 } // container mep
 

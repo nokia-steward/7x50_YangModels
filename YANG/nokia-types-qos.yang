@@ -31,7 +31,7 @@ module nokia-types-qos {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef bytes {
         type int32;
@@ -310,9 +310,18 @@ module nokia-types-qos {
 
     typedef adaptation-rule {
         type enumeration {
-            enum max                            { value 1; }
-            enum min                            { value 2; }
-            enum closest                        { value 3; }
+            enum max {
+                value 1;
+                description "At maximum, the configured rate";
+            }
+            enum min {
+                value 2;
+                description "At minimum, the configured rate";
+            }
+            enum closest {
+                value 3;
+                description "Closest rate to the configured value";
+            }
         }
         description
             "The adaptation rule to be applied to calcluate the operational values
@@ -486,6 +495,8 @@ module nokia-types-qos {
             enum offered-profile-capped-cir     { value 8; }
             enum offered-limited-capped-cir     { value 9; }
             enum offered-profile-with-discards  { value 10; }
+            enum ecn-codepoints                 { value 12; }
+            enum ecn-marked                     { value 13; }
         }
         description "Specifies the mode of statistics collected by ingress policer.";
     }
@@ -518,6 +529,8 @@ module nokia-types-qos {
             enum offered-total-cir-exceed       { value 8; }
             enum offered-four-profile-no-cir    { value 9; }
             enum offered-total-cir-four-profile { value 10; }
+            enum ecn-codepoints                 { value 11; }
+            enum ecn-marked                     { value 12; }
         }
         description "Specifies the mode of statistics collected by egress policer.";
     }

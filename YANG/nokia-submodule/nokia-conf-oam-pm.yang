@@ -37,7 +37,7 @@ submodule nokia-conf-oam-pm {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-oam-pm {
         container oam-pm {
@@ -1618,6 +1618,44 @@ submodule nokia-conf-oam-pm {
                                         } // container mpls
 
                                     }
+                                    case tunnel-type-segment-routing-v6 {
+
+                                        container segment-routing-v6 {
+                                            presence "Enable the segment-routing-v6 context";
+                                            description "Enable the segment-routing-v6 context";
+
+                                            choice segment-routing-v6-tunnel-types {
+                                                case segment-routing-v6-srv6-policy {
+
+                                                    container srv6-policy {
+                                                        presence "Enable the srv6-policy context";
+                                                        description "Enable the srv6-policy context";
+
+                                                        leaf color {
+                                                            type uint32;
+                                                            default "0";
+                                                            description "Color for associating the SRv6 policy with an objective";
+                                                        }
+
+                                                        leaf endpoint {
+                                                            type types-sros:ipv6-unicast-address;
+                                                            description "Endpoint of the SRv6 policy tunnel";
+                                                        }
+
+                                                        leaf segment-list {
+                                                            type uint32 {
+                                                                range "1..32";
+                                                            }
+                                                            description "SR segment list for the SRv6 policy tunnel";
+                                                        }
+
+                                                    } // container srv6-policy
+
+                                                }
+                                            }
+                                        } // container segment-routing-v6
+
+                                    }
                                 }
                             } // container tunnel
 
@@ -1760,6 +1798,21 @@ submodule nokia-conf-oam-pm {
                                     sros-ext:auto-restart-to-modify;
                                     description "Exclude a configuration group at this level";
                                 }
+
+                                container liveness {
+                                    sros-ext:auto-restart-to-modify;
+                                    description "Enter the liveness context";
+
+                                    leaf fail-threshold {
+                                        type uint32 {
+                                            range "1..500";
+                                        }
+                                        units "packets";
+                                        sros-ext:auto-restart-to-modify;
+                                        description "Number of failed packets to trigger liveness failure";
+                                    }
+
+                                } // container liveness
 
                                 container loss {
                                     sros-ext:auto-restart-to-modify;

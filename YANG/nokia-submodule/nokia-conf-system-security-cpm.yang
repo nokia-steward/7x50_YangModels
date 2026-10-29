@@ -41,7 +41,7 @@ submodule nokia-conf-system-security-cpm {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-system-security-cpm-cpm-filter {
         container cpm-filter {
@@ -216,7 +216,7 @@ submodule nokia-conf-system-security-cpm {
                                                 type leafref {
                                                     path "../../../../../../../../filter/match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Port list as the match criterion";
                                             }
 
@@ -277,7 +277,7 @@ submodule nokia-conf-system-security-cpm {
                                                 type leafref {
                                                     path "../../../../../../../../filter/match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Port list as the match criterion";
                                             }
 
@@ -341,7 +341,7 @@ submodule nokia-conf-system-security-cpm {
                                                 type leafref {
                                                     path "../../../../../../../../filter/match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Port list as the match criterion";
                                             }
 
@@ -397,7 +397,7 @@ submodule nokia-conf-system-security-cpm {
                                         type leafref {
                                             path "../../../../../../../../filter/match-list/ip-prefix-list/prefix-list-name";
                                         }
-                                        max-elements 1;
+                                        max-elements 16;
                                         description "IPv4 address prefix list used as match criterion";
                                     }
 
@@ -431,7 +431,7 @@ submodule nokia-conf-system-security-cpm {
                                         type leafref {
                                             path "../../../../../../../../filter/match-list/ip-prefix-list/prefix-list-name";
                                         }
-                                        max-elements 1;
+                                        max-elements 16;
                                         description "IPv4 address prefix list used as match criterion";
                                     }
 
@@ -664,7 +664,7 @@ submodule nokia-conf-system-security-cpm {
                                                 type leafref {
                                                     path "../../../../../../../../filter/match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Port list as the match criterion";
                                             }
 
@@ -725,7 +725,7 @@ submodule nokia-conf-system-security-cpm {
                                                 type leafref {
                                                     path "../../../../../../../../filter/match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Port list as the match criterion";
                                             }
 
@@ -789,7 +789,7 @@ submodule nokia-conf-system-security-cpm {
                                                 type leafref {
                                                     path "../../../../../../../../filter/match-list/port-list/port-list-name";
                                                 }
-                                                max-elements 1;
+                                                max-elements 16;
                                                 description "Port list as the match criterion";
                                             }
 
@@ -825,7 +825,7 @@ submodule nokia-conf-system-security-cpm {
                                         type leafref {
                                             path "../../../../../../../../filter/match-list/ipv6-prefix-list/prefix-list-name";
                                         }
-                                        max-elements 1;
+                                        max-elements 16;
                                         description "IPv6 address prefix list used as match criterion";
                                     }
 
@@ -859,7 +859,7 @@ submodule nokia-conf-system-security-cpm {
                                         type leafref {
                                             path "../../../../../../../../filter/match-list/ipv6-prefix-list/prefix-list-name";
                                         }
-                                        max-elements 1;
+                                        max-elements 16;
                                         description "IPv6 address prefix list used as match criterion";
                                     }
 

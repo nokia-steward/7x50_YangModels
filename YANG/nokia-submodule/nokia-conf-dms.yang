@@ -6,6 +6,7 @@ submodule nokia-conf-dms {
 
     import nokia-sros-yang-extensions     { prefix "sros-ext"; }
     import nokia-types-dms                { prefix "types-dms"; }
+    import nokia-types-isa                { prefix "types-isa"; }
     import nokia-types-services           { prefix "types-services"; }
     import nokia-types-sros               { prefix "types-sros"; }
 
@@ -42,7 +43,7 @@ submodule nokia-conf-dms {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-dms-defender-mitigation-system {
         container defender-mitigation-system {
@@ -150,6 +151,17 @@ submodule nokia-conf-dms {
 
                 } // list esa
 
+                list isa {
+                    key "mda-id";
+                    max-elements 1;
+                    description "Add a list entry for isa";
+
+                    leaf mda-id {
+                        type types-isa:slot-mda;
+                        description "MDA ID of the ISA";
+                    }
+
+                } // list isa
 
             } // container advanced-countermeasures-group
 
@@ -962,6 +974,12 @@ submodule nokia-conf-dms {
                 container protocol-handlers {
                     description "Enter the protocol-handlers context";
 
+                    leaf checksum-verification {
+                        type boolean;
+                        default "false";
+                        description "Perform TCP/UDP checksum verification";
+                    }
+
                     leaf ip-fragment-control {
                         type enumeration {
                             enum discard {
@@ -1575,7 +1593,7 @@ submodule nokia-conf-dms {
                                     range "1..3600";
                                 }
                                 units "seconds";
-                                description "Specifies the time that a DNS over UDP flow context will be maintained in the absence of packet activity before forcing the flow to close and freeing the DNS flow resource. If not configured, the more general UDP inactivity timeout applies to the DNS over UDP traffic.";
+                                description "Inactivity timeout for DNS over UDP flows";
                             }
 
                         } // container udp
@@ -1698,7 +1716,7 @@ submodule nokia-conf-dms {
                         leaf track-source {
                             type boolean;
                             default "false";
-                            description "Valid ICMP can optionally trigger tracked-source state to be kept.";
+                            description "Keep the tracked-source state for flows with valid ICMP";
                         }
 
                         leaf source-echo-rate-policer {
@@ -1751,7 +1769,7 @@ submodule nokia-conf-dms {
 
                         leaf fragment-limit {
                             type uint32 {
-                                range "1..31";
+                                range "1..255";
                             }
                             description "Maximum number of QUIC message fragments in handshake";
                         }

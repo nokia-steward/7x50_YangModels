@@ -32,7 +32,42 @@ module nokia-types-isa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-03-11";
+    revision "2026-10-28";
+
+    typedef watermark-rtcp-max-threshold-fcc {
+        type uint32 {
+            range "0|1..25";
+        }
+        description "Watermark max-threshold-per-session for FCC.";
+    }
+
+    typedef watermark-rtcp-max-threshold-ret {
+        type uint32 {
+            range "0|5..5000";
+        }
+        description "Watermark max-threshold-per-session for RET.";
+    }
+
+    typedef watermark-rtcp-action {
+        type enumeration {
+            enum report-only {
+                value 0;
+                description "Logs the session in syslog";
+            }
+            enum report-and-suspend {
+                value 1;
+                description "Logs in syslog and drops packets for suspend period";
+            }
+        }
+        description "Watermark RTCP action.";
+    }
+
+    typedef watermark-rtcp-suspend-time {
+        type uint32 {
+            range "0..3600";
+        }
+        description "Watermark RTCP penalty suspend time.";
+    }
 
     typedef slot-mda {
         type string;

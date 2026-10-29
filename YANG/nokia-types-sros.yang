@@ -32,7 +32,7 @@ module nokia-types-sros {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-07-08";
+    revision "2026-10-28";
 
     typedef string-not-all-spaces {
         type string {
@@ -842,14 +842,13 @@ module nokia-types-sros {
         type cflash-and-url;
     }
 
-    typedef ts-url-or-sftp-512 {
+    typedef ts-remote-url-ftp-sftp-512 {
         type string {
             length "1..512";
         }
         description
-            "URL specifies a url in the following format:
-             local-url    - [<cflash-id>/][<file-path>]
-             remote-url   - [{ftp://|tftp://}<login>:<pswd>@<remote-locn>/][<file-path>] 180 chars max
+            "URL specifies a remote url in the following format:
+             remote-url   - {ftp://|sftp://}<remote-locn>/[<file-path>] 512 chars max
              remote-locn  - [ <hostname> | <ipv4-address> | <ipv6-address> ]
              ipv4-address - a.b.c.d
              ipv6-address - x:x:x:x:x:x:x:x[-interface]
@@ -857,9 +856,7 @@ module nokia-types-sros {
                             x - [0..FFFF]H
                             d - [0..255]D
                             interface - 32 chars max, for link
-                            local addresses
-             cflash-id    - [cf1-4:]|[[cf1-4]-[A-D:]]
-             sftp         - sftp://[<login>:<pswd>@<remote-locn>/][<file-path>] 512 chars max";
+                            local addresses";
     }
 
     typedef ts-url-string {
@@ -2275,6 +2272,15 @@ module nokia-types-sros {
             enum micro-seg-block-admin-down     { value 6; }
         }
         description "Srv6 Error status";
+    }
+
+    typedef srv6-function-type {
+        type enumeration {
+            enum none                           { value 0; }
+            enum dynamic                        { value 1; }
+            enum static                         { value 2; }
+        }
+        description "SRv6 function allocation type (mirrors timetra-tc:TSrv6FunctionType).";
     }
 
     typedef srv6-route-resolution {

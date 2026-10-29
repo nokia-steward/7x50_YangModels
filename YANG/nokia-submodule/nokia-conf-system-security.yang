@@ -47,7 +47,7 @@ submodule nokia-conf-system-security {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-09-02";
+    revision "2026-10-28";
 
     grouping conf-system-security {
         container security {
@@ -838,7 +838,7 @@ submodule nokia-conf-system-security {
 
                     list static-policer {
                         key "policer-name";
-                        max-elements 27;
+                        max-elements 28;
                         description "Enter the static-policer list instance";
 
                         leaf policer-name {
@@ -1811,6 +1811,7 @@ submodule nokia-conf-system-security {
                     ordered-by user;
                     description "Exclude a configuration group at this level";
                 }
+
 
             } // container system-passwords
 
