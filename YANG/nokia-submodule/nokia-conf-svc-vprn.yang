@@ -99,7 +99,7 @@ submodule nokia-conf-svc-vprn {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-svc-vprn {
         list vprn {
@@ -9827,7 +9827,7 @@ submodule nokia-conf-svc-vprn {
                             leaf port {
                                 type types-qos:tcp-udp-match-port;
                                 default "49";
-                                description "TCP port ID on which to contact TACACS+ server";
+                                description "TCP port to communicate with the TACACS+ server";
                             }
 
                             leaf secret {
@@ -9918,7 +9918,7 @@ submodule nokia-conf-svc-vprn {
                                 range "1..65535";
                             }
                             default "1812";
-                            description "UDP port number on which to contact RADIUS server";
+                            description "UDP port to communicate with the RADIUS server";
                         }
 
                         leaf use-default-template {
@@ -9985,14 +9985,14 @@ submodule nokia-conf-svc-vprn {
                                 type types-sros:encrypted-leaf {
                                     length "1..115";
                                 }
-                                description "Secret key to access the RADIUS server";
+                                description "Secret key for RADIUS over UDP";
                             }
 
                             leaf tls-client-profile {
                                 type leafref {
                                     path "../../../../../../../system/security/tls/client-tls-profile/client-profile-name";
                                 }
-                                description "TLS client profile for the RADIUS server";
+                                description "TLS profile for RADIUS over TLS";
                             }
 
                             leaf-list apply-groups {
@@ -22248,13 +22248,13 @@ submodule nokia-conf-svc-vprn {
                                     leaf na {
                                         type boolean;
                                         default "false";
-                                        description "Create route based on IA_NA prefix option in relay-reply message";
+                                        description "Create route based on the IA_NA option";
                                     }
 
                                     leaf ta {
                                         type boolean;
                                         default "false";
-                                        description "Create route based on IA_TA prefix option in relay-reply message";
+                                        description "Create route based on IA_TA option";
                                     }
 
                                     container pd {
@@ -22264,7 +22264,7 @@ submodule nokia-conf-svc-vprn {
                                         leaf exclude {
                                             type boolean;
                                             default "false";
-                                            description "Create back hole route based on prefix exclude option in relay-reply message";
+                                            description "Create blackhole route based on prefix exclude option";
                                         }
 
                                     } // container pd

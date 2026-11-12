@@ -41,7 +41,7 @@ submodule nokia-conf-system-security-aaa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-system-security-aaa {
         container aaa {
@@ -157,7 +157,7 @@ submodule nokia-conf-system-security-aaa {
                             range "1..65535";
                         }
                         default "1812";
-                        description "UDP port number on which to contact RADIUS server";
+                        description "UDP port to communicate with the RADIUS server";
                     }
 
                     leaf use-default-template {
@@ -230,14 +230,14 @@ submodule nokia-conf-system-security-aaa {
                             type types-sros:encrypted-leaf {
                                 length "1..115";
                             }
-                            description "Secret key to access the RADIUS server";
+                            description "Secret key for RADIUS over UDP";
                         }
 
                         leaf tls-client-profile {
                             type leafref {
                                 path "../../../../../tls/client-tls-profile/client-profile-name";
                             }
-                            description "TLS client profile for the RADIUS server";
+                            description "TLS profile for RADIUS over TLS";
                         }
 
                         leaf-list apply-groups {
@@ -686,7 +686,7 @@ submodule nokia-conf-system-security-aaa {
                         leaf port {
                             type types-qos:tcp-udp-match-port;
                             default "49";
-                            description "TCP port ID on which to contact TACACS+ server";
+                            description "TCP port to communicate with the TACACS+ server";
                         }
 
                         leaf secret {

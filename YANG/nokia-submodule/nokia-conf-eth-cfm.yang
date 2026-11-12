@@ -34,7 +34,7 @@ submodule nokia-conf-eth-cfm {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-eth-cfm {
         container eth-cfm {
@@ -200,7 +200,7 @@ submodule nokia-conf-eth-cfm {
                     case dns {
 
                         leaf dns {
-                            type string {
+                            type types-sros:string-not-all-spaces {
                                 length "1..43";
                             }
                             sros-ext:immutable;
@@ -223,7 +223,7 @@ submodule nokia-conf-eth-cfm {
                     case name {
 
                         leaf name {
-                            type string {
+                            type types-sros:string-not-all-spaces {
                                 length "1..43";
                             }
                             sros-ext:immutable;
@@ -307,7 +307,7 @@ submodule nokia-conf-eth-cfm {
                         case icc-based {
 
                             leaf icc-based {
-                                type string {
+                                type types-sros:string-not-all-spaces {
                                     length "8..13";
                                 }
                                 sros-ext:immutable;
@@ -329,7 +329,7 @@ submodule nokia-conf-eth-cfm {
                         case string {
 
                             leaf string {
-                                type string {
+                                type types-sros:string-not-all-spaces {
                                     length "1..45";
                                 }
                                 sros-ext:immutable;

@@ -34,7 +34,7 @@ submodule nokia-conf-mcast-mgmt {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-mcast-mgmt-multicast-management {
         container multicast-management {
@@ -1531,7 +1531,7 @@ submodule nokia-conf-mcast-mgmt {
                         leaf rt-rate {
                             type types-mcast-mgmt:percent-without-zero;
                             default "5";
-                            description "Rate the RET packets are sent to client";
+                            description "Retransmission rate";
                         }
 
                         leaf-list apply-groups {
@@ -1581,7 +1581,7 @@ submodule nokia-conf-mcast-mgmt {
                             leaf rt-rate {
                                 type types-mcast-mgmt:percent-without-zero;
                                 default "5";
-                                description "Rate the RET packets are sent to client";
+                                description "Retransmission rate";
                             }
 
                             leaf mc-handover {
@@ -1649,7 +1649,7 @@ submodule nokia-conf-mcast-mgmt {
                             leaf rt-rate {
                                 type types-mcast-mgmt:percent-without-zero;
                                 default "5";
-                                description "Rate the RET packets are sent to client";
+                                description "Retransmission rate";
                             }
 
                             leaf mc-handover {
@@ -1720,7 +1720,7 @@ submodule nokia-conf-mcast-mgmt {
                             leaf rt-rate {
                                 type types-mcast-mgmt:percent-without-zero;
                                 default "5";
-                                description "Rate the RET packets are sent to client";
+                                description "Retransmission rate";
                             }
 
                             leaf mc-handover {

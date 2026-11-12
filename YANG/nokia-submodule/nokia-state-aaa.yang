@@ -35,7 +35,7 @@ submodule nokia-state-aaa {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2025-03-12";
+    revision "2026-11-11";
 
     grouping state-aaa {
         container aaa {
@@ -896,6 +896,11 @@ submodule nokia-state-aaa {
                                     description "The value of the Origin-State-Id AVP used in multi-chassis operation";
                                 }
 
+                                leaf new-origin-state-id {
+                                    type uint32;
+                                    description "The new value of the Origin-State-Id AVP used in multi-chassis operation";
+                                }
+
                             } // container mc
 
                         } // container remote
@@ -924,6 +929,11 @@ submodule nokia-state-aaa {
                                 leaf origin-state-id {
                                     type uint32;
                                     description "The value of the Origin-State-Id AVP used in multi-chassis operation";
+                                }
+
+                                leaf new-origin-state-id {
+                                    type uint32;
+                                    description "The new value of the Origin-State-Id AVP used in multi-chassis operation";
                                 }
 
                             } // container mc

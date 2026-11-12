@@ -37,7 +37,7 @@ submodule nokia-conf-svc-nat {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-svc-nat {
         container nat {
@@ -855,7 +855,7 @@ submodule nokia-conf-svc-nat {
                     leaf dnat-ip-address {
                         type types-sros:ipv4-unicast-address;
                         sros-ext:isa-auto-clear-on-modify;
-                        description "Default destination IP address for matching entries with dNAT action";
+                        description "Default DNAT destination IP address";
                     }
 
                     container action {
@@ -885,7 +885,7 @@ submodule nokia-conf-svc-nat {
 
                                     leaf ip-address {
                                         type types-sros:ipv4-unicast-address;
-                                        description "Substitute destination IP address of matching packets";
+                                        description "Replacement destination IP address";
                                     }
 
                                 } // container destination-nat
@@ -966,7 +966,7 @@ submodule nokia-conf-svc-nat {
 
                                     leaf ip-address {
                                         type types-sros:ipv4-unicast-address;
-                                        description "Replacement destination IP address for packets";
+                                        description "Replacement destination IP address";
                                     }
 
                                 } // container destination-nat

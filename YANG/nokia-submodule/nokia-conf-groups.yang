@@ -79,7 +79,7 @@ submodule nokia-conf-groups {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-groups {
         container groups {
@@ -2002,7 +2002,7 @@ submodule nokia-conf-groups {
                                         }
                                         type types-sros:ip-unicast-address;
                                     }
-                                    description "Peer IP address of the node SID";
+                                    description "Peer IP address for the encryption group";
                                 }
 
                                 leaf admin-state {
@@ -2072,7 +2072,7 @@ submodule nokia-conf-groups {
                                         }
                                         type types-sros:ip-unicast-address;
                                     }
-                                    description "Peer IP address of the node SID";
+                                    description "Peer IP address for the encryption group";
                                 }
 
                                 leaf admin-state {
@@ -15074,7 +15074,7 @@ submodule nokia-conf-groups {
 
                                 leaf track-source {
                                     type boolean;
-                                    description "Valid ICMP can optionally trigger tracked-source state to be kept.";
+                                    description "Keep the tracked-source state for flows with valid ICMP";
                                 }
 
                                 leaf source-echo-rate-policer {
@@ -16101,7 +16101,7 @@ submodule nokia-conf-groups {
                             case dns {
 
                                 leaf dns {
-                                    type string {
+                                    type types-sros:string-not-all-spaces {
                                         length "1..43";
                                     }
                                     sros-ext:immutable;
@@ -16124,7 +16124,7 @@ submodule nokia-conf-groups {
                             case name {
 
                                 leaf name {
-                                    type string {
+                                    type types-sros:string-not-all-spaces {
                                         length "1..43";
                                     }
                                     sros-ext:immutable;
@@ -16195,7 +16195,7 @@ submodule nokia-conf-groups {
                                 case icc-based {
 
                                     leaf icc-based {
-                                        type string {
+                                        type types-sros:string-not-all-spaces {
                                             length "8..13";
                                         }
                                         sros-ext:immutable;
@@ -16217,7 +16217,7 @@ submodule nokia-conf-groups {
                                 case string {
 
                                     leaf string {
-                                        type string {
+                                        type types-sros:string-not-all-spaces {
                                             length "1..45";
                                         }
                                         sros-ext:immutable;
@@ -45025,6 +45025,14 @@ submodule nokia-conf-groups {
                             description "Type of PSK to use";
                         }
 
+                        leaf mka-version {
+                            type enumeration {
+                                enum 1                              { value 1; }
+                                enum 2                              { value 2; }
+                            }
+                            description "Version of the MKA protocol announced in the transmitted MKPDUs.";
+                        }
+
                         container static-cak {
                             presence "Enable the static-cak context";
                             description "Enable the static-cak context";
@@ -45966,6 +45974,7 @@ submodule nokia-conf-groups {
                             }
 
                             leaf file-url {
+                                status obsolete;
                                 type types-sros:ts-url;
                                 description "URL and file name for packet capture transfer";
                             }
@@ -45974,6 +45983,38 @@ submodule nokia-conf-groups {
                                 type types-sros:named-item-64;
                                 description "Router name used for FTP transmission of the PCAP file";
                             }
+
+                            container pcap-file-location {
+                                description
+                                    "The remote location that the capture file is written to, and
+                                     the credentials used to reach it.";
+
+                                leaf url {
+                                    type types-sros:ts-url;
+                                    description
+                                        "The remote location that the capture file is written to.
+
+                                         The URL must use the ftp or sftp scheme. Local, cflash and
+                                         tftp URLs are not accepted. Credentials are configured
+                                         using username and password rather than being embedded in
+                                         the URL.";
+                                }
+
+                                leaf password {
+                                    type types-sros:encrypted-leaf {
+                                        length "1..126";
+                                    }
+                                    description "The password used to access the remote URL specified by the url.";
+                                }
+
+                                leaf username {
+                                    type types-sros:encrypted-leaf {
+                                        length "1..126";
+                                    }
+                                    description "The username used to access the remote URL specified by the url.";
+                                }
+
+                            } // container pcap-file-location
 
                         } // list pcap
 
@@ -47681,7 +47722,7 @@ submodule nokia-conf-groups {
 
                                 leaf rt-rate {
                                     type types-mcast-mgmt:percent-without-zero;
-                                    description "Rate the RET packets are sent to client";
+                                    description "Retransmission rate";
                                 }
 
                                 container hd {
@@ -47710,7 +47751,7 @@ submodule nokia-conf-groups {
 
                                     leaf rt-rate {
                                         type types-mcast-mgmt:percent-without-zero;
-                                        description "Rate the RET packets are sent to client";
+                                        description "Retransmission rate";
                                     }
 
                                     leaf mc-handover {
@@ -47756,7 +47797,7 @@ submodule nokia-conf-groups {
 
                                     leaf rt-rate {
                                         type types-mcast-mgmt:percent-without-zero;
-                                        description "Rate the RET packets are sent to client";
+                                        description "Retransmission rate";
                                     }
 
                                     leaf mc-handover {
@@ -47805,7 +47846,7 @@ submodule nokia-conf-groups {
 
                                     leaf rt-rate {
                                         type types-mcast-mgmt:percent-without-zero;
-                                        description "Rate the RET packets are sent to client";
+                                        description "Retransmission rate";
                                     }
 
                                     leaf mc-handover {
@@ -62854,7 +62895,7 @@ submodule nokia-conf-groups {
 
                             leaf stat-mode {
                                 type types-qos:sap-ingress-policer-stat-mode;
-                                description "Mode of statistics collected by the policer";
+                                description "Statistics collection mode for the SAP ingress policer";
                             }
 
                             leaf mbs {
@@ -68979,7 +69020,7 @@ submodule nokia-conf-groups {
 
                             leaf stat-mode {
                                 type types-qos:sap-egress-policer-stat-mode;
-                                description "Mode of statistics collected by the policer";
+                                description "Statistics collection mode for the SAP egress policer";
                             }
 
                             choice rate-or-percent-rate {
@@ -72349,7 +72390,7 @@ submodule nokia-conf-groups {
                             enum rollback-single                { value 2; }
                             enum rollback-all                   { value 3; }
                         }
-                        description "Parameters for redundancy rollback synchronization";
+                        description "Automatic synchronization of rollback checkpoint files";
                     }
 
                     leaf synchronize {
@@ -72386,7 +72427,7 @@ submodule nokia-conf-groups {
                                 range "1..300";
                             }
                             units "seconds";
-                            description "Time before reverting the management CPM Ethernet port";
+                            description "Time before reverting the management Ethernet port";
                         }
 
                     } // container mgmt-ethernet
@@ -73590,7 +73631,7 @@ submodule nokia-conf-groups {
                                     range "0..1800";
                                 }
                                 units "seconds";
-                                description "Time before BGP EVPN multi-homing DF election algorithm";
+                                description "Time before BGP EVPN multihoming DF election algorithm";
                             }
 
                             leaf activation-timer {
@@ -73598,7 +73639,7 @@ submodule nokia-conf-groups {
                                     range "0..100";
                                 }
                                 units "seconds";
-                                description "Time before Ethernet segment activated on DF-elected PE";
+                                description "Global ES activation timer";
                             }
 
                         } // container ethernet-segment
@@ -108997,7 +109038,7 @@ submodule nokia-conf-groups {
 
                                 leaf route-distinguisher {
                                     type types-services:vpn-route-distinguisher;
-                                    description "Route distinguisher for ES routes";
+                                    description "RD for ES routes";
                                 }
 
                                 leaf hash-label-block {
@@ -109032,12 +109073,12 @@ submodule nokia-conf-groups {
                                             }
                                             type types-sros:named-item;
                                         }
-                                        description "Specify name for Ethernet segment";
+                                        description "ES name";
                                     }
 
                                     leaf admin-state {
                                         type types-sros:admin-state;
-                                        description "Administrative state of the Ethernet segment instance";
+                                        description "Administrative state of the ES instance";
                                     }
 
                                     leaf type {
@@ -109046,12 +109087,12 @@ submodule nokia-conf-groups {
                                             enum virtual                        { value 2; }
                                         }
                                         sros-ext:immutable;
-                                        description "Ethernet Segment type";
+                                        description "ES type";
                                     }
 
                                     leaf esi {
                                         type types-services:ethernet-segment-id-mac-based;
-                                        description "Ethernet segment identifier";
+                                        description "ESI to signal in BGP-EVPN routes";
                                     }
 
                                     leaf orig-ip {
@@ -109085,7 +109126,7 @@ submodule nokia-conf-groups {
                                             enum none                           { value 0; }
                                             enum type-1                         { value 1; }
                                         }
-                                        description "EVPN Ethernet segment auto-ESI type";
+                                        description "EVPN ES auto-ESI type";
                                     }
 
                                     leaf ac-df-capability {
@@ -109104,7 +109145,7 @@ submodule nokia-conf-groups {
                                                 range "0..100";
                                             }
                                             units "seconds";
-                                            description "Activation timer per Ethernet segment";
+                                            description "Activation timer per ES";
                                         }
 
                                         leaf service-carving-mode {
@@ -109113,7 +109154,7 @@ submodule nokia-conf-groups {
                                                 enum manual                         { value 2; }
                                                 enum off                            { value 3; }
                                             }
-                                            description "Mode of service carving enabled per EVPN associated with this Ethernet segment entry";
+                                            description "Service-carving mode for the ES";
                                         }
 
                                         container manual {
@@ -109181,14 +109222,14 @@ submodule nokia-conf-groups {
                                                         enum non-revertive                  { value 2; }
                                                     }
                                                     sros-ext:immutable;
-                                                    description "Method used to elect the DF";
+                                                    description "DF election mode";
                                                 }
 
                                                 leaf value {
                                                     type uint32 {
                                                         range "0..65535";
                                                     }
-                                                    description "Preference that is used to elect the designated forwarder";
+                                                    description "Preference used to elect the DF";
                                                 }
 
                                             } // container preference
@@ -109218,7 +109259,7 @@ submodule nokia-conf-groups {
                                                             }
                                                             type types-sros:port;
                                                         }
-                                                        description "Port multi-homed with this Ethernet segment entry";
+                                                        description "Port multihomed with the ES entry";
                                                     }
 
                                                     container virtual-ranges {
@@ -109340,7 +109381,7 @@ submodule nokia-conf-groups {
                                                             }
                                                             type types-sros:lag-interface;
                                                         }
-                                                        description "LAG multihomed with the Ethernet segment entry";
+                                                        description "LAG multihomed with the ES entry";
                                                     }
 
                                                     container virtual-ranges {
@@ -109776,12 +109817,12 @@ submodule nokia-conf-groups {
                                             enum evi-route-target               { value 1; }
                                             enum evi-route-target-set           { value 2; }
                                         }
-                                        description "Method for the AD per-ES routes advertisement";
+                                        description "Method for the AD per-ES route advertisement";
                                     }
 
                                     leaf route-distinguisher-ip-address {
                                         type types-sros:ipv4-address;
-                                        description "IP address for route distinguisher for EVPN AD-ES routes";
+                                        description "RD IP address for EVPN AD per-ES routes";
                                     }
 
                                     leaf extended-evi-range {
@@ -121486,12 +121527,12 @@ submodule nokia-conf-groups {
 
                                                 leaf na {
                                                     type boolean;
-                                                    description "Create route based on IA_NA prefix option in relay-reply message";
+                                                    description "Create route based on the IA_NA option";
                                                 }
 
                                                 leaf ta {
                                                     type boolean;
-                                                    description "Create route based on IA_TA prefix option in relay-reply message";
+                                                    description "Create route based on IA_TA option";
                                                 }
 
                                                 container pd {
@@ -121500,7 +121541,7 @@ submodule nokia-conf-groups {
 
                                                     leaf exclude {
                                                         type boolean;
-                                                        description "Create back hole route based on prefix exclude option in relay-reply message";
+                                                        description "Create blackhole route based on prefix exclude option";
                                                     }
 
                                                 } // container pd
@@ -127073,7 +127114,7 @@ submodule nokia-conf-groups {
                                                     pattern "((([0-9]|[1-9][0-9]{1,2}|[1-3][0-9]{3}|40[0-8][0-9]|409[0-5]))(\\.\\.(([0-9]|[1-9][0-9]{1,2}|[1-3][0-9]{3}|40[0-8][0-9]|409[0-5])))?)|(unmatched)";
                                                 }
                                             }
-                                            description "IEEE 802.1q VLAN tag range";
+                                            description "VLAN tag range";
                                         }
 
                                         leaf dynamic-service {
@@ -130550,7 +130591,7 @@ submodule nokia-conf-groups {
                                 leaf dnat-ip-address {
                                     type types-sros:ipv4-unicast-address;
                                     sros-ext:isa-auto-clear-on-modify;
-                                    description "Default destination IP address for matching entries with dNAT action";
+                                    description "Default DNAT destination IP address";
                                 }
 
                                 container action {
@@ -130579,7 +130620,7 @@ submodule nokia-conf-groups {
 
                                                 leaf ip-address {
                                                     type types-sros:ipv4-unicast-address;
-                                                    description "Substitute destination IP address of matching packets";
+                                                    description "Replacement destination IP address";
                                                 }
 
                                             } // container destination-nat
@@ -130649,7 +130690,7 @@ submodule nokia-conf-groups {
 
                                                 leaf ip-address {
                                                     type types-sros:ipv4-unicast-address;
-                                                    description "Replacement destination IP address for packets";
+                                                    description "Replacement destination IP address";
                                                 }
 
                                             } // container destination-nat
@@ -151103,7 +151144,7 @@ submodule nokia-conf-groups {
 
                                         leaf port {
                                             type types-qos:tcp-udp-match-port;
-                                            description "TCP port ID on which to contact TACACS+ server";
+                                            description "TCP port to communicate with the TACACS+ server";
                                         }
 
                                         leaf secret {
@@ -151167,7 +151208,7 @@ submodule nokia-conf-groups {
                                         type uint32 {
                                             range "1..65535";
                                         }
-                                        description "UDP port number on which to contact RADIUS server";
+                                        description "UDP port to communicate with the RADIUS server";
                                     }
 
                                     leaf use-default-template {
@@ -151219,12 +151260,12 @@ submodule nokia-conf-groups {
                                             type types-sros:encrypted-leaf {
                                                 length "1..115";
                                             }
-                                            description "Secret key to access the RADIUS server";
+                                            description "Secret key for RADIUS over UDP";
                                         }
 
                                         leaf tls-client-profile {
                                             type types-sros:named-item;
-                                            description "TLS client profile for the RADIUS server";
+                                            description "TLS profile for RADIUS over TLS";
                                         }
 
                                     } // list server
@@ -161172,12 +161213,12 @@ submodule nokia-conf-groups {
 
                                                 leaf na {
                                                     type boolean;
-                                                    description "Create route based on IA_NA prefix option in relay-reply message";
+                                                    description "Create route based on the IA_NA option";
                                                 }
 
                                                 leaf ta {
                                                     type boolean;
-                                                    description "Create route based on IA_TA prefix option in relay-reply message";
+                                                    description "Create route based on IA_TA option";
                                                 }
 
                                                 container pd {
@@ -161186,7 +161227,7 @@ submodule nokia-conf-groups {
 
                                                     leaf exclude {
                                                         type boolean;
-                                                        description "Create back hole route based on prefix exclude option in relay-reply message";
+                                                        description "Create blackhole route based on prefix exclude option";
                                                     }
 
                                                 } // container pd
@@ -176536,7 +176577,7 @@ submodule nokia-conf-groups {
                                                     pattern "((([0-9]|[1-9][0-9]{1,2}|[1-3][0-9]{3}|40[0-8][0-9]|409[0-5]))(\\.\\.(([0-9]|[1-9][0-9]{1,2}|[1-3][0-9]{3}|40[0-8][0-9]|409[0-5])))?)|(unmatched)";
                                                 }
                                             }
-                                            description "IEEE 802.1q VLAN tag range";
+                                            description "VLAN tag range";
                                         }
 
                                         leaf dynamic-service {
@@ -192705,7 +192746,7 @@ submodule nokia-conf-groups {
                             }
 
                             leaf local-name {
-                                type string {
+                                type types-sros:string-not-all-spaces {
                                     length "1..45";
                                 }
                                 description "Local name used in CFM PDUs";
@@ -200009,7 +200050,7 @@ submodule nokia-conf-groups {
                                         type uint32 {
                                             range "1..65535";
                                         }
-                                        description "UDP port number on which to contact RADIUS server";
+                                        description "UDP port to communicate with the RADIUS server";
                                     }
 
                                     leaf use-default-template {
@@ -200066,12 +200107,12 @@ submodule nokia-conf-groups {
                                             type types-sros:encrypted-leaf {
                                                 length "1..115";
                                             }
-                                            description "Secret key to access the RADIUS server";
+                                            description "Secret key for RADIUS over UDP";
                                         }
 
                                         leaf tls-client-profile {
                                             type types-sros:named-item;
-                                            description "TLS client profile for the RADIUS server";
+                                            description "TLS profile for RADIUS over TLS";
                                         }
 
                                     } // list server
@@ -200402,7 +200443,7 @@ submodule nokia-conf-groups {
 
                                         leaf port {
                                             type types-qos:tcp-udp-match-port;
-                                            description "TCP port ID on which to contact TACACS+ server";
+                                            description "TCP port to communicate with the TACACS+ server";
                                         }
 
                                         leaf secret {
