@@ -37,7 +37,7 @@ submodule nokia-conf-mirror {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-mirror {
         container mirror {
@@ -688,6 +688,7 @@ submodule nokia-conf-mirror {
                     }
 
                     leaf file-url {
+                        status obsolete;
                         type types-sros:ts-url;
                         description "URL and file name for packet capture transfer";
                     }
@@ -714,6 +715,38 @@ submodule nokia-conf-mirror {
                         ordered-by user;
                         description "Exclude a configuration group at this level";
                     }
+
+                    container pcap-file-location {
+                        description
+                            "The remote location that the capture file is written to, and
+                             the credentials used to reach it.";
+
+                        leaf url {
+                            type types-sros:ts-url;
+                            description
+                                "The remote location that the capture file is written to.
+
+                                 The URL must use the ftp or sftp scheme. Local, cflash and
+                                 tftp URLs are not accepted. Credentials are configured
+                                 using username and password rather than being embedded in
+                                 the URL.";
+                        }
+
+                        leaf password {
+                            type types-sros:encrypted-leaf {
+                                length "1..126";
+                            }
+                            description "The password used to access the remote URL specified by the url.";
+                        }
+
+                        leaf username {
+                            type types-sros:encrypted-leaf {
+                                length "1..126";
+                            }
+                            description "The username used to access the remote URL specified by the url.";
+                        }
+
+                    } // container pcap-file-location
 
                 } // list pcap
 

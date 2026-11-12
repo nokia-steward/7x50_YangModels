@@ -43,7 +43,7 @@ submodule nokia-state-svc-ies {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping state-svc-ies {
         list ies {
@@ -2376,7 +2376,7 @@ submodule nokia-state-svc-ies {
 
                             leaf security-association {
                                 type uint32 {
-                                    range "1..16";
+                                    range "1..32";
                                 }
                                 description "The unique identifier of an security association (SA).";
                             }
@@ -8361,7 +8361,7 @@ submodule nokia-state-svc-ies {
 
                             leaf security-association {
                                 type uint32 {
-                                    range "1..16";
+                                    range "1..32";
                                 }
                                 description "The unique identifier of an security association (SA).";
                             }
@@ -9756,7 +9756,7 @@ submodule nokia-state-svc-ies {
 
                                 leaf security-association {
                                     type uint32 {
-                                        range "1..16";
+                                        range "1..32";
                                     }
                                     description "The unique identifier of an security association (SA).";
                                 }

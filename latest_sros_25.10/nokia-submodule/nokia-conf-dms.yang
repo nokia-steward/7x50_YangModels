@@ -42,7 +42,7 @@ submodule nokia-conf-dms {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-dms-defender-mitigation-system {
         container defender-mitigation-system {
@@ -1465,7 +1465,7 @@ submodule nokia-conf-dms {
                         leaf track-source {
                             type boolean;
                             default "false";
-                            description "Valid ICMP can optionally trigger tracked-source state to be kept.";
+                            description "Keep the tracked-source state for flows with valid ICMP";
                         }
 
                         leaf source-echo-rate-policer {

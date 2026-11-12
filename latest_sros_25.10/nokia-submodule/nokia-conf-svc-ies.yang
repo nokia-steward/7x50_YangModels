@@ -69,7 +69,7 @@ submodule nokia-conf-svc-ies {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-svc-ies {
         list ies {
@@ -7304,13 +7304,13 @@ submodule nokia-conf-svc-ies {
                                     leaf na {
                                         type boolean;
                                         default "false";
-                                        description "Create route based on IA_NA prefix option in relay-reply message";
+                                        description "Create route based on the IA_NA option";
                                     }
 
                                     leaf ta {
                                         type boolean;
                                         default "false";
-                                        description "Create route based on IA_TA prefix option in relay-reply message";
+                                        description "Create route based on IA_TA option";
                                     }
 
                                     container pd {
@@ -7320,7 +7320,7 @@ submodule nokia-conf-svc-ies {
                                         leaf exclude {
                                             type boolean;
                                             default "false";
-                                            description "Create back hole route based on prefix exclude option in relay-reply message";
+                                            description "Create blackhole route based on prefix exclude option";
                                         }
 
                                     } // container pd

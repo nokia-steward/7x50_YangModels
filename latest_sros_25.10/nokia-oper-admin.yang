@@ -36,7 +36,7 @@ module nokia-oper-admin {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     typedef configuration-region {
         type enumeration {
@@ -114,42 +114,42 @@ module nokia-oper-admin {
 
                 leaf operation-id {
                     type types-operation:operation-id;
-                    description "ID assigned to the operation.";
+                    description "Operation ID";
                 }
 
                 leaf start-time {
                     type types-operation:operation-timestamp;
-                    description "Time when the operation started its execution.";
+                    description "Time when the operation execution started";
                 }
 
                 leaf results-path {
                     type types-operation:operation-path;
-                    description "Path to the results of the operation formatted as xpath.";
+                    description "Path to the operation results formatted as xpath";
                 }
 
                 leaf status {
                     type types-operation:operation-status;
-                    description "Status of the operation";
+                    description "Operation status";
                 }
 
                 leaf-list error-message {
                     type types-operation:operation-message;
-                    description "Error messages reported during execution of the operation.";
+                    description "Error messages reported during operation execution";
                 }
 
                 leaf-list warning-message {
                     type types-operation:operation-message;
-                    description "Warning messages reported during execution of the operation.";
+                    description "Warning messages reported during operation execution";
                 }
 
                 leaf-list info-message {
                     type types-operation:operation-message;
-                    description "Info messages reported during execution of the operation.";
+                    description "Info messages reported during operation execution";
                 }
 
                 leaf end-time {
                     type types-operation:operation-timestamp;
-                    description "Time when the operation ended its execution.";
+                    description "Time when the operation execution completed";
                 }
 
             }
@@ -184,42 +184,42 @@ module nokia-oper-admin {
 
                 leaf operation-id {
                     type types-operation:operation-id;
-                    description "ID assigned to the operation.";
+                    description "Operation ID";
                 }
 
                 leaf start-time {
                     type types-operation:operation-timestamp;
-                    description "Time when the operation started its execution.";
+                    description "Time when the operation execution started";
                 }
 
                 leaf results-path {
                     type types-operation:operation-path;
-                    description "Path to the results of the operation formatted as xpath.";
+                    description "Path to the operation results formatted as xpath";
                 }
 
                 leaf status {
                     type types-operation:operation-status;
-                    description "Status of the operation";
+                    description "Operation status";
                 }
 
                 leaf-list error-message {
                     type types-operation:operation-message;
-                    description "Error messages reported during execution of the operation.";
+                    description "Error messages reported during operation execution";
                 }
 
                 leaf-list warning-message {
                     type types-operation:operation-message;
-                    description "Warning messages reported during execution of the operation.";
+                    description "Warning messages reported during operation execution";
                 }
 
                 leaf-list info-message {
                     type types-operation:operation-message;
-                    description "Info messages reported during execution of the operation.";
+                    description "Info messages reported during operation execution";
                 }
 
                 leaf end-time {
                     type types-operation:operation-timestamp;
-                    description "Time when the operation ended its execution.";
+                    description "Time when the operation execution completed";
                 }
 
             }
@@ -240,42 +240,42 @@ module nokia-oper-admin {
 
                 leaf operation-id {
                     type types-operation:operation-id;
-                    description "ID assigned to the operation.";
+                    description "Operation ID";
                 }
 
                 leaf start-time {
                     type types-operation:operation-timestamp;
-                    description "Time when the operation started its execution.";
+                    description "Time when the operation execution started";
                 }
 
                 leaf results-path {
                     type types-operation:operation-path;
-                    description "Path to the results of the operation formatted as xpath.";
+                    description "Path to the operation results formatted as xpath";
                 }
 
                 leaf status {
                     type types-operation:operation-status;
-                    description "Status of the operation";
+                    description "Operation status";
                 }
 
                 leaf-list error-message {
                     type types-operation:operation-message;
-                    description "Error messages reported during execution of the operation.";
+                    description "Error messages reported during operation execution";
                 }
 
                 leaf-list warning-message {
                     type types-operation:operation-message;
-                    description "Warning messages reported during execution of the operation.";
+                    description "Warning messages reported during operation execution";
                 }
 
                 leaf-list info-message {
                     type types-operation:operation-message;
-                    description "Info messages reported during execution of the operation.";
+                    description "Info messages reported during operation execution";
                 }
 
                 leaf end-time {
                     type types-operation:operation-timestamp;
-                    description "Time when the operation ended its execution.";
+                    description "Time when the operation execution completed";
                 }
 
             }
@@ -291,42 +291,42 @@ module nokia-oper-admin {
 
                     leaf operation-id {
                         type types-operation:operation-id;
-                        description "ID assigned to the operation.";
+                        description "Operation ID";
                     }
 
                     leaf start-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation started its execution.";
+                        description "Time when the operation execution started";
                     }
 
                     leaf results-path {
                         type types-operation:operation-path;
-                        description "Path to the results of the operation formatted as xpath.";
+                        description "Path to the operation results formatted as xpath";
                     }
 
                     leaf status {
                         type types-operation:operation-status;
-                        description "Status of the operation";
+                        description "Operation status";
                     }
 
                     leaf-list error-message {
                         type types-operation:operation-message;
-                        description "Error messages reported during execution of the operation.";
+                        description "Error messages reported during operation execution";
                     }
 
                     leaf-list warning-message {
                         type types-operation:operation-message;
-                        description "Warning messages reported during execution of the operation.";
+                        description "Warning messages reported during operation execution";
                     }
 
                     leaf-list info-message {
                         type types-operation:operation-message;
-                        description "Info messages reported during execution of the operation.";
+                        description "Info messages reported during operation execution";
                     }
 
                     leaf end-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation ended its execution.";
+                        description "Time when the operation execution completed";
                     }
 
                 }
@@ -361,42 +361,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -443,42 +443,42 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -513,42 +513,42 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -568,42 +568,42 @@ module nokia-oper-admin {
 
                     leaf operation-id {
                         type types-operation:operation-id;
-                        description "ID assigned to the operation.";
+                        description "Operation ID";
                     }
 
                     leaf start-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation started its execution.";
+                        description "Time when the operation execution started";
                     }
 
                     leaf results-path {
                         type types-operation:operation-path;
-                        description "Path to the results of the operation formatted as xpath.";
+                        description "Path to the operation results formatted as xpath";
                     }
 
                     leaf status {
                         type types-operation:operation-status;
-                        description "Status of the operation";
+                        description "Operation status";
                     }
 
                     leaf-list error-message {
                         type types-operation:operation-message;
-                        description "Error messages reported during execution of the operation.";
+                        description "Error messages reported during operation execution";
                     }
 
                     leaf-list warning-message {
                         type types-operation:operation-message;
-                        description "Warning messages reported during execution of the operation.";
+                        description "Warning messages reported during operation execution";
                     }
 
                     leaf-list info-message {
                         type types-operation:operation-message;
-                        description "Info messages reported during execution of the operation.";
+                        description "Info messages reported during operation execution";
                     }
 
                     leaf end-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation ended its execution.";
+                        description "Time when the operation execution completed";
                     }
 
                 }
@@ -615,7 +615,7 @@ module nokia-oper-admin {
             description "Enter the redundancy context";
 
             action force-switchover {
-                description "Force a switchover to the standby CPM";
+                description "Force a switchover to the standby CPM or CPIOM";
 
                 input {
 
@@ -634,49 +634,49 @@ module nokia-oper-admin {
 
                     leaf operation-id {
                         type types-operation:operation-id;
-                        description "ID assigned to the operation.";
+                        description "Operation ID";
                     }
 
                     leaf start-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation started its execution.";
+                        description "Time when the operation execution started";
                     }
 
                     leaf results-path {
                         type types-operation:operation-path;
-                        description "Path to the results of the operation formatted as xpath.";
+                        description "Path to the operation results formatted as xpath";
                     }
 
                     leaf status {
                         type types-operation:operation-status;
-                        description "Status of the operation";
+                        description "Operation status";
                     }
 
                     leaf-list error-message {
                         type types-operation:operation-message;
-                        description "Error messages reported during execution of the operation.";
+                        description "Error messages reported during operation execution";
                     }
 
                     leaf-list warning-message {
                         type types-operation:operation-message;
-                        description "Warning messages reported during execution of the operation.";
+                        description "Warning messages reported during operation execution";
                     }
 
                     leaf-list info-message {
                         type types-operation:operation-message;
-                        description "Info messages reported during execution of the operation.";
+                        description "Info messages reported during operation execution";
                     }
 
                     leaf end-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation ended its execution.";
+                        description "Time when the operation execution completed";
                     }
 
                 }
             } // action force-switchover
 
             action synchronize {
-                description "Synchronize the standby CPM";
+                description "Synchronize the standby CPM or CPIOM";
 
                 input {
 
@@ -712,42 +712,42 @@ module nokia-oper-admin {
 
                     leaf operation-id {
                         type types-operation:operation-id;
-                        description "ID assigned to the operation.";
+                        description "Operation ID";
                     }
 
                     leaf start-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation started its execution.";
+                        description "Time when the operation execution started";
                     }
 
                     leaf results-path {
                         type types-operation:operation-path;
-                        description "Path to the results of the operation formatted as xpath.";
+                        description "Path to the operation results formatted as xpath";
                     }
 
                     leaf status {
                         type types-operation:operation-status;
-                        description "Status of the operation";
+                        description "Operation status";
                     }
 
                     leaf-list error-message {
                         type types-operation:operation-message;
-                        description "Error messages reported during execution of the operation.";
+                        description "Error messages reported during operation execution";
                     }
 
                     leaf-list warning-message {
                         type types-operation:operation-message;
-                        description "Warning messages reported during execution of the operation.";
+                        description "Warning messages reported during operation execution";
                     }
 
                     leaf-list info-message {
                         type types-operation:operation-message;
-                        description "Info messages reported during execution of the operation.";
+                        description "Info messages reported during operation execution";
                     }
 
                     leaf end-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation ended its execution.";
+                        description "Time when the operation execution completed";
                     }
 
                 }
@@ -789,42 +789,42 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -837,42 +837,42 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -894,42 +894,42 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -958,42 +958,42 @@ module nokia-oper-admin {
 
                     leaf operation-id {
                         type types-operation:operation-id;
-                        description "ID assigned to the operation.";
+                        description "Operation ID";
                     }
 
                     leaf start-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation started its execution.";
+                        description "Time when the operation execution started";
                     }
 
                     leaf results-path {
                         type types-operation:operation-path;
-                        description "Path to the results of the operation formatted as xpath.";
+                        description "Path to the operation results formatted as xpath";
                     }
 
                     leaf status {
                         type types-operation:operation-status;
-                        description "Status of the operation";
+                        description "Operation status";
                     }
 
                     leaf-list error-message {
                         type types-operation:operation-message;
-                        description "Error messages reported during execution of the operation.";
+                        description "Error messages reported during operation execution";
                     }
 
                     leaf-list warning-message {
                         type types-operation:operation-message;
-                        description "Warning messages reported during execution of the operation.";
+                        description "Warning messages reported during operation execution";
                     }
 
                     leaf-list info-message {
                         type types-operation:operation-message;
-                        description "Info messages reported during execution of the operation.";
+                        description "Info messages reported during operation execution";
                     }
 
                     leaf end-time {
                         type types-operation:operation-timestamp;
-                        description "Time when the operation ended its execution.";
+                        description "Time when the operation execution completed";
                     }
 
                 }
@@ -1026,42 +1026,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1097,42 +1097,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1160,42 +1160,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1231,42 +1231,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1305,42 +1305,42 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -1376,42 +1376,42 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -1434,42 +1434,42 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -1523,42 +1523,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1571,42 +1571,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1639,7 +1639,7 @@ module nokia-oper-admin {
 
                             leaf now {
                                 type empty;
-                                description "Perform the action immediately";
+                                description "Individual persistent-index";
                             }
 
                             leaf serial-number {
@@ -1654,42 +1654,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1717,7 +1717,7 @@ module nokia-oper-admin {
 
                             leaf now {
                                 type empty;
-                                description "Perform the action immediately";
+                                description "Individual persistent-index";
                             }
 
                             leaf serial-number {
@@ -1732,42 +1732,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1795,7 +1795,7 @@ module nokia-oper-admin {
 
                             leaf now {
                                 type empty;
-                                description "Perform the action immediately";
+                                description "Individual persistent-index";
                             }
 
                             leaf serial-number {
@@ -1816,42 +1816,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1873,42 +1873,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -1932,42 +1932,42 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -1993,42 +1993,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -2103,17 +2103,17 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 container results {
@@ -2126,7 +2126,7 @@ module nokia-oper-admin {
                                             type string {
                                                 length "1..32";
                                             }
-                                            description "The pki ca-profile name";
+                                            description "The state of the connection.";
                                         }
 
                                         leaf save-as {
@@ -2136,14 +2136,17 @@ module nokia-oper-admin {
 
                                         leaf current-key {
                                             type types-security:pki-file-name;
+                                            description "The state of the connection.";
                                         }
 
                                         leaf current-certificate {
                                             type types-security:pki-file-name;
+                                            description "The state of the connection.";
                                         }
 
                                         leaf new-key {
                                             type types-security:pki-file-name;
+                                            description "The state of the connection.";
                                         }
 
                                         leaf hash-algorithm {
@@ -2174,7 +2177,7 @@ module nokia-oper-admin {
 
                                     leaf last-ca-response-time {
                                         type yang:date-and-time;
-                                        description "Time when CA last responsed";
+                                        description "Time when CA last response";
                                     }
 
                                     leaf transaction-status {
@@ -2198,27 +2201,27 @@ module nokia-oper-admin {
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -2242,42 +2245,42 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -2382,17 +2385,17 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 container results {
@@ -2405,7 +2408,7 @@ module nokia-oper-admin {
                                             type string {
                                                 length "1..32";
                                             }
-                                            description "The pki ca-profile name";
+                                            description "The state of the connection.";
                                         }
 
                                         leaf save-as {
@@ -2415,6 +2418,7 @@ module nokia-oper-admin {
 
                                         leaf key-to-certify {
                                             type types-security:pki-file-name;
+                                            description "The state of the connection.";
                                         }
 
                                         choice protection-algorithm {
@@ -2424,6 +2428,7 @@ module nokia-oper-admin {
                                                     type string {
                                                         length "1..64";
                                                     }
+                                                    description "The state of the connection.";
                                                 }
 
                                             }
@@ -2431,20 +2436,24 @@ module nokia-oper-admin {
 
                                                 leaf certificate {
                                                     type types-security:pki-file-name;
+                                                    description "The state of the connection.";
                                                 }
 
                                                 leaf send-chain {
                                                     type empty;
+                                                    description "The state of the connection.";
                                                 }
 
                                                 leaf with-ca {
                                                     type string {
                                                         length "1..32";
                                                     }
+                                                    description "The state of the connection.";
                                                 }
 
                                                 leaf protection-key {
                                                     type types-security:pki-file-name;
+                                                    description "The state of the connection.";
                                                 }
 
                                                 leaf hash-algorithm {
@@ -2479,7 +2488,7 @@ module nokia-oper-admin {
                                         type string {
                                             length "1..32";
                                         }
-                                        description "The pki ca-profile name";
+                                        description "The state of the connection.";
                                     }
 
                                     leaf save-as {
@@ -2489,7 +2498,7 @@ module nokia-oper-admin {
 
                                     leaf last-ca-response-time {
                                         type yang:date-and-time;
-                                        description "Time when CA last responsed";
+                                        description "Time when CA last response";
                                     }
 
                                     leaf transaction-status {
@@ -2513,27 +2522,27 @@ module nokia-oper-admin {
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -2586,17 +2595,17 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 container results {
@@ -2609,7 +2618,7 @@ module nokia-oper-admin {
                                             type string {
                                                 length "1..32";
                                             }
-                                            description "The pki ca-profile name";
+                                            description "The state of the connection.";
                                         }
 
                                         leaf save-as {
@@ -2619,14 +2628,17 @@ module nokia-oper-admin {
 
                                         leaf new-key {
                                             type types-security:pki-file-name;
+                                            description "The state of the connection.";
                                         }
 
                                         leaf old-key {
                                             type types-security:pki-file-name;
+                                            description "The state of the connection.";
                                         }
 
                                         leaf old-certificate {
                                             type types-security:pki-file-name;
+                                            description "The state of the connection.";
                                         }
 
                                         leaf hash-algorithm {
@@ -2638,7 +2650,7 @@ module nokia-oper-admin {
 
                                     leaf last-ca-response-time {
                                         type yang:date-and-time;
-                                        description "Time when CA last responsed";
+                                        description "Time when CA last response";
                                     }
 
                                     leaf transaction-status {
@@ -2662,27 +2674,27 @@ module nokia-oper-admin {
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -2706,17 +2718,17 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 container results {
@@ -2731,7 +2743,7 @@ module nokia-oper-admin {
                                         type string {
                                             length "1..32";
                                         }
-                                        description "The pki ca-profile name";
+                                        description "The state of the connection.";
                                     }
 
                                     leaf save-as {
@@ -2741,7 +2753,7 @@ module nokia-oper-admin {
 
                                     leaf last-ca-response-time {
                                         type yang:date-and-time;
-                                        description "Time when CA last responsed";
+                                        description "Time when CA last response";
                                     }
 
                                     leaf transaction-status {
@@ -2765,27 +2777,27 @@ module nokia-oper-admin {
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -2826,42 +2838,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -2885,42 +2897,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -2958,42 +2970,42 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -3063,42 +3075,42 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -3155,42 +3167,42 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf results-path {
                                     type types-operation:operation-path;
-                                    description "Path to the results of the operation formatted as xpath.";
+                                    description "Path to the operation results formatted as xpath";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -3244,42 +3256,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -3335,42 +3347,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -3427,42 +3439,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -3514,42 +3526,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -3585,42 +3597,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -3644,42 +3656,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -3715,17 +3727,17 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         container results {
@@ -3813,27 +3825,27 @@ module nokia-oper-admin {
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -3854,17 +3866,17 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         container results {
@@ -3952,27 +3964,27 @@ module nokia-oper-admin {
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -3995,17 +4007,17 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         container results {
@@ -4093,27 +4105,27 @@ module nokia-oper-admin {
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -4158,42 +4170,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -4230,42 +4242,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -4292,42 +4304,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -4348,37 +4360,37 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -4391,37 +4403,37 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -4444,37 +4456,37 @@ module nokia-oper-admin {
 
                                 leaf operation-id {
                                     type types-operation:operation-id;
-                                    description "ID assigned to the operation.";
+                                    description "Operation ID";
                                 }
 
                                 leaf start-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation started its execution.";
+                                    description "Time when the operation execution started";
                                 }
 
                                 leaf status {
                                     type types-operation:operation-status;
-                                    description "Status of the operation";
+                                    description "Operation status";
                                 }
 
                                 leaf-list error-message {
                                     type types-operation:operation-message;
-                                    description "Error messages reported during execution of the operation.";
+                                    description "Error messages reported during operation execution";
                                 }
 
                                 leaf-list warning-message {
                                     type types-operation:operation-message;
-                                    description "Warning messages reported during execution of the operation.";
+                                    description "Warning messages reported during operation execution";
                                 }
 
                                 leaf-list info-message {
                                     type types-operation:operation-message;
-                                    description "Info messages reported during execution of the operation.";
+                                    description "Info messages reported during operation execution";
                                 }
 
                                 leaf end-time {
                                     type types-operation:operation-timestamp;
-                                    description "Time when the operation ended its execution.";
+                                    description "Time when the operation execution completed";
                                 }
 
                             }
@@ -4548,17 +4560,17 @@ module nokia-oper-admin {
 
                         leaf operation-id {
                             type types-operation:operation-id;
-                            description "ID assigned to the operation.";
+                            description "Operation ID";
                         }
 
                         leaf start-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation started its execution.";
+                            description "Time when the operation execution started";
                         }
 
                         leaf results-path {
                             type types-operation:operation-path;
-                            description "Path to the results of the operation formatted as xpath.";
+                            description "Path to the operation results formatted as xpath";
                         }
 
                         container results {
@@ -4566,28 +4578,31 @@ module nokia-oper-admin {
 
                             leaf local-ip-address {
                                 type types-sros:ip-address;
+                                description "Individual persistent-index";
                             }
 
                             leaf remote-ip-address {
                                 type types-sros:ip-address;
+                                description "Individual persistent-index";
                             }
 
                             leaf max-number-of-records {
                                 type uint32;
+                                description "Individual persistent-index";
                             }
 
                             list key-history {
                                 key "index";
-                                description "The ipsec key history.";
+                                description "Enter the key-history list instance";
 
                                 leaf index {
                                     type uint32;
-                                    description "The display index of the showing key history record.";
+                                    description "Individual persistent-index";
                                 }
 
                                 leaf established-time {
                                     type yang:date-and-time;
-                                    description "Time when ipsec Security Association (SA) was established.";
+                                    description "Individual persistent-index";
                                 }
 
                                 choice type {
@@ -4597,14 +4612,14 @@ module nokia-oper-admin {
                                             type string {
                                                 length "1..16";
                                             }
-                                            description "Initiator Security Parameter Index (SPI).";
+                                            description "Individual persistent-index";
                                         }
 
                                         leaf responder-spi {
                                             type string {
                                                 length "1..16";
                                             }
-                                            description "Responder Security Parameter Index (SPI).";
+                                            description "Individual persistent-index";
                                         }
 
                                         choice ike-version {
@@ -4615,21 +4630,21 @@ module nokia-oper-admin {
 
                                                     leaf algorithm {
                                                         type types-security:ipsec-encryption-algorithm;
-                                                        description "The encryption algorithm.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-length {
                                                         type uint32 {
                                                             range "1..128";
                                                         }
-                                                        description "The length of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-hex {
                                                         type string {
                                                             length "1..265";
                                                         }
-                                                        description "The hex string of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                 } // container responder-encryption-key
@@ -4639,21 +4654,21 @@ module nokia-oper-admin {
 
                                                     leaf algorithm {
                                                         type types-security:ipsec-authentication-algorithm;
-                                                        description "The authentication algorithm.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-length {
                                                         type uint32 {
                                                             range "1..128";
                                                         }
-                                                        description "The length of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-hex {
                                                         type string {
                                                             length "1..256";
                                                         }
-                                                        description "The hex string of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                 } // container responder-authentication-key
@@ -4663,21 +4678,21 @@ module nokia-oper-admin {
 
                                                     leaf algorithm {
                                                         type types-security:ipsec-encryption-algorithm;
-                                                        description "The encryption algorithm.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-length {
                                                         type uint32 {
                                                             range "1..128";
                                                         }
-                                                        description "The length of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-hex {
                                                         type string {
                                                             length "1..265";
                                                         }
-                                                        description "The hex string of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                 } // container initiator-encryption-key
@@ -4687,21 +4702,21 @@ module nokia-oper-admin {
 
                                                     leaf algorithm {
                                                         type types-security:ipsec-authentication-algorithm;
-                                                        description "The authentication algorithm.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-length {
                                                         type uint32 {
                                                             range "1..128";
                                                         }
-                                                        description "The length of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-hex {
                                                         type string {
                                                             length "1..256";
                                                         }
-                                                        description "The hex string of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                 } // container initiator-authentication-key
@@ -4714,21 +4729,21 @@ module nokia-oper-admin {
 
                                                     leaf algorithm {
                                                         type types-security:ipsec-encryption-algorithm;
-                                                        description "The encryption algorithm.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-length {
                                                         type uint32 {
                                                             range "1..128";
                                                         }
-                                                        description "The length of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                     leaf key-hex {
                                                         type string {
                                                             length "1..265";
                                                         }
-                                                        description "The hex string of the key.";
+                                                        description "Individual persistent-index";
                                                     }
 
                                                 } // container encryption-key
@@ -4743,7 +4758,7 @@ module nokia-oper-admin {
 
                                             leaf spi {
                                                 type uint32;
-                                                description "Inbound Security Parameter Index (SPI).";
+                                                description "Individual persistent-index";
                                             }
 
                                             container encryption-key {
@@ -4751,21 +4766,21 @@ module nokia-oper-admin {
 
                                                 leaf algorithm {
                                                     type types-security:ipsec-encryption-algorithm;
-                                                    description "The encryption algorithm.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-length {
                                                     type uint32 {
                                                         range "1..128";
                                                     }
-                                                    description "The length of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-hex {
                                                     type string {
                                                         length "1..265";
                                                     }
-                                                    description "The hex string of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                             } // container encryption-key
@@ -4775,21 +4790,21 @@ module nokia-oper-admin {
 
                                                 leaf algorithm {
                                                     type types-security:ipsec-authentication-algorithm;
-                                                    description "The authentication algorithm.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-length {
                                                     type uint32 {
                                                         range "1..128";
                                                     }
-                                                    description "The length of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-hex {
                                                     type string {
                                                         length "1..256";
                                                     }
-                                                    description "The hex string of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                             } // container authentication-key
@@ -4801,7 +4816,7 @@ module nokia-oper-admin {
 
                                             leaf spi {
                                                 type uint32;
-                                                description "Outbound Security Parameter Index (SPI).";
+                                                description "Individual persistent-index";
                                             }
 
                                             container encryption-key {
@@ -4809,21 +4824,21 @@ module nokia-oper-admin {
 
                                                 leaf algorithm {
                                                     type types-security:ipsec-encryption-algorithm;
-                                                    description "The encryption algorithm.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-length {
                                                     type uint32 {
                                                         range "1..128";
                                                     }
-                                                    description "The length of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-hex {
                                                     type string {
                                                         length "1..265";
                                                     }
-                                                    description "The hex string of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                             } // container encryption-key
@@ -4833,21 +4848,21 @@ module nokia-oper-admin {
 
                                                 leaf algorithm {
                                                     type types-security:ipsec-authentication-algorithm;
-                                                    description "The authentication algorithm.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-length {
                                                     type uint32 {
                                                         range "1..128";
                                                     }
-                                                    description "The length of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                                 leaf key-hex {
                                                     type string {
                                                         length "1..256";
                                                     }
-                                                    description "The hex string of the key.";
+                                                    description "Individual persistent-index";
                                                 }
 
                                             } // container authentication-key
@@ -4862,27 +4877,27 @@ module nokia-oper-admin {
 
                         leaf status {
                             type types-operation:operation-status;
-                            description "Status of the operation";
+                            description "Operation status";
                         }
 
                         leaf-list error-message {
                             type types-operation:operation-message;
-                            description "Error messages reported during execution of the operation.";
+                            description "Error messages reported during operation execution";
                         }
 
                         leaf-list warning-message {
                             type types-operation:operation-message;
-                            description "Warning messages reported during execution of the operation.";
+                            description "Warning messages reported during operation execution";
                         }
 
                         leaf-list info-message {
                             type types-operation:operation-message;
-                            description "Info messages reported during execution of the operation.";
+                            description "Info messages reported during operation execution";
                         }
 
                         leaf end-time {
                             type types-operation:operation-timestamp;
-                            description "Time when the operation ended its execution.";
+                            description "Time when the operation execution completed";
                         }
 
                     }
@@ -4952,42 +4967,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }
@@ -5034,42 +5049,42 @@ module nokia-oper-admin {
 
                             leaf operation-id {
                                 type types-operation:operation-id;
-                                description "ID assigned to the operation.";
+                                description "Operation ID";
                             }
 
                             leaf start-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation started its execution.";
+                                description "Time when the operation execution started";
                             }
 
                             leaf results-path {
                                 type types-operation:operation-path;
-                                description "Path to the results of the operation formatted as xpath.";
+                                description "Path to the operation results formatted as xpath";
                             }
 
                             leaf status {
                                 type types-operation:operation-status;
-                                description "Status of the operation";
+                                description "Operation status";
                             }
 
                             leaf-list error-message {
                                 type types-operation:operation-message;
-                                description "Error messages reported during execution of the operation.";
+                                description "Error messages reported during operation execution";
                             }
 
                             leaf-list warning-message {
                                 type types-operation:operation-message;
-                                description "Warning messages reported during execution of the operation.";
+                                description "Warning messages reported during operation execution";
                             }
 
                             leaf-list info-message {
                                 type types-operation:operation-message;
-                                description "Info messages reported during execution of the operation.";
+                                description "Info messages reported during operation execution";
                             }
 
                             leaf end-time {
                                 type types-operation:operation-timestamp;
-                                description "Time when the operation ended its execution.";
+                                description "Time when the operation execution completed";
                             }
 
                         }

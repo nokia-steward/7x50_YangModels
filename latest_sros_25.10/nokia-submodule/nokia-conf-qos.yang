@@ -36,7 +36,7 @@ submodule nokia-conf-qos {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     grouping conf-qos {
         container qos {
@@ -1636,7 +1636,7 @@ submodule nokia-conf-qos {
 
                     leaf stat-mode {
                         type types-qos:sap-ingress-policer-stat-mode;
-                        description "Mode of statistics collected by the policer";
+                        description "Statistics collection mode for the SAP ingress policer";
                     }
 
                     leaf mbs {
@@ -8817,7 +8817,7 @@ submodule nokia-conf-qos {
                     leaf stat-mode {
                         type types-qos:sap-egress-policer-stat-mode;
                         default "minimal";
-                        description "Mode of statistics collected by the policer";
+                        description "Statistics collection mode for the SAP egress policer";
                     }
 
                     leaf-list apply-groups {

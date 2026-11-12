@@ -83,7 +83,7 @@ module nokia-state {
          This specification is supplied `as is', and Nokia makes no warranty,
          either express or implied, as to the use, operation, condition, or performance
          of the specification.";
-    revision "2026-08-12";
+    revision "2026-11-11";
 
     container state {
         config false;
@@ -947,6 +947,11 @@ module nokia-state {
                                     description "The value of the Origin-State-Id AVP used in multi-chassis operation";
                                 }
 
+                                leaf new-origin-state-id {
+                                    type uint32;
+                                    description "The new value of the Origin-State-Id AVP used in multi-chassis operation";
+                                }
+
                             } // container mc
 
                         } // container remote
@@ -975,6 +980,11 @@ module nokia-state {
                                 leaf origin-state-id {
                                     type uint32;
                                     description "The value of the Origin-State-Id AVP used in multi-chassis operation";
+                                }
+
+                                leaf new-origin-state-id {
+                                    type uint32;
+                                    description "The new value of the Origin-State-Id AVP used in multi-chassis operation";
                                 }
 
                             } // container mc
@@ -58126,6 +58136,22 @@ module nokia-state {
                             path "../../../../esa[esa-id=current()/../esa-id]/vm/vm-id";
                         }
                         description "ESA-VM used by the ISA NAT MAP-T group.";
+                    }
+
+                    leaf state {
+                        type enumeration {
+                            enum inactive                       { value 1; }
+                            enum active                         { value 2; }
+                            enum needs-reset                    { value 3; }
+                            enum resetting                      { value 4; }
+                            enum needs-reconcile                { value 5; }
+                            enum reconciling                    { value 6; }
+                            enum needs-audit                    { value 7; }
+                            enum auditing                       { value 8; }
+                            enum failed-bypass                  { value 9; }
+                            enum active-bypass                  { value 10; }
+                        }
+                        description "The state of this ESA-VM in the ISA NAT MAP-T group";
                     }
 
                     container resources {
@@ -118204,7 +118230,7 @@ module nokia-state {
 
                             leaf security-association {
                                 type uint32 {
-                                    range "1..16";
+                                    range "1..32";
                                 }
                                 description "The unique identifier of an security association (SA).";
                             }
@@ -180090,6 +180116,11 @@ module nokia-state {
                                 description "Type of SRv6 instance created";
                             }
 
+                            leaf last-update {
+                                type types-sros:date-time;
+                                description "Time this entry was last updated.";
+                            }
+
                         } // list non-ethernet-segment-destination
 
                     } // container destinations
@@ -186631,6 +186662,12 @@ module nokia-state {
                                     description "Type of SRv6 instance created";
                                 }
 
+                                leaf last-update {
+                                    status obsolete;
+                                    type types-sros:date-time;
+                                    description "Time this entry was last updated.";
+                                }
+
                             } // list non-ethernet-segment-destination
 
                         } // container destinations
@@ -188971,7 +189008,7 @@ module nokia-state {
 
                                 leaf security-association {
                                     type uint32 {
-                                        range "1..16";
+                                        range "1..32";
                                     }
                                     description "The unique identifier of an security association (SA).";
                                 }
@@ -194956,7 +194993,7 @@ module nokia-state {
 
                                 leaf security-association {
                                     type uint32 {
-                                        range "1..16";
+                                        range "1..32";
                                     }
                                     description "The unique identifier of an security association (SA).";
                                 }
@@ -196351,7 +196388,7 @@ module nokia-state {
 
                                     leaf security-association {
                                         type uint32 {
-                                            range "1..16";
+                                            range "1..32";
                                         }
                                         description "The unique identifier of an security association (SA).";
                                     }
@@ -207889,7 +207926,7 @@ module nokia-state {
 
                             leaf fcc-min-duration {
                                 type uint32 {
-                                    range "1..100000";
+                                    range "0..100000";
                                 }
                                 units "milliseconds";
                                 description
@@ -207899,7 +207936,7 @@ module nokia-state {
 
                             leaf audio-reorder {
                                 type uint32 {
-                                    range "1..100000";
+                                    range "0..100000";
                                 }
                                 units "milliseconds";
                                 description
@@ -255511,7 +255548,7 @@ module nokia-state {
 
                                 leaf security-association {
                                     type uint32 {
-                                        range "1..16";
+                                        range "1..32";
                                     }
                                     description "The unique identifier of an security association (SA).";
                                 }
@@ -262470,7 +262507,7 @@ module nokia-state {
 
                                 leaf security-association {
                                     type uint32 {
-                                        range "1..16";
+                                        range "1..32";
                                     }
                                     description "The unique identifier of an security association (SA).";
                                 }
@@ -263865,7 +263902,7 @@ module nokia-state {
 
                                     leaf security-association {
                                         type uint32 {
-                                            range "1..16";
+                                            range "1..32";
                                         }
                                         description "The unique identifier of an security association (SA).";
                                     }
@@ -264476,7 +264513,7 @@ module nokia-state {
 
                                 leaf security-association {
                                     type uint32 {
-                                        range "1..16";
+                                        range "1..32";
                                     }
                                     description "The unique identifier of an security association (SA).";
                                 }
@@ -292963,7 +293000,7 @@ module nokia-state {
 
                             leaf fcc-min-duration {
                                 type uint32 {
-                                    range "1..100000";
+                                    range "0..100000";
                                 }
                                 units "milliseconds";
                                 description
@@ -292973,7 +293010,7 @@ module nokia-state {
 
                             leaf audio-reorder {
                                 type uint32 {
-                                    range "1..100000";
+                                    range "0..100000";
                                 }
                                 units "milliseconds";
                                 description
